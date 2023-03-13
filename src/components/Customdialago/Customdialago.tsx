@@ -55,6 +55,13 @@ const Customdialago = ({children}:Props) => {
 		aria-describedby="alert-dialog-description"
 		keepMounted
 		TransitionComponent={Transition}
+		sx={{
+			'&	.MuiDialog-paper':{
+				backgroundColor: 'transparent',
+				backgroundImage: 'none',
+				borderRadius: '1.5rem',
+			}
+		 }}
 	>
 		{children}
 	</Dialog>;

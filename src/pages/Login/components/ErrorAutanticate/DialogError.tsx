@@ -1,8 +1,7 @@
 import React from 'react';
 import { dialogCloseSubject$ } from '@/components/Customdialago/Customdialago';
-import { DialogContent, Typography } from '@mui/material';
+import { Box, DialogContent, Divider, Typography } from '@mui/material';
 import CustomTitleDialog from '@/components/CustomTitleDialog/CustomTitleDialog';
-import { Container } from '@/style-components/layout.styled';
 import {  Card } from '../../style-components/cart.style';
 
 
@@ -18,19 +17,29 @@ const DialogError = ({ title, children }: DialogTitleProps) => {
 
 	return (
 		<>
-		 <Container>
+		 <Box> 
 
 			<Card id='CardError'>
-				<CustomTitleDialog id="customized-dialog-title" handleClose={handleClose}>
+				<CustomTitleDialog 
+				id="customized-dialog-title" 
+				handleClose={handleClose} 
+				fontWeight={700} 
+				letterSpacing={'5px'}  
+				fontSize={'1.3rem'}
+				
+				>
 					{title}
 				</CustomTitleDialog>
-				<DialogContent dividers >
+				<Divider />
+				<DialogContent sx={{
+					padding: '1rem 8rem 0 0rem'
+				}} >
 					<Typography gutterBottom>
 						{children}
 					</Typography>
 				</DialogContent>
 			</Card>
-		 </Container>
+		 </Box>
 		</>)
 };
 

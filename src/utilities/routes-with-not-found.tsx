@@ -9,7 +9,7 @@ function RoutesWithNotFound({ children }: Props) {
   return (
     <Routes>
       {children}
-      <Route path='*' element={<><NopageNoFound/></>} />
+      <Route path='*' element={<NopageNoFound/>} />
     </Routes>
   )
 }

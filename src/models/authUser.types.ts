@@ -1,27 +1,15 @@
+import { User } from "./apiData.types"
 import { StatusLogin } from "./StatusLogin"
 
-export interface User {
-        _id: string,
-        Names: string,
-        email: string,
-        status: string,
-        img: string,
-        role: string,
-        createdAt: string,
-        updatedAt:string,  
-    
-}
-export interface ApiUserLogin{
 
+export interface ApiUserLogin{
         status: string,
         message: string,
         remerberMe: boolean,
         Data: {
             user:User
             token: string
-        }
-        
-        
+        }     
 }
 export const UserEmptyState: User = {
 

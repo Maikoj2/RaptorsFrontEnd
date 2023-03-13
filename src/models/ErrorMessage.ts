@@ -7,10 +7,11 @@ export interface apiErrorMessage{
 }
 
 export interface ValidateError{
-   msg:string;
-   param:string;
-   location:string;
-   value:string;
+   msg?:string;
+   param?:string;
+   location?:string;
+   value?:string;
+   name?:string;
    
 }
 

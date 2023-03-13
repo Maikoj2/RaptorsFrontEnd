@@ -1,23 +1,24 @@
 
 import { BackGrounLayout, LayoutLogin } from "./style-components"
 import { Container, Row, CartLayout } from '@/style-components';
-import {   DialogError, LoginCart } from './components';
+import {  DialogError, LoginCart } from './components';
 import { BackGrounImg } from './style-components/BackgrounLogin';
 import Customdialago, { dialogOpenSubject$ } from '../../components/Customdialago/Customdialago';
 import { useSelector } from "react-redux";
 import { AppStore } from "@/redux/storer";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy } from 'react';
 import { UseAuthStore } from "@/hooks";
+// const DialogError = lazy(() => import('./components/ErrorAutanticate/DialogError'))
 
 
 
 
 const Login = () => {
   const [errorMessge, seterrorMessge] = useState('')
-  const {message} = useSelector((state: AppStore) => state.user);
-  const { CheckAuthToken } =  UseAuthStore()
+  const { message, } = useSelector((state: AppStore) => state.user);
+  const { CheckAuthToken } = UseAuthStore()
   useEffect(() => {
-   CheckAuthToken()
+    CheckAuthToken()
   }, [])
   useEffect(() => {
     if (message !== '') {
@@ -26,22 +27,23 @@ const Login = () => {
     }
   }, [message])
   return (
-    <>
+    <>{
       <LayoutLogin>
-       <Customdialago >
-        <DialogError title= 'Error' >{ errorMessge } </DialogError>
-      </Customdialago>
+        <Customdialago >
+          <DialogError title='Error' >{errorMessge} </DialogError>
+        </Customdialago>
         <Container>
           <Row>
             <CartLayout>
-              <LoginCart/>
+              <LoginCart />
             </CartLayout>
             <BackGrounLayout>
-              <BackGrounImg/>
+              <BackGrounImg />
             </BackGrounLayout>
           </Row>
         </Container>
       </LayoutLogin>
+    }
     </>
   )
 }

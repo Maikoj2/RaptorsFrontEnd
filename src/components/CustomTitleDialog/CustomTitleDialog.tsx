@@ -13,7 +13,7 @@ export interface DialogTitleProps {
 const CustomTitleDialog= (props: DialogTitleProps) => {
 	const { children, handleClose, ...other } = props;
 	return( 
-	<DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+	<DialogTitle sx={{ m: 0, p: 2 }} {...other} >
 	{children}
 	{handleClose ? (
 	  <IconButton

@@ -22,41 +22,41 @@ const Form = () => {
   const onSummit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     startLogin({ email: email, password: password }, Remenberme);
-   
+
   }
   const onSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRemenberme(event.target.checked)
   }
   return (
-    <form   onSubmit={(e: any)=>onSummit(e)}>
-    <Label>Email</Label>
-    <div className="MarginBottom-3">
-      <CumstonInput 
-      type="email" 
-      placeholder="Examples@example.com" 
-      name="email"
-      value={email}
-      onChange={onInputChange}/>
-    </div>
-    <Label>Password</Label>
-    <div className="MarginBottom-3">
-      <CumstonInput 
-      type="password" 
-      placeholder="Password"
-      name="password"
-      value={password}
-      onChange={onInputChange}
-      className="form-control" />
-    </div>
-    <LayoutcheckBoxInputswitch>
-      <CheckBoxInputswitch  type="checkbox" id="rememberMe"  onChange={onSwitch} checked={Remenberme}/>
-      <Label className="checkLabel"  htmlFor="rememberMe">Remember me</Label>
-    </LayoutcheckBoxInputswitch>
+    <form onSubmit={(e: any) => onSummit(e)}>
+      <Label>Email</Label>
+      <div className="MarginBottom-3">
+        <CumstonInput
+          type="email"
+          placeholder="Examples@example.com"
+          name="email"
+          value={email}
+          onChange={onInputChange} />
+      </div>
+      <Label>Password</Label>
+      <div className="MarginBottom-3">
+        <CumstonInput
+          type="password"
+          placeholder="Password"
+          name="password"
+          value={password}
+          onChange={onInputChange}
+          className="form-control" />
+      </div>
+      <LayoutcheckBoxInputswitch>
+        <CheckBoxInputswitch type="checkbox" id="rememberMe" onChange={onSwitch} checked={Remenberme} />
+        <Label className="checkLabel" htmlFor="rememberMe">Remember me</Label>
+      </LayoutcheckBoxInputswitch>
       <div className="text-center">
-      <ButtonCustom type='submit' name='btnGradient' className='.MarginBottom-0  mt-4' disabled={userState.status === StatusLogin.CHEKING}>Sign in</ButtonCustom>
-    </div>
-  </form>
-    
+        <ButtonCustom type='submit' name='btnGradient' className='.MarginBottom-0  mt-4' disabled={userState.status === StatusLogin.CHEKING}>Sign in</ButtonCustom>
+      </div>
+    </form>
+
   )
 };
 

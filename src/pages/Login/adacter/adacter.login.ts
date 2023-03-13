@@ -1,7 +1,8 @@
-import {  ApiUserLogin, User } from '@/models';
+import {  ApiUserLogin,  } from '@/models';
 
 
-export const loginAdacter = ({Data}: ApiUserLogin): User => {
+
+export const loginAdacter = ({Data}: ApiUserLogin) => {
   return {
     _id: Data.user._id,
     Names: Data.user.Names,

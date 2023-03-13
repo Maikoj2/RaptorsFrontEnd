@@ -4,10 +4,10 @@ import { getLocalStorage } from "@/utilities";
 import axios from "axios";
 
 
-const { VITE_REACT_URL_PRODUCTION } = getEnvVariable()
+const {  VITE_REACT_URL } = getEnvVariable()
 
 const RaptorsApi = axios.create({
-    baseURL: VITE_REACT_URL_PRODUCTION
+    baseURL: VITE_REACT_URL 
 });
 
 RaptorsApi.interceptors.request.use((config ) => {

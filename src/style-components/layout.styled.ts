@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const Layout = styled.div`
 overflow: hidden ;
@@ -67,3 +67,28 @@ z-index: 1;
   }
 
 `;
+export const ContainerFluid = styled.div`
+  width: 100%;
+  padding-right: var(--bs-gutter-x, 1.5rem);
+  padding-left: var(--bs-gutter-x, 1.5rem);
+  margin-right: auto;
+  margin-left: auto;
+
+  @media (min-width: 576px) {
+      max-width: 540px;
+  }
+  @media (min-width: 768px) {  
+      max-width: 720px;
+  }
+  @media (min-width: 992px) {
+      max-width: 960px;
+  }
+  @media (min-width: 1200px) {
+      max-width: 1140px;
+  }
+  @media (min-width: 1400px) {
+      max-width: 1320px;
+  }
+
+`;
+

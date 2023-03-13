@@ -1,3 +1,3 @@
 export * from './components';
-export * from './dashboard';
+export * from './pages';
 export { default as private } from './private';

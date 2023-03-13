@@ -1,6 +1,6 @@
 
 import RaptorsApi from '@/api/LoginApi';
-import { LocalStorageType, LoginRoutes, PrivateRoutes } from '@/models';
+import { LocalStorageType, ApiLoginRoutes, PrivateRoutes } from '@/models';
 import { chackingCredentials, chackingRemenberme, clearErrorMessage, login, logOut } from '@/redux/slices/auth.slice';
 import { AppStore } from '@/redux/storer';
 import { getLocalStorage } from '@/utilities';
@@ -18,13 +18,13 @@ export const UseAuthStore = () => {
             dispatch(clearErrorMessage(''));
         }, 10)
     }
-
     const loginUserinfo = useSelector((state: AppStore) => state.user);
+
     const startLogin = async ({ email = '', password = '' }, remerberMe= false) => {
        
         dispatch(chackingCredentials());
         try {
-            const { data } = await RaptorsApi.post(LoginRoutes.LOGIN, { email: email, password: password });
+            const { data } = await RaptorsApi.post(ApiLoginRoutes.LOGIN, { email: email, password: password });
             dispatch(chackingRemenberme(remerberMe));
             dispatch(login(data));
             Navigate(`/${PrivateRoutes.PRIVATE}`, {replace: true}); 
@@ -51,7 +51,7 @@ export const UseAuthStore = () => {
         dispatch(chackingCredentials());
         if (!token) return dispatch(logOut(''))
         try {
-            const  { data } = await  RaptorsApi.get(LoginRoutes.RE_NEW);
+            const  { data } = await  RaptorsApi.get(ApiLoginRoutes.RE_NEW);
             dispatch(chackingRemenberme(true));
             dispatch(login(data));
             Navigate(`/${PrivateRoutes.PRIVATE}`, {replace: true}); 
@@ -60,11 +60,17 @@ export const UseAuthStore = () => {
         }
     }
 
+    const LogOut = () => {
+        dispatch(logOut(''));
+    }
+
+
     return {
         loginUserinfo,
         dispatch,
         startLogin,
-        CheckAuthToken
+        CheckAuthToken,
+        LogOut
     }
 
 }

@@ -1,4 +1,4 @@
-export enum LoginRoutes{
+export enum ApiLoginRoutes{
     LOGIN = '/login',           /**this routes is login post */
     RE_NEW = '/login/reNew',     /**this routes is a get and  renuew the Token */
 

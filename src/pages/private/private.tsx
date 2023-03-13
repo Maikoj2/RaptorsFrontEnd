@@ -1,24 +1,23 @@
-import { PrivateRoutes, StatusLogin } from '@/models';
+import { PrivateRoutes } from '@/models';
 import { RoutesWithNotFound } from '@/utilities';
 import { Route, Navigate } from 'react-router-dom';
+// import { lazy } from 'react';
+import { Main } from './Main';
+import { Dashboard } from './pages/Dashboard';
+import { Users } from './pages/Users';
 
-import { lazy, Suspense } from 'react';
-import { Loading } from '@/components';
-import { useSelector } from 'react-redux';
-import { AppStore } from '../../redux/storer';
+// const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'))
+// const Users = lazy(() => import('./pages/Users/Users'))
 
-
-
-const Dashboard = lazy(()=> import('./dashboard/Dashboard')) 
-
- const Private = () => {
+const Private = () => {
     return (
         <RoutesWithNotFound>
-            <Route path='/' element={<Navigate to={PrivateRoutes.DASHBOARD} />} />
-            <Route path={PrivateRoutes.DASHBOARD} element={<Dashboard />} />
+            <Route element={<Main />}>
+                <Route path='/' element={<Navigate to={PrivateRoutes.DASHBOARD} />} />
+                <Route path={PrivateRoutes.DASHBOARD} element={<Dashboard />} />
+                <Route path={PrivateRoutes.USERS} element={<Users />} />
+            </Route>
         </RoutesWithNotFound>
-
- 
     )
 }
 export default Private

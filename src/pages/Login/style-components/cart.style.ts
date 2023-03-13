@@ -5,11 +5,13 @@ position: relative;
 display: flex;
 flex-direction: column;
 min-width: 0;
+color: black;
 word-wrap: break-word;
 background-clip: border-box;
 border: 0 solid rgba(0, 0, 0, 0.125);
 padding: 1.5rem;
-border-radius: 1rem;
+margin: 0;
+border-radius: 1.5rem;
 ${(props) => {
   switch (props.id) {
     case "CardPlane":
@@ -21,8 +23,6 @@ ${(props) => {
     case "CardError":
       return css`
         background-color: #fff;
-        box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
-        margin-top: 2rem
       `;
     default:
       return css`
