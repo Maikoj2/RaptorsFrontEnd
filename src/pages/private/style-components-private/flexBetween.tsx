@@ -1,11 +1,8 @@
-import Box from "@mui/material/Box";
-import { styled } from "@mui/material/styles";
-
+import Box from '@mui/material/Box'
+import { styled } from '@mui/material/styles'
 
 export const FlexBetween = styled(Box)({
-    display : "flex",
-    justifyContent : "space-between",
-    alignItems : "center",
-});
-
- 
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center'
+})

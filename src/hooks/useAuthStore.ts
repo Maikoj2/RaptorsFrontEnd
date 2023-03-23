@@ -1,78 +1,57 @@
-
-import RaptorsApi from '@/api/LoginApi';
-import { LocalStorageType, ApiLoginRoutes, PrivateRoutes } from '@/models';
-import { chackingCredentials, chackingRemenberme, clearErrorMessage, login, logOut } from '@/redux/slices/auth.slice';
-import { AppStore } from '@/redux/storer';
-import { getLocalStorage } from '@/utilities';
-import { ManegerErrors } from '@/utilities/managerErrors';
-import { useDispatch, useSelector } from 'react-redux';
-import {  useNavigate } from 'react-router-dom';
-
-
+import { LocalStorageType, ApiLoginRoutes, PrivateRoutes } from '@/models'
+import { chackingCredentials, chackingRemenberme, clearErrorMessage, login, logOut, UpdateToken } from '@/redux/slices/auth.slice'
+import { type AppStore } from '@/redux/storer'
+import { getLocalStorage } from '@/utilities'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { AxiosGetLogin, AxiosLogin } from '../services/longIn'
+import { type UserLogin } from '../models/authUser.types'
 
 export const UseAuthStore = () => {
-    const Navigate = useNavigate()
-    const dispatch = useDispatch();
-    const clearMessageError = () => {
-        setTimeout(() => {
-            dispatch(clearErrorMessage(''));
-        }, 10)
-    }
-    const loginUserinfo = useSelector((state: AppStore) => state.user);
+  const Navigate = useNavigate()
+  const dispatch = useDispatch()
 
-    const startLogin = async ({ email = '', password = '' }, remerberMe= false) => {
-       
-        dispatch(chackingCredentials());
-        try {
-            const { data } = await RaptorsApi.post(ApiLoginRoutes.LOGIN, { email: email, password: password });
-            dispatch(chackingRemenberme(remerberMe));
-            dispatch(login(data));
-            Navigate(`/${PrivateRoutes.PRIVATE}`, {replace: true}); 
-        } catch (error: any) {
-            console.log(error);
-            
-            if (error.response.data) {             
-               const message =ManegerErrors(error.response.data)
-               dispatch(logOut(message));
-                clearMessageError();
-            }
-            if (error.code === "ERR_NETWORK") {
-                dispatch(logOut(error.message));
-                clearMessageError();
-            }
-            console.log(error);
-        }
+  const clearMessageError = () => {
+    setTimeout(() => {
+      dispatch(clearErrorMessage(''))
+    }, 10)
+  }
+  const loginUserinfo = useSelector((state: AppStore) => state.apiUsers)
 
+  const startLogin = async ({ email = '', password = '' }, remerberMe = false) => {
+    dispatch(chackingCredentials())
+    AxiosLogin(ApiLoginRoutes.LOGIN, { email, password })
+      .then((res) => {
+        dispatch(chackingRemenberme(remerberMe))
+        dispatch(login(res))
+        Navigate(`/${PrivateRoutes.PRIVATE}`, { replace: true })
+      })
+      .catch(() => {
+        dispatch(logOut(''))
+      })
+  }
 
-    }
+  const CheckAuthToken = async () => {
+    const { Data }: UserLogin = getLocalStorage(LocalStorageType.DATA_SESSION)
+    if (!Data.token) return dispatch(logOut(''))
+    dispatch(chackingCredentials())
+    AxiosGetLogin(ApiLoginRoutes.RE_NEW)
+      .then((res) => {
+        dispatch(chackingRemenberme(true))
+        dispatch(UpdateToken(res))
+      })
+      .catch(() => dispatch(logOut('')))
+  }
 
-    const CheckAuthToken= async () => {
-        const token = getLocalStorage(LocalStorageType.TOKEN);
-        dispatch(chackingCredentials());
-        if (!token) return dispatch(logOut(''))
-        try {
-            const  { data } = await  RaptorsApi.get(ApiLoginRoutes.RE_NEW);
-            dispatch(chackingRemenberme(true));
-            dispatch(login(data));
-            Navigate(`/${PrivateRoutes.PRIVATE}`, {replace: true}); 
-        } catch (error) {
-            dispatch(logOut(''));
-        }
-    }
+  const LogOut = () => {
+    dispatch(logOut(''))
+  }
 
-    const LogOut = () => {
-        dispatch(logOut(''));
-    }
-
-
-    return {
-        loginUserinfo,
-        dispatch,
-        startLogin,
-        CheckAuthToken,
-        LogOut
-    }
-
+  return {
+    loginUserinfo,
+    dispatch,
+    startLogin,
+    CheckAuthToken,
+    LogOut
+  }
 }
-
- 

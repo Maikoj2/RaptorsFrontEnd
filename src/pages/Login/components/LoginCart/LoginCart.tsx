@@ -1,10 +1,7 @@
-import React from 'react';
-import { CardBody, CardHeader } from '../../style-components';
-import { CardFooter, CartTitle, Card } from '../../style-components/cart.style';
-import { CustomForm } from '../CustomForm';
-
-
-
+import React from 'react'
+import { CardBody, CardHeader } from '../../style-components'
+import { CardFooter, CartTitle, Card } from '../../style-components/cart.style'
+import { CustomForm } from '../CustomForm'
 
 export interface LoginCartInterface { }
 
@@ -25,7 +22,6 @@ const LoginCart: React.FC<LoginCartInterface> = () => {
       </Card>
     </>
   )
-};
+}
 
-export default LoginCart;
-
+export default LoginCart

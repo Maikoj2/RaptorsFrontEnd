@@ -1,17 +1,30 @@
-import React from 'react';
-import { BreadcrumbList, Breadcrumbtitle } from './style-components/breadcrumb.style';
+
+import { Box, useTheme } from '@mui/material'
+import React from 'react'
+import { useLocation } from 'react-router-dom'
+import { BreadcrumbList, Breadcrumbtitle } from './style-components/breadcrumb.style'
+
 export interface BreadcrumbInterface { }
 
 const Breadcrumb: React.FC<BreadcrumbInterface> = () => {
-	return (
-		<nav aria-label="breadcrumb">
-			<BreadcrumbList className=" mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-				<li className=""><a className="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-				<li className="text-sm text-dark active" aria-current="page">Dashboard</li>
-			</BreadcrumbList>
-			<Breadcrumbtitle>Dashboard</Breadcrumbtitle>
-		</nav>
-	)
-};
+  const { pathname } = useLocation()
+  const pathSepared = pathname.substring(1).split('/')
 
-export default Breadcrumb;
+  const theme: any = useTheme()
+  return (
+		<Box sx={{
+		  display: 'block',
+		  padding: '0.25rem 1rem 0.25rem 1rem'
+		}}>
+			<BreadcrumbList>
+			{pathSepared.map((path) => {
+			  return <li key={path}>{path}</li>
+			})}
+
+			</BreadcrumbList>
+			<Breadcrumbtitle color={theme.palette.neutral[100]}>{pathSepared[pathSepared.length - 1]}</Breadcrumbtitle>
+		</Box>
+  )
+}
+
+export default Breadcrumb

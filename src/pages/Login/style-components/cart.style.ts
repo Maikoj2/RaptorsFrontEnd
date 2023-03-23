@@ -14,26 +14,31 @@ margin: 0;
 border-radius: 1.5rem;
 ${(props) => {
   switch (props.id) {
-    case "CardPlane":
+    case 'CardPlane':
       return css`
         background-color: transparent;
         box-shadow: none;
-        margin-top: 8rem
-      `;
-    case "CardError":
+        margin-top: 8rem`
+    case 'CardPdialog':
+      return css`
+        background-color: transparent;
+        box-shadow: none;
+        margin-top: 1rem;
+        padding: 0.5rem`
+    case 'CardError':
       return css`
         background-color: #fff;
-      `;
+      `
     default:
       return css`
       background-color: #fff;
       box-shadow: 0 20px 27px 0 rgba(0, 0, 0, 0.05);
       margin-top: 8rem
-      `;
+      `
   }
 }
 }
-`;
+`
 export const CardHeader = styled.div`
   padding: 1.5rem;
   padding-bottom: 0;
@@ -43,16 +48,16 @@ export const CardHeader = styled.div`
   &:first-child{
     border-radius: 1rem 1rem 0 0;
   }
-`;
+`
 export const CardBody = styled.div`
 flex: 1 1 auto;
 padding: 1rem 1rem;
-`;
+`
 export const CardFooter = styled.div`
 padding: 0.5rem 1rem;
 background-color: #fff;
 border-top: 0 solid rgba(0, 0, 0, 0.125);
-`;
+`
 
 export const CartTitle = styled.h3`
 font-weight: 700 !important;

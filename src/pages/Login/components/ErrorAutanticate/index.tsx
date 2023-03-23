@@ -1,1 +1,1 @@
-export { default as DialogError } from './DialogError';
+export { default as DialogError } from './DialogError'

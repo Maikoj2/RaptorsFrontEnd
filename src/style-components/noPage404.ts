@@ -1,8 +1,6 @@
 import { Box } from '@mui/material'
 import styled, { css, keyframes } from 'styled-components'
 
-
-
 const AnimationSwin = css`
   @-moz-keyframes swing {
     0% {
@@ -57,7 +55,6 @@ const AnimationSwin = css`
     }
   }
 `
-
 
 export const Box404 = styled(Box)`
     min-height: 100vh;

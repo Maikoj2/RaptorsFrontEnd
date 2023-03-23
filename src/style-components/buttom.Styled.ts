@@ -14,6 +14,7 @@ export const ButtonCustom = styled.button`
     border-radius: 0.5rem;
     transition: all 0.15s ease-in;
     font-weight: 700;
+    color: ${(props) => props.color || ' #fff'};
     
     &:not(:disabled){
         cursor: pointer;
@@ -40,31 +41,29 @@ export const ButtonCustom = styled.button`
         box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.09), 0 2px 3px -1px rgba(0, 0, 0, 0.07);
     }
  ${(props) => {
-
         switch (props.name) {
-            case "primary":
+            case 'primary':
                 return css`
-                        color: #fff;
-                        background-color: #cb0c9f;
+                       
+                        background-image: linear-gradient(310deg, #EF4405 0%, #FC9772 100%);
                         border-color: #cb0c9f;
                         width: 100%;
                         &:hover{
-                            color: #fff;
+                           
                             background-color: #ad0a87;
                             border-color: #a20a7f;
                         }
                         &:focus {
-                            color: #fff;
+                            
                             background-color: #ad0a87;
                             border-color: #a20a7f;
                             box-shadow: 0 0 0 0.2rem rgba(211, 48, 173, 0.5);
                         }
                         &:active{
-                            color: #fff;
                             background-color: #a20a7f;
                             border-color: #980977;
                         }
-                        `;
+                        `
 
             case 'btnGradient':
                 return css`
@@ -88,7 +87,7 @@ export const ButtonCustom = styled.button`
                         &:focus{
                             box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.09), 0 2px 3px -1px rgba(0, 0, 0, 0.07);
                         }
-                        `;
+                        `
         }
     }}
 

@@ -1,63 +1,162 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react'
 
-export const useForm = ( initialForm: any = {}, formValidations:any = {}  ) => {
-  
-    const [ formState, setFormState ] = useState( initialForm );
-    const [ formValidation, setFormValidation ] = useState({}as any);
-
-    
-    // useEffect(() => {
-    //     createValidators();
-    // }, [ formState ])
-
-    // useEffect(() => {
-    //     setFormState( initialForm );
-    // }, [ initialForm ])
-
-
-    const isFormValid = useMemo( () => {
-        for (const formValue of Object.keys( formValidation )) {
-            if ( formValidation[formValue] !== null ) return false;
-        }
-        return true;
-    }, [ formValidation ])
-    
-    const onInputChange = ({ target }:React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = target;
-        setFormState({
-            ...formState,
-            [ name ]: value
-        });
-    }
-
-    const onResetForm = () => {
-        setFormState( initialForm );
-    }
-    const createValidators = () => {
-        
-        const formCheckedValues = {} as any;
-        
-        
-        for ( const formField of Object.keys( formValidations )) {
-
-            const [ fn, errorMessage ]  = formValidations[formField] ;
-
-            formCheckedValues[`${ formField }Valid`] = fn( formState[formField] ) ? null : errorMessage;
-        }
-
-        setFormValidation( formCheckedValues );
-    }
-
-    return {
-        ...formState,
-        formState,
-        onInputChange,
-        onResetForm,
-
-        ...formValidation,
-        isFormValid
+export interface ValidationOptions {
+  validators: Array<(value: any) => boolean | Promise<boolean>>
+  errorMessages: string[]
+}
+export interface FormOptions {
+  initialValues: any
+  validations: Record<string, ValidationOptions>
+  onSubmit?: (values: any) => void
+}
+interface FormState {
+  values: any
+  errors: Record<string, string>
+  touched: Record<string, boolean>
+  isSubmitting: boolean
+  isValidating: boolean
+  isValid: boolean
 }
 
-}
+export const useForm = ({ initialValues, validations, onSubmit }: FormOptions) => {
+  const [formState, setFormState] = useState<FormState>({
+    values: initialValues,
+    errors: {},
+    touched: {},
+    isSubmitting: false,
+    isValidating: false,
+    isValid: false
+  })
 
-  
+  const validateField = async (fieldName: string, value: any) => {
+    const validation = validations[fieldName]
+    if (!validation) {
+      return true
+    }
+
+    let isValid = true
+    const errorMessages: string[] = []
+    for (let i = 0; i < validation.validators.length; i++) {
+      const validator = validation.validators[i]
+      const errorMessage = validation.errorMessages[i]
+
+      try {
+        isValid = await validator(value)
+      } catch (err: any) {
+        errorMessages.push(err.message || 'Validation failed')
+        isValid = false
+      }
+
+      if (!isValid) {
+        errorMessages.push(errorMessage)
+      }
+    }
+    const errors = { ...formState.errors }
+    const touched = { ...formState.touched }
+
+    if (isValid) {
+      delete errors[fieldName]
+    } else {
+      errors[fieldName] = errorMessages[0] || validation.errorMessages[0]
+    }
+
+    touched[fieldName] = true
+
+    const isValidForm = Object.keys(validations).every((key) => !errors[key])
+
+    setFormState((prevState) => ({
+      ...prevState,
+      errors,
+      touched,
+      isValid: isValidForm
+    }))
+
+    return isValid
+  }
+
+  const validateForm = async (values: any) => {
+    const promises = Object.keys(validations).map(async (fieldName) => await validateField(fieldName, values[fieldName]))
+
+    const results = await Promise.all(promises)
+
+    return results.every((result) => result)
+  }
+
+  const handleChange = (event: React.ChangeEvent<any>) => {
+    const { name, value } = event.target
+
+    setFormState((prevState) => ({
+      ...prevState,
+      values: {
+        ...prevState.values,
+        [name]: value
+      }
+    }))
+
+    validateField(name, value)
+  }
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const isValid = await validateForm(formState.values)
+
+    setFormState((prevState) => ({
+      ...prevState,
+      isSubmitting: true,
+      isValidating: true,
+      isValid
+    }))
+
+    if (isValid && (onSubmit != null)) {
+      onSubmit(formState.values)
+    }
+
+    setFormState((prevState) => ({
+      ...prevState,
+      isSubmitting: false,
+      isValidating: false
+    }))
+    const errorMessages = getErrorMessages(formState.errors, formState.values)
+    setFormState((prevState) => ({
+      ...prevState,
+      errors: errorMessages
+    }))
+  }
+
+  const getErrorMessages = (errors: Record<string, string>, touched: Record<string, boolean>) => {
+    const errorMessages: Record<string, string> = {}
+
+    Object.keys(errors).forEach((fieldName) => {
+      if (touched[fieldName]) {
+        errorMessages[fieldName] = errors[fieldName]
+      }
+    })
+
+    return errorMessages
+  }
+
+  const handleReset = () => {
+    setFormState({
+      values: initialValues,
+      errors: {},
+      touched: {},
+      isSubmitting: false,
+      isValidating: false,
+      isValid: false
+    })
+  }
+
+  return {
+    values: formState.values,
+    errors: formState.errors,
+    touched: formState.touched,
+    isSubmitting: formState.isSubmitting,
+    isValidating: formState.isValidating,
+    isValid: formState.isValid,
+    handleChange,
+    handleSubmit,
+    handleReset,
+    errorMessages: getErrorMessages(formState.errors, formState.touched)
+  }
+}

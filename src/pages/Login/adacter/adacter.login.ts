@@ -1,18 +1,23 @@
-import {  ApiUserLogin,  } from '@/models';
+import { type ApiUserLogin, type UserLogin } from '@/models'
 
-
-
-export const loginAdacter = ({Data}: ApiUserLogin) => {
+export const loginAdacter = ({ ok, message, Data }: ApiUserLogin): UserLogin => {
+  const { user, token } = Data
+  const Userdata = {
+    _id: user._id,
+    Names: user.Names,
+    email: user.email,
+    img: user.img,
+    role: user.role,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt
+  }
   return {
-    _id: Data.user._id,
-    Names: Data.user.Names,
-    email:  Data.user.email,
-    token: Data.token,
-    img:  Data.user.img,
-    status: Data.user.status,
-    role:  Data.user.role,
-    createdAt: Data.user.createdAt,
-    updatedAt: Data.user.updatedAt
-   
-  };
-};
+    status: ok,
+    message,
+    remerberMe: true,
+    Data: {
+      user: Userdata,
+      token
+    }
+  }
+}

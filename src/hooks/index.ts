@@ -1,2 +1,2 @@
-export * from './useAuthStore';
-export * from './useForms';
+export * from './useAuthStore'
+export * from './useForms'

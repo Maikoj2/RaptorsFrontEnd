@@ -1,1 +1,1 @@
-export { default as NopageNoFound } from './NopageNoFound';
+export { default as NopageNoFound } from './NopageNoFound'

@@ -1,22 +1,12 @@
-import { apiErrorMessage, ValidateError } from "@/models";
+import { type typeWithKey } from '@/models'
 
-
-export const ManegerErrors = (ErrorCode: any) => {
-
-    const { message, error }: apiErrorMessage = ErrorCode
-    switch (message) {
-        case 'VALIDATE_ERROR': 
-         return error.errors
-         .map((element: ValidateError) => {
-                return  (`The ${element.param}:  ${element.value}, ${element.msg} `);
-            })
-            
-
-        default:
-            return error;
-            
-    }
-
-
-
-};
+export const getValidationError = (ErrorCode: any) => {
+  const codeMatcher: typeWithKey<string> = {
+    ERR_BAD_REQUEST: 'Request failed with status code 401',
+    ERR_NETWORK: 'Conection Error with the backend',
+    INVALID_TOKEN: 'The token is invalid or expired',
+    VALIDATE_ERROR: 'Error of validation',
+    WRONG_CREDENTIALS: 'la clave y/o el email es incorrecta'
+  }
+  return codeMatcher[ErrorCode]
+}

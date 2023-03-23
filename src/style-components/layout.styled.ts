@@ -9,8 +9,7 @@ touch-action: auto;
 margin-top: 0;
 transition: all 0.2s ease-in-out;
 
-`;
-
+`
 
 export const Row = styled.div`
 --bs-gutter-x: 1.5rem;
@@ -21,7 +20,7 @@ margin-top: calc(-1 * var(--bs-gutter-y));
 margin-right: calc(-.5 * var(--bs-gutter-x));
 margin-left: calc(-.5 * var(--bs-gutter-x));
 
-`;
+`
 export const CartLayout = styled.div`
 display: flex;
 margin-right: auto ;
@@ -37,9 +36,9 @@ flex-direction: column;
 }
 @media (min-width: 768px) {
     flex: 0 0 auto;
-    width: 50%;
+    width: ${(props: any) => props.width || '50%'} ;
 }
-`;
+`
 
 export const Container = styled.div`
 z-index: 1;
@@ -66,7 +65,7 @@ z-index: 1;
       max-width: 1320px;
   }
 
-`;
+`
 export const ContainerFluid = styled.div`
   width: 100%;
   padding-right: var(--bs-gutter-x, 1.5rem);
@@ -90,5 +89,4 @@ export const ContainerFluid = styled.div`
       max-width: 1320px;
   }
 
-`;
-
+`

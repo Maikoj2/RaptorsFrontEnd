@@ -1,63 +1,80 @@
-import { UseAuthStore, useForm } from "@/hooks";
-import { PrivateRoutes, StatusLogin } from "@/models";
-import { AppStore } from "@/redux/storer";
-import { ButtonCustom, Label } from "@/style-components";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { CheckBoxInputswitch, CumstonInput, LayoutcheckBoxInputswitch } from "../../style-components/Input.style";
+import { UseAuthStore, useForm } from '@/hooks'
+import { StatusLogin } from '@/models'
+import { type AppStore } from '@/redux/storer'
+import { ButtonCustom, Label } from '@/style-components'
+import { Box } from '@mui/material'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { ErrorMsg } from '../../style-components'
+import { CheckBoxInputswitch, CumstonInput, LayoutcheckBoxInputswitch } from '../../style-components/Input.style'
 
-
-const loginfields = {
-  email: 'maicol9@jimenez.co', password: '000000',
+const initialValues = {
+  email: 'maicol9@jimenez.co', password: '000000'
+}
+const validations = {
+  email: {
+    validators: [
+      (value: any) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+      (value: any) => value.length > 0
+    ],
+    errorMessages: ['Email is not available', 'Please enter a email']
+  },
+  password: {
+    validators: [(value: any) => value.length > 0],
+    errorMessages: ['Please enter a password']
+  }
 }
 
-
-
 const Form = () => {
-  const { startLogin } = UseAuthStore();
-  const { onInputChange, email, password } = useForm(loginfields)
-  const userState = useSelector((state: AppStore) => state.user);
-  const [Remenberme, setRemenberme] = useState(true);
+  const { startLogin } = UseAuthStore()
+  const { values, errors, touched, handleChange, handleSubmit, handleReset } = useForm({
+    initialValues,
+    validations,
+    onSubmit: (values: any) => {
+      // console.log(values);
+      startLogin({ email: values.email, password: values.password }, Remenberme)
+    }
+  })
+  const userState = useSelector((state: AppStore) => state.loginUser)
 
-  const onSummit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    startLogin({ email: email, password: password }, Remenberme);
+  const [Remenberme, setRemenberme] = useState(true)
 
-  }
   const onSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRemenberme(event.target.checked)
   }
   return (
-    <form onSubmit={(e: any) => onSummit(e)}>
+    <form onSubmit={async (e: any) => { await handleSubmit(e) }}>
       <Label>Email</Label>
-      <div className="MarginBottom-3">
+      <Box marginBottom={'1rem'}>
         <CumstonInput
           type="email"
           placeholder="Examples@example.com"
           name="email"
-          value={email}
-          onChange={onInputChange} />
-      </div>
+          value={values.email}
+          onChange={handleChange} />
+        {touched.email && errors.email && <ErrorMsg>{errors.email}</ErrorMsg>}
+      </Box>
       <Label>Password</Label>
-      <div className="MarginBottom-3">
+      <Box marginBottom={'1rem'}>
         <CumstonInput
           type="password"
           placeholder="Password"
           name="password"
-          value={password}
-          onChange={onInputChange}
+          value={values.password}
+          onChange={handleChange}
           className="form-control" />
-      </div>
+        {touched.password && errors.password && <ErrorMsg>{errors.password}</ErrorMsg>}
+      </Box>
       <LayoutcheckBoxInputswitch>
         <CheckBoxInputswitch type="checkbox" id="rememberMe" onChange={onSwitch} checked={Remenberme} />
         <Label className="checkLabel" htmlFor="rememberMe">Remember me</Label>
       </LayoutcheckBoxInputswitch>
-      <div className="text-center">
-        <ButtonCustom type='submit' name='btnGradient' className='.MarginBottom-0  mt-4' disabled={userState.status === StatusLogin.CHEKING}>Sign in</ButtonCustom>
-      </div>
+      <Box marginBottom={'1rem'} textAlign={'center'}>
+        <ButtonCustom type='submit' name='btnGradient' disabled={userState.status === StatusLogin.CHEKING}>Sign in</ButtonCustom>
+      </Box>
     </form>
 
   )
-};
+}
 
-export default Form;
+export default Form

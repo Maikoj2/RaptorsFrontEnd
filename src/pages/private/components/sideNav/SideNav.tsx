@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { FaChevronRight, FaHome, FaServicestack, FaChevronLeft, FaCog, FaLandmark, FaMoneyCheck, FaCodeBranch, FaCalendarAlt, FaCalendarDay, FaSkating, FaUsersCog } from 'react-icons/fa';
+import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
+import { FaChevronRight, FaHome, FaServicestack, FaChevronLeft, FaCog, FaLandmark, FaMoneyCheck, FaCodeBranch, FaCalendarAlt, FaCalendarDay, FaSkating, FaUsersCog } from 'react-icons/fa'
 
 import {
   Box,
@@ -12,29 +12,24 @@ import {
   ListItemText,
   Typography,
   useTheme
-} from '@mui/material';
+} from '@mui/material'
 
-import { useLocation, useNavigate } from 'react-router-dom';
-import { PrivateRoutes } from '../../../../models/routes';
-import {ProfileAdminDashboard} from '../navbar/components';
-import { useSelector } from 'react-redux';
-import { AppStore } from '../../../../redux/storer';
-import { DividerHori, } from '@/style-components/divider.styled';
-import { BoxSidebar,  IconStyler } from '../../style-components-private';
-import { IconShape } from '../IconShape';
-import { LogoImage } from '../../models/ImageUrl';
+import { useLocation, useNavigate } from 'react-router-dom'
+import { PrivateRoutes } from '../../../../models/routes'
+import { ProfileAdminDashboard } from '../navbar/components'
+import { useSelector } from 'react-redux'
+import { type AppStore } from '../../../../redux/storer'
+import { DividerHori } from '@/style-components/divider.styled'
+import { BoxSidebar, IconStyler } from '../../style-components-private'
+import { IconShape } from '../IconShape'
+import { LogoImage } from '../../models/ImageUrl'
 
-
-
-
-
-
-type sideBarProps = {
-  setisSidebarOpen: Dispatch<SetStateAction<boolean>>;
-  isSidebarOpen: boolean;
-  isNonMobile: boolean;
-  drawerWidth?: string;
-};
+interface sideBarProps {
+  setisSidebarOpen: Dispatch<SetStateAction<boolean>>
+  isSidebarOpen: boolean
+  isNonMobile: boolean
+  drawerWidth?: string
+}
 
 const navItems = [
   {
@@ -82,33 +77,30 @@ const navItems = [
     icon: <FaMoneyCheck />
   },
 
-
   {
     Text: 'Deudas',
     icon: <FaLandmark />
-  },
+  }
 
 ]
 
-
 const sidebar: React.FunctionComponent<sideBarProps> = ({ setisSidebarOpen, isSidebarOpen, isNonMobile, drawerWidth }) => {
-  const user = useSelector((state: AppStore) => state.user)
-  const { pathname } = useLocation();
-  const [Active, setActive] = useState('');
-  const Navigate = useNavigate();
-  const theme = useTheme();
+  const user = useSelector((state: AppStore) => state.loginUser)
+  const { pathname } = useLocation()
+  const [Active, setActive] = useState('')
+  const Navigate = useNavigate()
+  const theme: any = useTheme()
   useEffect(() => {
     const pathAtive = pathname.substring(1).split('/')
-    setActive(pathAtive[pathAtive.length - 1]);
+    setActive(pathAtive[pathAtive.length - 1])
   }, [pathname])
-
 
   return (
     <Box component='nav' >
       {isSidebarOpen && (
         <Drawer
           open={isSidebarOpen}
-          onClose={() => setisSidebarOpen(false)}
+          onClose={() => { setisSidebarOpen(false) }}
           variant='persistent'
           anchor='left'
 
@@ -116,7 +108,7 @@ const sidebar: React.FunctionComponent<sideBarProps> = ({ setisSidebarOpen, isSi
             width: drawerWidth,
             '& .MuiDrawer-paper': {
               color: theme.palette.secondary[200],
-             
+
               boxSizing: 'border-box',
               borderWidth: isNonMobile ? 0 : '2px',
               maxWidth: drawerWidth,
@@ -131,14 +123,14 @@ const sidebar: React.FunctionComponent<sideBarProps> = ({ setisSidebarOpen, isSi
             transition: 'all 0.2s ease-in-out',
             borderRadius: '1rem',
             m: '1rem 0 1rem 1rem',
-            backgroundColor: !isNonMobile ? theme.palette.background.alt : 'transparent',
+            backgroundColor: !isNonMobile ? theme.palette.background.alt : 'transparent'
           }} >
             <Box height={'4.875rem'}>
               {/* /**Sidebar header */}
               <Box color={theme.palette.secondary.main} >
                 {!isNonMobile &&
                   (<IconButton
-                    onClick={() => setisSidebarOpen(!isSidebarOpen)} sx={
+                    onClick={() => { setisSidebarOpen(!isSidebarOpen) }} sx={
                       {
                         color: theme.palette.neutral[10],
                         padding: ' 1rem',
@@ -149,15 +141,15 @@ const sidebar: React.FunctionComponent<sideBarProps> = ({ setisSidebarOpen, isSi
                     }>
                     <FaChevronLeft />
                   </IconButton>)}
-                <IconButton onClick={() => console.log('action')} sx={
+                <IconButton onClick={() => { console.log('action') }} sx={
                   {
-                  m: '0', 
-                  whiteSpace: 'nowrap', 
-                  letterSpacing: '-0.025rem', 
-                  "&.MuiButtonBase-root:hover": {
-                    bgcolor: "transparent"
-                  }
-                }}  >
+                    m: '0',
+                    whiteSpace: 'nowrap',
+                    letterSpacing: '-0.025rem',
+                    '&.MuiButtonBase-root:hover': {
+                      bgcolor: 'transparent'
+                    }
+                  }} >
                   <Box
                     component='img'
                     alt='logo'
@@ -166,7 +158,7 @@ const sidebar: React.FunctionComponent<sideBarProps> = ({ setisSidebarOpen, isSi
                     maxHeight={'4rem'}
                     sx={{ transition: 'all 0.2s ease-in-out' }}
                   />
-                  <Typography fontWeight='bold' marginLeft={'0.25rem'} sx={{ fontSize: '1.25rem', transition: 'all 0.2s ease-in-out', }}>
+                  <Typography fontWeight='bold' marginLeft={'0.25rem'} sx={{ fontSize: '1.25rem', transition: 'all 0.2s ease-in-out' }}>
                     RaptorsVLC
                   </Typography>
                 </IconButton>
@@ -180,14 +172,14 @@ const sidebar: React.FunctionComponent<sideBarProps> = ({ setisSidebarOpen, isSi
                 display: 'block',
                 overflow: 'auto',
                 height: 'calc(100vh - 360px)',
-                width: 'auto',
+                width: 'auto'
               }
 
             }>
               <List>
                 {
                   navItems.map(({ Text, icon }) => {
-                    if (!icon) {
+                    if (icon == null) {
                       return (
                         <Typography variant='h6' key={Text} sx={{
                           m: '2.25rem 0 1rem 3rem ',
@@ -195,23 +187,21 @@ const sidebar: React.FunctionComponent<sideBarProps> = ({ setisSidebarOpen, isSi
                           opacity: 0.6,
                           color: theme.palette.neutral[300],
                           fontWeight: '700',
-                          fontSize:'0.75rem',
+                          fontSize: '0.75rem',
                           lineHeight: ' 1.25',
-                          marginLeft: ' 0.5rem',
+                          marginLeft: ' 0.5rem'
 
                         }}>
                           {Text.toLocaleUpperCase()}
                         </Typography>
                       )
-
                     }
                     return (
                       <ListItem key={Text} disablePadding>
                         <ListItemButton
                           onClick={() => {
-                            setActive(Text);
-                            Navigate(`${Text}`, { replace: true });
-                            
+                            setActive(Text)
+                            Navigate(`${Text}`, { replace: true })
                           }}
                           autoFocus= {Active === Text}
                           sx={{
@@ -222,12 +212,12 @@ const sidebar: React.FunctionComponent<sideBarProps> = ({ setisSidebarOpen, isSi
                             transition: 'color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out',
                             backgroundColor: 'transparent',
                             color: theme.palette.neutral[100],
-                            "&.MuiButtonBase-root:focus": {
+                            '&.MuiButtonBase-root:focus': {
                               transform: 'scale(1.03)',
                               bgcolor: theme.palette.background.alt,
                               boxShadow: 'box-shadow: 0 0.3125rem 0.625rem rgba(0, 0, 0, 0.0514) '
                             },
-                            "&.MuiButtonBase-root:hover": {
+                            '&.MuiButtonBase-root:hover': {
                               transform: 'scale(1.05)',
                               bgcolor: theme.palette.background.alt,
                               boxShadow: 'box-shadow: 0 0.3125rem 0.625rem rgba(0, 0, 0, 0.0514) '
@@ -238,7 +228,7 @@ const sidebar: React.FunctionComponent<sideBarProps> = ({ setisSidebarOpen, isSi
                             sx={{
                               transition: '0.3s ease',
                               opacity: 1,
-                              marginLeft: ' 0.25rem',
+                              marginLeft: ' 0.25rem'
 
                             }}
                           />
@@ -246,7 +236,6 @@ const sidebar: React.FunctionComponent<sideBarProps> = ({ setisSidebarOpen, isSi
                         </ListItemButton>
                       </ListItem>
                     )
-
                   })
                 }
               </List>
@@ -258,16 +247,13 @@ const sidebar: React.FunctionComponent<sideBarProps> = ({ setisSidebarOpen, isSi
               <ProfileAdminDashboard alt={'profile'}
                 borderRadius={'50'}
                 height={'40'}
-                width={'40'} 
+                width={'40'}
                 userData={user.Data.user}
                 Children={<IconStyler children={<FaCog />}/>}
               />
             </Box>
             {/* /**Sidebar end footer */}
           </BoxSidebar>
-
-
-
 
         </Drawer>
       )}

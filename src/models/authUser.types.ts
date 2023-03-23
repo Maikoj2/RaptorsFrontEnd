@@ -1,46 +1,32 @@
-import { User } from "./apiData.types"
-import { StatusLogin } from "./StatusLogin"
+import { type ApiUser } from './apiData.types'
+import { StatusLogin } from './StatusLogin'
 
-
-export interface ApiUserLogin{
-        status: string,
-        message: string,
-        remerberMe: boolean,
-        Data: {
-            user:User
-            token: string
-        }     
+export interface UserLogin {
+  status: string
+  message: string
+  remerberMe: boolean
+  Data: {
+    user: ApiUser
+    token: string
+  }
 }
-export const UserEmptyState: User = {
-
-    _id: '',
-    Names: '',
-    email: '',
-    status: '',
-    img: '',
-    role: '',
-    createdAt:  '',
-    updatedAt: '',
+export const UserEmptyState: ApiUser = {
+  _id: '',
+  Names: '',
+  email: '',
+  img: '',
+  role: '',
+  createdAt: '',
+  updatedAt: ''
 }
 
-export const UserLoginEmptystate: ApiUserLogin = {
+export const UserLoginEmptystate: UserLogin = {
 
-    status: StatusLogin.NOT_AUTENTICATED,
-    message: '',
-    remerberMe: false,
-    Data: {
-        user:UserEmptyState,
-        token: ''
-    }
-}
-
-export const UserOnLogin: ApiUserLogin = {
-
-    status: StatusLogin.AUTENTICATED,
-    message: '',
-    remerberMe: true,
-    Data: {
-        user:UserEmptyState,
-        token: ''
-    }
+  status: StatusLogin.NOT_AUTENTICATED,
+  message: '',
+  remerberMe: false,
+  Data: {
+    user: UserEmptyState,
+    token: ''
+  }
 }

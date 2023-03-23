@@ -1,1 +1,1 @@
-export { default as Customdialago } from './Customdialago';
+export { default as Customdialago } from './Customdialago'

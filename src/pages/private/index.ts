@@ -1,3 +1,20 @@
-export * from './components';
-export * from './pages';
-export { default as private } from './private';
+export * from './Main'
+export * from './components/Breadcrumb'
+export * from './components/Breadcrumb/style-components/breadcrumb.style'
+export * from './components/IconShape'
+export * from './components/Table'
+export * from './components'
+export { default as Navbar } from './components/navbar/Navbar'
+export * from './components/navbar/components/ProfileAdminDashboard'
+export * from './components/navbar/components'
+export { default as SideNav } from './components/sideNav/SideNav'
+export * from './hooks'
+export * from './models'
+export * from './pages/Dashboard'
+export * from './pages/Users'
+export * from './pages'
+export { default as private } from './routes'
+
+export { default as UserSlice } from '../../redux/slices/user.slice'
+export * from './style-components-private'
+export * from './theme'

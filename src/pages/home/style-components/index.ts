@@ -1,1 +1,1 @@
-export * from './home-title.styled';
+export * from './home-title.styled'

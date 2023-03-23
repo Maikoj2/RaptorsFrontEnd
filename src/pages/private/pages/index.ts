@@ -1,1 +1,2 @@
-export * from './main';
+export * from './Dashboard'
+export * from './Users'

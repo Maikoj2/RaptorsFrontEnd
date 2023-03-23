@@ -1,7 +1,7 @@
-import { useState, Dispatch, SetStateAction } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { SetMode } from "../../../../redux/slices/theme.slice";
-import { AppStore } from "@/redux/storer";
+import { useState, type Dispatch, type SetStateAction } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { SetMode } from '../../../../redux/slices/theme.slice'
+import { type AppStore } from '@/redux/storer'
 
 // MUI imports
 import {
@@ -14,49 +14,47 @@ import {
   Menu,
   MenuItem,
   useTheme,
-  ListItemText,
-} from '@mui/material';
-import { ProfileAdminDashboard } from "./components";
+  ListItemText
+} from '@mui/material'
+import { ProfileAdminDashboard } from './components'
 // icons imports
-import { FaSignOutAlt, FaSun, FaCog, FaMoon, FaAngleDown, FaBars, FaSearch } from "react-icons/fa";
+import { FaSignOutAlt, FaSun, FaCog, FaMoon, FaAngleDown, FaBars, FaSearch } from 'react-icons/fa'
 // my componentes
-import { FlexBetween, IconStyler } from '../../style-components-private';
-import { IconShape } from "../IconShape";
-import { UseAuthStore } from '@/hooks';
+import { FlexBetween, IconStyler } from '../../style-components-private'
+import { IconShape } from '../IconShape'
+import { UseAuthStore } from '@/hooks'
+import { UseThemeMode } from '../../hooks/useThemeMode'
 
-
-
-
-
-type sideBarProps = {
-  setisSidebarOpen: Dispatch<SetStateAction<boolean>>;
-  isSidebarOpen: boolean;
-  isNonMobile: boolean;
-};
+interface sideBarProps {
+  setisSidebarOpen: Dispatch<SetStateAction<boolean>>
+  isSidebarOpen: boolean
+  isNonMobile: boolean
+}
 
 const Navbar: React.FunctionComponent<sideBarProps> = ({ isSidebarOpen, setisSidebarOpen, isNonMobile }) => {
-  const dispatch = useDispatch();
-  const { LogOut } = UseAuthStore();
-  const user = useSelector((state: AppStore) => state.user)
-  const theme = useTheme();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const isOpen = Boolean(anchorEl);
-  const handleClick = (event) => setAnchorEl(event.currentTarget);
-  const handleClose = () => setAnchorEl(null);
+  const user = useSelector((state: AppStore) => state.loginUser)
+  const theme: any = useTheme()
+  const [anchorEl, setAnchorEl] = useState(null)
+  const { LogOut } = UseAuthStore()
+  const { setThemeMode } = UseThemeMode()
+  const isOpen = Boolean(anchorEl)
+  const handleClick = (event: any) => { console.log(event); setAnchorEl(event.currentTarget) }
+  const handleClose = () => { setAnchorEl(null) }
+
   return (
 
     <AppBar
       sx={{
         position: 'static',
         background: 'none',
-        boxShadow: 'none',
+        boxShadow: 'none'
 
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         {/* {left side } */}
         <FlexBetween >
-          <IconButton onClick={() => setisSidebarOpen(!isSidebarOpen)} >
+          <IconButton onClick={() => { setisSidebarOpen(!isSidebarOpen) }} >
             <FaBars />
           </IconButton>
           <FlexBetween
@@ -71,24 +69,22 @@ const Navbar: React.FunctionComponent<sideBarProps> = ({ isSidebarOpen, setisSid
         </FlexBetween>
         {/* {left side } */}
         <FlexBetween >
-          <IconButton onClick={() => dispatch(SetMode())}>
+          <IconButton onClick={() => { setThemeMode() }}>
             {theme.palette.mode === 'dark'
               ? (<IconStyler children={<FaMoon />} $size='20px' />)
               : (<IconStyler children={<FaSun />} $size='20px' />)}
           </IconButton>
-          <IconButton sx={{
-            display: !isNonMobile && 'none',
-          }}>
+          <IconButton sx={{ display: !isNonMobile && 'none' }}>
             <IconStyler children={<FaCog />} $size='20px' />
           </IconButton >
           <Box
             onClick={handleClick}
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              textTransform: "none",
-              gap: "1rem",
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              textTransform: 'none',
+              gap: '1rem'
             }}>
             <ProfileAdminDashboard alt={'profile'}
               borderRadius={'50'}
@@ -102,7 +98,7 @@ const Navbar: React.FunctionComponent<sideBarProps> = ({ isSidebarOpen, setisSid
         <Menu anchorEl={anchorEl} open={isOpen} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           sx={
             {
-              "& .MuiPaper-root": {
+              '& .MuiPaper-root': {
                 backgroundColor: theme.palette.background.alt,
                 borderRadius: ' 0.5rem'
               }
@@ -122,17 +118,17 @@ const Navbar: React.FunctionComponent<sideBarProps> = ({ isSidebarOpen, setisSid
             <Box sx={{
               paddingBottom: '0.25rem',
               paddingTop: '0.25rem',
-              display: 'flex',
+              display: 'flex'
 
             }}>
               <IconShape Children={<FaSignOutAlt />} />
               <ListItemText primary={'Log Out'} sx={{
-                "&.MuiListItemText-root": {
+                '&.MuiListItemText-root': {
                   transform: 'scale(1.05)',
                   bgcolor: 'transparent',
                   justifyContent: 'center',
                   display: 'flex',
-                  flexDirection: 'column',
+                  flexDirection: 'column'
 
                 }
               }} />

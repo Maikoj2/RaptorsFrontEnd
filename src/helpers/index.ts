@@ -1,1 +1,2 @@
-export * from './getEnvValriable';
+export * from './getEnvValriable'
+export * from './getValuebykey'

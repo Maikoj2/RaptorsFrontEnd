@@ -1,1 +1,1 @@
-export { default as ProfileAdminDashboard } from './ProfileAdminDashboard';
+export { default as ProfileAdminDashboard } from './ProfileAdminDashboard'

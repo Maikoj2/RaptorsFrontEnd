@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 export interface DashboardInterface {}
 
-const Dashboard : React.FC<DashboardInterface> = () => {
-	return <div>Dashboard</div>;
-};
+const Dashboard: React.FC<DashboardInterface> = () => {
+  return <div>Dashboard</div>
+}
 
-export default Dashboard;
+export default Dashboard

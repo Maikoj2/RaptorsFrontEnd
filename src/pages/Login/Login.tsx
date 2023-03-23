@@ -1,37 +1,18 @@
 
-import { BackGrounLayout, LayoutLogin } from "./style-components"
-import { Container, Row, CartLayout } from '@/style-components';
-import {  DialogError, LoginCart } from './components';
-import { BackGrounImg } from './style-components/BackgrounLogin';
-import Customdialago, { dialogOpenSubject$ } from '../../components/Customdialago/Customdialago';
-import { useSelector } from "react-redux";
-import { AppStore } from "@/redux/storer";
-import { useEffect, useState, lazy } from 'react';
-import { UseAuthStore } from "@/hooks";
-// const DialogError = lazy(() => import('./components/ErrorAutanticate/DialogError'))
-
-
-
+import { BackGrounLayout, LayoutLogin } from './style-components'
+import { Container, Row, CartLayout } from '@/style-components'
+import { LoginCart } from './components'
+import { BackGrounImg } from './style-components/BackgrounLogin'
+import { useSelector } from 'react-redux'
+import { type AppStore } from '@/redux/storer'
+import { StatusLogin } from '@/models'
+import Loading from '../../components/Loading/Loading'
 
 const Login = () => {
-  const [errorMessge, seterrorMessge] = useState('')
-  const { message, } = useSelector((state: AppStore) => state.user);
-  const { CheckAuthToken } = UseAuthStore()
-  useEffect(() => {
-    CheckAuthToken()
-  }, [])
-  useEffect(() => {
-    if (message !== '') {
-      seterrorMessge(message)
-      dialogOpenSubject$.setSubject = true;
-    }
-  }, [message])
+  const user = useSelector((state: AppStore) => state.loginUser)
   return (
-    <>{
-      <LayoutLogin>
-        <Customdialago >
-          <DialogError title='Error' >{errorMessge} </DialogError>
-        </Customdialago>
+    <>{(user.status === StatusLogin.NOT_AUTENTICATED)
+      ? <LayoutLogin>
         <Container>
           <Row>
             <CartLayout>
@@ -43,6 +24,7 @@ const Login = () => {
           </Row>
         </Container>
       </LayoutLogin>
+      : <Loading/>
     }
     </>
   )

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 import second from '../../../../src/assets/Rts.png'
 
 export const BackGrounImg = styled.div`
@@ -14,4 +14,4 @@ export const BackGrounImg = styled.div`
     display: block !important
 }
  
-`;
+`

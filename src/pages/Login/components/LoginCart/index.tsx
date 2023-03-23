@@ -1,1 +1,1 @@
-export { default as LoginCart } from './LoginCart';
+export { default as LoginCart } from './LoginCart'

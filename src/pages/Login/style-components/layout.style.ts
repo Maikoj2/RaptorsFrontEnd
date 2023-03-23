@@ -10,7 +10,7 @@ export const LayoutLogin = styled.div`
   background-position: 50%;
   min-height: 75vh
  
-`;
+`
 
 export const BackGrounLayout = styled.div`
     flex-shrink: 0;
@@ -24,9 +24,4 @@ export const BackGrounLayout = styled.div`
     width: 50%;
 }
  
-`;
-
-
-
-
-
+`

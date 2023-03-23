@@ -1,11 +1,19 @@
-export interface User {
-    _id: string,
-    Names: string,
-    email: string,
-    status: string,
-    img: string,
-    role: string,
-    createdAt: string,
-    updatedAt:string,  
+export interface ApiUser {
+  _id: string
+  Names: string
+  email: string
+  img: string
+  role: string
+  createdAt: string
+  updatedAt: string
 
+}
+export interface ApiUserLogin {
+  ok: string
+  message: string
+  remerberMe: boolean
+  Data: {
+    user: ApiUser
+    token: string
+  }
 }

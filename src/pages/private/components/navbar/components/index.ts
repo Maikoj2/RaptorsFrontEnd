@@ -1,1 +1,1 @@
-export * from './ProfileAdminDashboard';
+export * from './ProfileAdminDashboard'

@@ -1,22 +1,23 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { authSlice} from '@/redux/slices'
-import { ApiUserLogin } from '../models/authUser.types';
-import { themeMode } from '@/pages/private/models';
-import  GlobalSlice  from '@/redux/slices/theme.slice';
-
-
+import { configureStore } from '@reduxjs/toolkit'
+import { authSlice, themeSlice, userSlice, placeDialogopenSlice } from '@/redux/slices'
+import { type UserLogin } from '../models/authUser.types'
+import { type themeMode } from '@/pages/private/models'
+import { type UsersData } from '../pages/private/models/apiUsers.types'
+import { type DialogopenAt } from './slices/placeDialogopen.slice'
 
 export interface AppStore {
-    user: ApiUserLogin,
-    theme: themeMode,
+  loginUser: UserLogin
+  theme: themeMode
+  apiUsers: UsersData
+  Dialog: DialogopenAt
 }
-
 
 export default configureStore<AppStore>({
 
-    reducer: {
-        user: authSlice,
-        theme: GlobalSlice,
-     
-    }
+  reducer: {
+    loginUser: authSlice,
+    theme: themeSlice,
+    apiUsers: userSlice,
+    Dialog: placeDialogopenSlice
+  }
 })

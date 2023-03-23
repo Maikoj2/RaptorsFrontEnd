@@ -1,15 +1,18 @@
-import { Input, TextField } from '@mui/material';
+import { Input, TextField } from '@mui/material'
 import styled from 'styled-components'
-
-export const CumstonInput = styled.input` 
+interface CumstonInputProps {
+  $backgroundColor?: string,
+  $cl?: string,
+}
+export const CumstonInput = styled.input<CumstonInputProps>` 
 display: block;
 width: 100%;
 padding: 0.5rem 0.75rem;
 font-size: 0.875rem;
 font-weight: 400;
 line-height: 1.4rem;
-color: #495057;
-background-color: #fff;
+color:  ${(props: any) => props.$cl || '#495057'};
+background-color: ${(props: any) => props.$backgroundColor || '#fff'};
 background-clip: padding-box;
 border: 1px solid #d2d6da;
 appearance: none;
@@ -83,14 +86,14 @@ transition: box-shadow 0.15s ease, border-color 0.15s ease;
     
   }
 
-`;
+`
 
 export const LayoutcheckBoxInputswitch = styled.div` 
  padding-left: 3rem;
   display: block;
   min-height: 1.5rem;
   margin-bottom: 0.125rem;
-`;
+`
 
 export const CheckBoxInputswitch = styled.input` 
   width: 2.5rem;

@@ -1,1 +1,1 @@
-export { default as IconShape } from './IconShape';
+export { default as IconShape } from './IconShape'

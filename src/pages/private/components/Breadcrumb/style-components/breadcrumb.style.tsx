@@ -4,11 +4,11 @@ import styled, { css } from 'styled-components'
 const style = css`
   display: flex;
   flex-wrap: wrap;
-  padding: 0.5rem 1rem;
-  margin-bottom: 1rem;
+  padding: 0 1rem;
   list-style: none;
   background-color: transparent;
   border-radius: 0.5rem;
+  margin: 0%;
   li{
     font-size: 0.875rem
   }
@@ -23,14 +23,17 @@ const style = css`
 }
 `
 
-export const BreadcrumbList = styled(({  children, ...rest }) => (
+export const BreadcrumbList = styled(({ children, ...rest }) => (
   <ol {...rest}>
-    { children }
+    {children}
   </ol>
 ))`
   ${style}
 `
 export const Breadcrumbtitle = styled.h6`
-font-weight: 700;
-margin-bottom: 0
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.625;
+  color: ${props => props.color};
+   padding-left: 0.5rem;
 `

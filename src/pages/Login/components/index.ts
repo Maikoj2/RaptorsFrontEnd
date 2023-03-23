@@ -1,3 +1,3 @@
-export * from './CustomForm';
-export * from './ErrorAutanticate';
-export * from './LoginCart';
+export * from './CustomForm'
+export * from './ErrorAutanticate'
+export * from './LoginCart'
