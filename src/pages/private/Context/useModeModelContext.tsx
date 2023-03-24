@@ -1,29 +1,41 @@
 import { typeWithKey } from '@/models';
-import { GridRowModesModel } from '@mui/x-data-grid';
 import {ReactNode, createContext, useContext, useState, Dispatch,useCallback} from 'react'
 
 export interface Props {
   children: ReactNode
 }
 interface RowModesModelContextType {
-  setSelectvalueContx: Dispatch<React.SetStateAction<typeWithKey<string>>>;
-  SelectvalueContx:typeWithKey<string>
+  setSelectvalueContx: Dispatch<React.SetStateAction<typeWithKey<string>>>,
+  SelectvalueContx:typeWithKey<string>,
+  setnameOpenDialg: Dispatch<React.SetStateAction<string>>,
+  nameOpenDialg:string
+  setConfirm: Dispatch<React.SetStateAction<boolean>>,
+  confirm:boolean
 }
 
-export const rowModesModelContext = createContext<RowModesModelContextType>({}as RowModesModelContextType)
+export const managerContext = createContext<RowModesModelContextType>({}as RowModesModelContextType)
 
-export const DataApiProvider = ({ children }: Props) => {
+export const DataContextProvider = ({ children }: Props) => {
 
 
   const [SelectvalueContx, setSelectvalueContx] = useState<typeWithKey<string>>({})
+  const [ nameOpenDialg,setnameOpenDialg] = useState<string>('')
+  const [ confirm,setConfirm] = useState<boolean>(false)
 
-  return <rowModesModelContext.Provider value={{ SelectvalueContx,setSelectvalueContx }}>{children}</rowModesModelContext.Provider>
+  return <managerContext.Provider value={{ 
+    SelectvalueContx,
+    setSelectvalueContx,
+    nameOpenDialg, 
+    setnameOpenDialg,
+    confirm,
+    setConfirm
+  }}>{children}</managerContext.Provider>
 }
 
-export const useModeModelContext = () => {
-  const context = useContext(rowModesModelContext);
+export const useManagerContext = () => {
+  const context = useContext(managerContext);
   if (context === undefined) {
-    throw new Error('useModeModelContext must be used within a DataProvider')
+    throw new Error('useManagerContext must be used within a DataProvider')
   }
   return context
 }

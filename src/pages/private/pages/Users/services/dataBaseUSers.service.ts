@@ -10,3 +10,6 @@ export const AxiosSetAitem = async (url: string, body: any) => {
 export const AxiosUpdateAitem = async (url: string, body: any) => {
   return await RaptorsApi.put(url, body).then(({ data }) => (AUserAdacter(data)))
 }
+export const AxiosDeleteAitem = async (url: string) => {
+  return await RaptorsApi.delete(url).then(({ data }) => (AUserAdacter(data)))
+}

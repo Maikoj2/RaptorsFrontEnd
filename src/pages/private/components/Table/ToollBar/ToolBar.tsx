@@ -1,20 +1,20 @@
 import { FlexBetween, IconStyler } from '@/pages/private/style-components-private'
 import React from 'react'
-import { Typography, useTheme, Button, Dialog } from '@mui/material'
+import { Typography, useTheme, Button } from '@mui/material'
 import { GridToolbarQuickFilter } from '@mui/x-data-grid'
 import { FaPlusCircle } from 'react-icons/fa'
 import { dialogOpenSubject$ } from '@/components/Customdialago/Customdialago'
-import { useOpenedDialogAt } from '@/pages/private/hooks/useDialogOpenAt'
+import { useManagerContext } from '@/pages/private/Context'
 
 export interface ToollBarProps {
   NameHeaderTable: string
 }
 
 const ToolBar: React.FC<ToollBarProps> = ({ NameHeaderTable = '' }) => {
-  const theme: any = useTheme()
-  const { setNameOpenedDialog } = useOpenedDialogAt()
+  const theme: any = useTheme();
+  const { setnameOpenDialg } = useManagerContext();
   const HandelClick = () => {
-    setNameOpenedDialog(NameHeaderTable)
+	setnameOpenDialg(NameHeaderTable)
     dialogOpenSubject$.setSubject = true
   }
   return (

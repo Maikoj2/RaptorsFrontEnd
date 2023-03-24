@@ -2,6 +2,7 @@ import { StatusUsers } from '@/models'
 
 import { createSlice } from '@reduxjs/toolkit'
 import { UsersEmptyState, type UsersData } from '../../pages/private/models/apiUsers.types'
+import { ApiUser } from '../../models/apiData.types';
 
 interface Action {
   payload: UsersData
@@ -15,6 +16,9 @@ export const userSlice = createSlice({
     chackingDataBase: (state: UsersData) => {
       state.status = StatusUsers.CHEKING
     },
+    chaangeStatusDataBase: (state: UsersData, {payload}:any) => {
+      state.status = payload
+    },
     onAllUsers: (state: UsersData, { payload }: Action) => {
       state.status = StatusUsers.OBTAINED
       state.Data = payload.Data
@@ -26,6 +30,17 @@ export const userSlice = createSlice({
       state.Data.push(payload.Data)
       state.message = payload.message
       state.total = state.total + 1
+    },
+    updateUser: (state: UsersData, { payload }: any) => {
+      state.Data = state.Data.map((row: ApiUser) => (row._id === payload._id ? payload : row))
+      state.status = StatusUsers.OBTAINED
+      state.message = payload.message
+    },
+    DeletedUser: (state: UsersData, { payload }: any) => {
+      state.status = StatusUsers.OBTAINED
+      state.message = payload.message
+      state.total = state.total - 1
+      state.Data = state.Data.filter((row:ApiUser) => (row._id !== payload.Data._id))
     },
     clearErrorMessage: (state: UsersData, action: any) => {
       state.message = action.payload
@@ -41,5 +56,5 @@ export const userSlice = createSlice({
 
 })
 
-export const { onAllUsers, chackingDataBase, clearErrorMessage, clearUserData, addUser } = userSlice.actions
+export const {chaangeStatusDataBase, onAllUsers, chackingDataBase,updateUser, clearErrorMessage, clearUserData, addUser,DeletedUser } = userSlice.actions
 export default userSlice.reducer

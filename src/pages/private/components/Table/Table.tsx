@@ -18,16 +18,11 @@ import { ApiUser } from '../../../../models/apiData.types';
 import { BoxTable } from '../../style-components-private'
 import React from 'react';
 import { FaSave, FaTimes, FaEdit, FaTrashAlt } from 'react-icons/fa';
-import { useModeModelContext } from '../../Context';
-
-
-
-
-export interface Propsselect {
-  value: string
-  id?: GridRowId
-}
-
+import { useManagerContext } from '../../Context';
+import { AppStore } from '@/redux/storer';
+import { useSelector } from 'react-redux';
+import { dialogOpenSubject$ } from '@/components/Customdialago/Customdialago';
+import { nameModals } from '../../models';
 export interface TableProps {
   columns: GridColDef[]
   pageSize?: number
@@ -35,10 +30,8 @@ export interface TableProps {
   NameHeaderTable: string,
   loanding?: boolean,
   actions?: boolean,
-  handleEditClick?: (id: GridRowId) => void
-  handleDeleteClick?: (id: GridRowId) => void
-  handleCancelClick?: (id: GridRowId) => void
-  handleSaveClick?: (id: GridRowId) => void
+  UpdateOnDataBAse?: (newRow: any) => void
+  DeleteOnDataBAse?: (id: string) => void
 }
 
 
@@ -50,15 +43,22 @@ const Table: React.FC<TableProps> = ({
   NameHeaderTable,
   loanding,
   actions = false,
-  // handleEditClick,
-  // handleCancelClick,
-  // handleDeleteClick,
-  // handleSaveClick 
+  UpdateOnDataBAse,
+  DeleteOnDataBAse
 }) => {
   const theme: any = useTheme()
+  const { Data } = useSelector((state: AppStore) => state.loginUser)
+  // const { setnameOpenDialg } = useManagerContext();
   const [rows, setRows] = useState(data);
+  // const [confirmdeleted, setconfimdeleted] = useState(false);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
-  const { SelectvalueContx, setSelectvalueContx}= useModeModelContext()
+  const { SelectvalueContx } = useManagerContext()
+
+  useEffect(() => {
+    setRows(data)
+  }, [data])
+
+
 
   const ActionsCol: GridColDef[] = [
     {
@@ -120,14 +120,17 @@ const Table: React.FC<TableProps> = ({
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
-  const handleSaveClick = (id: GridRowId) => () => {
-    console.log(rowModesModel);
-    
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-  };
+  const handleSaveClick = (id: GridRowId) => () => setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+
 
   const handleDeleteClick = (id: GridRowId) => () => {
-    setRows(rows.filter((row: ApiUser) => row._id !== id));
+    // setnameOpenDialg(nameModals.CONFIRMACION)
+    DeleteOnDataBAse!(id as string);
+    // dialogOpenSubject$.setSubject = true 
+      if (Data.user._id !== id) {
+        setRows(rows.filter((row: ApiUser) => row._id !== id));
+      }
+    // }
   };
 
   const handleCancelClick = (id: GridRowId) => () => {
@@ -143,18 +146,15 @@ const Table: React.FC<TableProps> = ({
   };
 
   const processRowUpdate = (newRow: GridRowModel) => {
-    newRow.role = SelectvalueContx[newRow._id];
-    const updatedRow = { ...newRow, isNew: false }
-  /**TODO: enviar los datos al hook que actualiza el usuarioen el la base de dato */
+    if (!!SelectvalueContx[newRow._id]) { newRow.role = SelectvalueContx[newRow._id] }
+    const updatedRow = { ...newRow, isNew: false };
+
+    UpdateOnDataBAse!(updatedRow);
     setRows(rows.map((row: ApiUser) => (row._id === newRow._id ? updatedRow : row)))
     return updatedRow
   }
 
-  const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
-
-    setRowModesModel(newRowModesModel)
-
-  }
+  const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => { setRowModesModel(newRowModesModel) }
 
   return (
     <BoxTable height={380} width={'100%'} $background={theme.palette.background.glass}>

@@ -8,7 +8,7 @@ export interface FormNewUserProps { }
 const FormNewUser: React.FC<FormNewUserProps> = () => {
   return <Container>
 		<Row>
-			<CartLayout width={'100%'}>
+			<CartLayout width$={'100%'}>
 				<Card id='CardPdialog'>
 					<CardHeader>
 						<CartTitle >

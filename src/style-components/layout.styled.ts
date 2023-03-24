@@ -21,7 +21,11 @@ margin-right: calc(-.5 * var(--bs-gutter-x));
 margin-left: calc(-.5 * var(--bs-gutter-x));
 
 `
-export const CartLayout = styled.div`
+
+interface CartLayoutprops{
+    width$: string;
+}
+export const CartLayout = styled.div<CartLayoutprops>`
 display: flex;
 margin-right: auto ;
 margin-left: auto ;
@@ -36,7 +40,7 @@ flex-direction: column;
 }
 @media (min-width: 768px) {
     flex: 0 0 auto;
-    width: ${(props: any) => props.width || '50%'} ;
+    width: ${(props: any) => props.width$|| '50%'} ;
 }
 `
 

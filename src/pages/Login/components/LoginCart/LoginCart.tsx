@@ -10,7 +10,7 @@ const LoginCart: React.FC<LoginCartInterface> = () => {
     < >
       <Card id=''>
         <CardHeader>
-          <CartTitle className='text-center'>
+          <CartTitle>
             welcome to RaptorAdmin
           </CartTitle>
           <p>Enter your email and password to sign in</p>

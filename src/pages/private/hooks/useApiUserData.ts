@@ -1,48 +1,64 @@
 
 import { type AppStore } from '@/redux/storer'
 import { useDispatch, useSelector } from 'react-redux'
-import { addUser, chackingDataBase, clearErrorMessage, onAllUsers } from '../../../redux/slices/user.slice'
-import { ApiUserRoutes } from '@/models/RoutsApi'
+import { addUser, chaangeStatusDataBase, chackingDataBase, clearErrorMessage, DeletedUser, onAllUsers, updateUser } from '../../../redux/slices/user.slice'
+import {  ApiRoutes } from '@/models/RoutsApi'
 
-import { AxiosGetallitems, AxiosSetAitem } from '../pages/Users/services'
+import { AxiosDeleteAitem, AxiosGetallitems, AxiosSetAitem, AxiosUpdateAitem } from '../pages/Users/services'
+import { StatusUsers } from '@/models'
 
 export const useUserStore = () => {
-  const dispatch = useDispatch()
-  const Usersinfo = useSelector((state: AppStore) => state.apiUsers)
+  const dispatch = useDispatch();
+  const Usersinfo = useSelector((state: AppStore) => state.apiUsers);
   const clearMessageError = () => {
     setTimeout(() => {
       dispatch(clearErrorMessage(''))
-    }, 10)
-  }
+    }, 10);
+  };
 
   const getAllUsersDataBase = async ({ limit = 50, from = 0 }) => {
-    dispatch(chackingDataBase())
-    AxiosGetallitems(ApiUserRoutes.API_USER, { params: { limit, from } })
+    dispatch(chackingDataBase());
+    AxiosGetallitems(ApiRoutes.API_USER, { params: { limit, from } })
       .then((data) => {
-        dispatch(onAllUsers(data))
-        clearMessageError()
-      })
+        dispatch(onAllUsers(data));
+        clearMessageError();
+      });
   }
   const AddUsersDataBase = async (Data: any) => {
-    dispatch(chackingDataBase())
-    AxiosSetAitem(ApiUserRoutes.API_USER, Data)
+    dispatch(chackingDataBase());
+    AxiosSetAitem(ApiRoutes.API_USER, Data)
       .then((data: any) => {
-        dispatch(addUser(data))
-        clearMessageError()
+        dispatch(addUser(data));
+        clearMessageError();
       })
   }
-  const EditUsersDataBase = async (Data: any) => {
-    dispatch(chackingDataBase())
-    AxiosSetAitem(ApiUserRoutes.API_USER, Data)
+  const upDateUsersDataBase = async (Data: any) => {
+    delete Data.isNew;
+    dispatch(chackingDataBase());
+    AxiosUpdateAitem(`${ApiRoutes.API_USER}/${Data._id}`, Data)
       .then((data: any) => {
-        dispatch(addUser(data))
-        clearMessageError()
+        data.Data = Data;
+         dispatch(updateUser(data));
+         clearMessageError();
       })
+  }
+  const deleteUsersDataBase = async (Data: any) => {
+  console.log(Data);
+  
+    dispatch(chackingDataBase());
+    AxiosDeleteAitem(`${ApiRoutes.API_USER}/${Data}`)
+      .then((data: any) => {
+         dispatch(DeletedUser(data));
+         clearMessageError();
+      }).catch(()=>
+        dispatch(chaangeStatusDataBase(StatusUsers.OBTAINED))
+      )
   }
   return {
     getAllUsersDataBase,
     AddUsersDataBase,
-    EditUsersDataBase,
+    upDateUsersDataBase,
+    deleteUsersDataBase,
     Usersinfo
   }
 }

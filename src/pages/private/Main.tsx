@@ -11,11 +11,12 @@ import { UseAuthStore } from '@/hooks'
 import { validateTokenexpire } from '@/utilities'
 import { Customdialago } from '@/components'
 import { searchByKey } from '@/helpers'
+import { useManagerContext } from '@/pages/private/Context';
 
 export const Main = () => {
   const { getAllUsersDataBase } = useUserStore()
   const { status } = useSelector((state: AppStore) => state.apiUsers)
-  const { name } = useSelector((state: any) => state.Dialog)
+  const { nameOpenDialg } = useManagerContext();
   const [atOpenedDialog, setatOpenedDialog] = useState('')
   const isNonMobile = useMediaQuery('(min-width: 600px)')
   const [isSidebarOpen, setisSidebarOpen] = useState(isNonMobile)
@@ -26,8 +27,10 @@ export const Main = () => {
     validateTokenexpire() && CheckAuthToken()
   }, [])
   useEffect(() => {
-    setatOpenedDialog(name)
-  }, [name])
+    console.log(nameOpenDialg);
+    
+    setatOpenedDialog(nameOpenDialg)
+  }, [nameOpenDialg])
 
   useEffect(() => {
     isNonMobile && setisSidebarOpen(!isSidebarOpen)

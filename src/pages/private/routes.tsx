@@ -2,14 +2,14 @@ import { UseAuthStore } from '@/hooks'
 import { PrivateRoutes } from '@/models'
 import { RoutesWithNotFound } from '@/utilities'
 import { Route, Navigate } from 'react-router-dom'
-import { DataApiProvider } from './Context'
+import { DataContextProvider } from './Context'
 import { Main } from './Main'
 import { Dashboard, Users } from './pages'
 
 
 const Private = () => {
   return (
-    <DataApiProvider>
+    <DataContextProvider>
       <RoutesWithNotFound>
         <Route element={<Main />}>
           <Route path='/' element={<Navigate to={PrivateRoutes.DASHBOARD} />} />
@@ -17,7 +17,7 @@ const Private = () => {
           <Route path={PrivateRoutes.USERS} element={<Users />} />
         </Route>
       </RoutesWithNotFound>
-    </DataApiProvider>
+    </DataContextProvider>
   )
 }
 export default Private

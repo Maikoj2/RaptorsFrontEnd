@@ -5,8 +5,9 @@ export const getValidationError = (ErrorCode: any) => {
     ERR_BAD_REQUEST: 'Request failed with status code 401',
     ERR_NETWORK: 'Conection Error with the backend',
     INVALID_TOKEN: 'The token is invalid or expired',
-    VALIDATE_ERROR: 'Error of validation',
-    WRONG_CREDENTIALS: 'la clave y/o el email es incorrecta'
+    VALIDATE_ERROR: 'hay un error de validacion',
+    WRONG_CREDENTIALS: 'la clave y/o el email es incorrecta',
+    ERROR_DELETED: 'No puedes eleiminar tu propia cuenta'
   }
   return codeMatcher[ErrorCode]
 }

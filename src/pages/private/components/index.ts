@@ -1,8 +1,12 @@
-export * from './Breadcrumb'
-export * from './Breadcrumb/style-components/breadcrumb.style'
-export * from './IconShape'
-export * from './Table'
-export { default as Navbar } from './navbar/Navbar'
-export * from './navbar/components/ProfileAdminDashboard'
-export * from './navbar/components'
-export { default as SideNav } from './sideNav/SideNav'
+export * from './Breadcrumb';
+export * from './Breadcrumb/style-components/breadcrumb.style';
+export * from './IconShape';
+export * from './Table/CustomPagination';
+export * from './Table/ToollBar';
+export * from './Table';
+export * from './Table/models';
+export * from './WindowsToConfirm';
+export { default as Navbar } from './navbar/Navbar';
+export * from './navbar/components/ProfileAdminDashboard';
+export * from './navbar/components';
+export { default as SideNav } from './sideNav/SideNav';

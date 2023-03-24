@@ -6,9 +6,9 @@ import {  GridColDef, GridRenderCellParams, GridRowModes } from '@mui/x-data-gri
 import { CustomSelect } from '../pages/Users/components/FormNewUser/CustomSelect';
 
 import { dateformat } from '../utilities'
-import { useModeModelContext } from '../Context';
+import { useManagerContext } from '../Context';
 export const useColDataTable = () => {
-  const { SelectvalueContx , setSelectvalueContx}= useModeModelContext()
+  const { SelectvalueContx , setSelectvalueContx}= useManagerContext()
   const UserColumnDef: GridColDef[] = [
     {
       field: 'img',
