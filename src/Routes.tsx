@@ -46,7 +46,7 @@ const Routes = () => {
           >
             <RoutesWithNotFound>
               <Route path='/' element={<Home />} />
-              <Route path={PublicRoutes.LOGIN} element={<>{(sessionData.status === StatusLogin.AUTENTICATED) ? <Navigate replace to={`/${PrivateRoutes.PRIVATE}`} /> : <Login />}</>} />
+              <Route path={PublicRoutes.LOGIN} element={<>{(sessionData.status === StatusLogin.AUTHENTICATED) ? <Navigate replace to={`/${PrivateRoutes.PRIVATE}`} /> : <Login />}</>} />
               <Route path={PublicRoutes.HOME} element={<Home />} />
               <Route element={<AuthGuard PrivateValditation={true} />}>
                 <Route path={`${PrivateRoutes.PRIVATE}/*`} element={<Private />} />

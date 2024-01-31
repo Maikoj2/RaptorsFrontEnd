@@ -18,12 +18,12 @@ const WindowsToConfirm: React.FC<WindowsToConfirmProps> = () => {
 	return <Container>
 		<Row>
 			<CartLayout width$={'100%'}>
-				<Card id='CardPdialog'>
+				<Card id='CardDialog'>
 					<CardHeader>
 						<Typography variant='h5' color={theme.palette.neutral[100]} fontSize={'1.5rem'}>
 							Comfirmar 
 						</Typography>
-						<DividerHori mode={'$ligt'}/>
+						<DividerHori mode={'$light'}/>
 						<p>seguro que quieres
 						eliminal este
 						elemento?

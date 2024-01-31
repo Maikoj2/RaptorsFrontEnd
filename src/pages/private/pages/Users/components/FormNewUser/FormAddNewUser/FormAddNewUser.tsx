@@ -1,14 +1,13 @@
-import { useForm } from '@/hooks'
-import React from 'react'
-import { ButtonCustom, Label } from '@/style-components'
-import { Box, useTheme } from '@mui/material'
-import { CumstonInput, ErrorMsg } from '@/pages/Login'
-import { CustomSelect } from '../CustomSelect'
-import { roles } from '@/models'
-import { FlexBetween } from '@/pages/private/style-components-private'
-import { useUserStore } from '@/pages/private/hooks'
+import { dialogCloseSubject$ } from "@/components/Customdialago/Customdialago"
+import { useForm } from "@/hooks"
+import { roles } from "@/models"
+import { CustomInput, ErrorMsg } from "@/pages/Login"
+import { useUserStore } from "@/pages/private/hooks"
+import { FlexBetween } from "@/pages/private/style-components-private"
+import { ButtonCustom, Label } from "@/style-components"
+import { Box, useTheme } from "@mui/material"
+import { CustomSelect } from "../CustomSelect"
 
-import { dialogCloseSubject$ } from '@/components/Customdialago/Customdialago'
 
 export interface FormAddNewUserProps { }
 
@@ -74,7 +73,7 @@ const FormAddNewUser: React.FC<FormAddNewUserProps> = () => {
 		<form onSubmit={async (e) => { await handleSubmit(e) }}>
 			<Label $cl={theme.palette.neutral[100]}>Nombre Completo</Label>
 			<Box marginBottom={'1rem'}>
-				<CumstonInput
+				<CustomInput
 					type="text"
 					placeholder="Nombres..."
 					name="Names"
@@ -87,7 +86,7 @@ const FormAddNewUser: React.FC<FormAddNewUserProps> = () => {
 			</Box>
 			<Label $cl={theme.palette.neutral[100]}>E-mail</Label>
 			<Box marginBottom={'1rem'}>
-				<CumstonInput
+				<CustomInput
 					type="email"
 					placeholder="Examples@example.com"
 					name="email"
@@ -100,7 +99,7 @@ const FormAddNewUser: React.FC<FormAddNewUserProps> = () => {
 			</Box>
 			<Label $cl={theme.palette.neutral[100]}>Contraseña</Label>
 			<Box marginBottom={'1rem'}>
-				<CumstonInput
+				<CustomInput
 					type="password"
 					placeholder=""
 					name="password"
@@ -113,7 +112,7 @@ const FormAddNewUser: React.FC<FormAddNewUserProps> = () => {
 			</Box>
 			<Label $cl={theme.palette.neutral[100]}>Repita Contraseña</Label>
 			<Box marginBottom={'1rem'}>
-				<CumstonInput
+				<CustomInput
 					type="password"
 					placeholder=""
 					name="repeatPassword"
@@ -136,6 +135,7 @@ const FormAddNewUser: React.FC<FormAddNewUserProps> = () => {
 							{ value: roles.USER, label: 'Usuario' },
 							{ value: roles.TEACHER, label: 'Profesor' }
 						]}
+						m={'0px'}
 					/>
 					{touched.role && errors.role && <ErrorMsg>{errors.role}</ErrorMsg>}
 
@@ -146,7 +146,7 @@ const FormAddNewUser: React.FC<FormAddNewUserProps> = () => {
 						onClick={handleClic}
 						type='submit'
 						name='primary'
-						color={theme.palette.neutral[100]}
+					     $color={theme.palette.neutral[100]}
 						disabled={!isValid}>Agregar</ButtonCustom>
 				</Box>
 

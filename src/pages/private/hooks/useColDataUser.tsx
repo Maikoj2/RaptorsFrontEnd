@@ -1,13 +1,13 @@
 
 import { roles } from '@/models';
 import { Box, Typography } from '@mui/material';
-import {  GridColDef, GridRenderCellParams, GridRowModes } from '@mui/x-data-grid';
+import {  GridColDef, GridColumnHeaderParams, GridRenderCellParams, GridRowModes } from '@mui/x-data-grid';
 
 import { CustomSelect } from '../pages/Users/components/FormNewUser/CustomSelect';
 
 import { dateformat } from '../utilities'
 import { useManagerContext } from '../Context';
-export const useColDataTable = () => {
+export const useColDataTableUsers= () => {
   const { SelectvalueContx , setSelectvalueContx}= useManagerContext()
   const UserColumnDef: GridColDef[] = [
     {
@@ -31,7 +31,12 @@ export const useColDataTable = () => {
     },
     {
       field: 'Names',
-      headerName: 'Nombres',
+      renderHeader: (params: GridColumnHeaderParams) => (
+        <strong style={{
+          fontWeight: 'bold',
+        }}>
+          {'Nombres '}
+        </strong>),
       flex: 1,
       editable: true,
       minWidth: 200,
@@ -42,7 +47,12 @@ export const useColDataTable = () => {
     },
     {
       field: 'email',
-      headerName: 'email',
+      renderHeader: (params: GridColumnHeaderParams) => (
+        <strong style={{
+          fontWeight: 'bold',
+        }}>
+          {'Email'}
+        </strong>),
       flex: 1,
       minWidth: 200,
       maxWidth: 230,
@@ -50,7 +60,12 @@ export const useColDataTable = () => {
     },
     {
       field: 'role',
-      headerName: 'Rol',
+      renderHeader: (params: GridColumnHeaderParams) => (
+        <strong style={{
+          fontWeight: 'bold',
+        }}>
+          {'Rol'}
+        </strong>),
       flex: 1,
       editable: true,
       minWidth: 125,
@@ -75,7 +90,12 @@ export const useColDataTable = () => {
     },
     {
       field: 'createdAt',
-      headerName: 'Creado en',
+      renderHeader: (params: GridColumnHeaderParams) => (
+        <strong style={{
+          fontWeight: 'bold',
+        }}>
+          {'Creado el'}
+        </strong>),
       flex: 1,
       minWidth: 100,
       maxWidth: 180,
@@ -83,7 +103,12 @@ export const useColDataTable = () => {
     },
     {
       field: 'updatedAt',
-      headerName: 'actualizado en',
+      renderHeader: (params: GridColumnHeaderParams) => (
+        <strong style={{
+          fontWeight: 'bold',
+        }}>
+          {'Actualizado el'}
+        </strong>),
       minWidth: 100,
       maxWidth: 180,
       flex: 1,

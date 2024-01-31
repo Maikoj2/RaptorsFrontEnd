@@ -5,5 +5,8 @@ export enum ApiLoginRoutes {
 }
 
 export enum ApiRoutes {
-  API_USER = '/User', /** this route is to Get and Post users*/
+  API_USER = '/User',         /** this route is  users of backend*/
+  API_STAFF = '/Staff',       /** this route is  staff of backend*/
+  API_BASE_SALARY = '/BaseSalary',       /** this route is  staff of backend*/
+  API_UP_LOAD = '/upload',       /** this route is  upload of backend*/
 }

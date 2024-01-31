@@ -11,7 +11,7 @@ import Loading from '../../components/Loading/Loading'
 const Login = () => {
   const user = useSelector((state: AppStore) => state.loginUser)
   return (
-    <>{(user.status === StatusLogin.NOT_AUTENTICATED)
+    <>{(user.status === StatusLogin.NOT_AUTHENTICATED)
       ? <LayoutLogin>
         <Container>
           <Row>

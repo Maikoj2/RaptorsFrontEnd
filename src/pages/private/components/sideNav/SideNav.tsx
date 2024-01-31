@@ -65,7 +65,7 @@ const navItems = [
     icon: <FaSkating />
   },
   {
-    Text: 'Profesores',
+    Text: PrivateRoutes.STAFF,
     icon: <FaCodeBranch />
   },
   {
@@ -165,7 +165,7 @@ const sidebar: React.FunctionComponent<sideBarProps> = ({ setisSidebarOpen, isSi
               </Box>
             </Box>
             {/* /** End Sidebar header */}
-            <DividerHori mode={(theme.palette.mode === 'dark') ? '$ligt' : '$dark'} />
+            <DividerHori mode={(theme.palette.mode === 'dark') ? '$light' : '$dark'} />
             {/* /**Sidebar list item */}
             <Box sx={
               {
@@ -243,7 +243,7 @@ const sidebar: React.FunctionComponent<sideBarProps> = ({ setisSidebarOpen, isSi
             {/* /**Sidebar list item */}
             {/* /**Sidebar footer */}
             <Box bottom='2rem'>
-              <DividerHori mode={(theme.palette.mode === 'dark') ? '$ligt' : '$dark'} />
+              <DividerHori mode={(theme.palette.mode === 'dark') ? '$light' : '$dark'} />
               <ProfileAdminDashboard alt={'profile'}
                 borderRadius={'50'}
                 height={'40'}

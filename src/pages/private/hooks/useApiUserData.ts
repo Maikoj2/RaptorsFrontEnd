@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addUser, chaangeStatusDataBase, chackingDataBase, clearErrorMessage, DeletedUser, onAllUsers, updateUser } from '../../../redux/slices/user.slice'
 import {  ApiRoutes } from '@/models/RoutsApi'
 
-import { AxiosDeleteAitem, AxiosGetallitems, AxiosSetAitem, AxiosUpdateAitem } from '../pages/Users/services'
-import { StatusUsers } from '@/models'
+import {  AxiosDeleteAitemuser, AxiosGetallitemsuser,  AxiosSetAitemuser, AxiosUpdateAitemuser } from '../pages/Users/services'
+import { StatusData } from '@/models'
 
 export const useUserStore = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export const useUserStore = () => {
 
   const getAllUsersDataBase = async ({ limit = 50, from = 0 }) => {
     dispatch(chackingDataBase());
-    AxiosGetallitems(ApiRoutes.API_USER, { params: { limit, from } })
+    AxiosGetallitemsuser(ApiRoutes.API_USER, { params: { limit, from } })
       .then((data) => {
         dispatch(onAllUsers(data));
         clearMessageError();
@@ -26,7 +26,7 @@ export const useUserStore = () => {
   }
   const AddUsersDataBase = async (Data: any) => {
     dispatch(chackingDataBase());
-    AxiosSetAitem(ApiRoutes.API_USER, Data)
+    AxiosSetAitemuser(ApiRoutes.API_USER, Data)
       .then((data: any) => {
         dispatch(addUser(data));
         clearMessageError();
@@ -34,10 +34,14 @@ export const useUserStore = () => {
   }
   const upDateUsersDataBase = async (Data: any) => {
     delete Data.isNew;
+    console.log(Data);
     dispatch(chackingDataBase());
-    AxiosUpdateAitem(`${ApiRoutes.API_USER}/${Data._id}`, Data)
+    AxiosUpdateAitemuser(`${ApiRoutes.API_USER}/${Data._id}`, Data)
       .then((data: any) => {
+        
         data.Data = Data;
+        console.log(data.Data);
+        
          dispatch(updateUser(data));
          clearMessageError();
       })
@@ -46,12 +50,12 @@ export const useUserStore = () => {
   console.log(Data);
   
     dispatch(chackingDataBase());
-    AxiosDeleteAitem(`${ApiRoutes.API_USER}/${Data}`)
+    AxiosDeleteAitemuser(`${ApiRoutes.API_USER}/${Data}`)
       .then((data: any) => {
          dispatch(DeletedUser(data));
          clearMessageError();
       }).catch(()=>
-        dispatch(chaangeStatusDataBase(StatusUsers.OBTAINED))
+        dispatch(chaangeStatusDataBase(StatusData.OBTAINED))
       )
   }
   return {

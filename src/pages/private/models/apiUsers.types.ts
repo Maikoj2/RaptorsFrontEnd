@@ -1,4 +1,4 @@
-import { StatusUsers } from '@/models'
+import { StatusData } from '@/models'
 import { type ApiUser } from '../../../models/apiData.types'
 
 export interface UsersData {
@@ -28,7 +28,7 @@ export interface ApiAUser {
 const UserEmptyState: ApiUser[] = []
 
 export const UsersEmptyState: UsersData = {
-  status: StatusUsers.NO_OBTAINED,
+  status: StatusData.NO_OBTAINED,
   message: '',
   Data: UserEmptyState,
   total: 0

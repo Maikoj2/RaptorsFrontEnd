@@ -28,7 +28,7 @@ export interface TableProps {
   pageSize?: number
   data: any
   NameHeaderTable: string,
-  loanding?: boolean,
+  loading?: boolean,
   actions?: boolean,
   UpdateOnDataBAse?: (newRow: any) => void
   DeleteOnDataBAse?: (id: string) => void
@@ -41,7 +41,7 @@ const Table: React.FC<TableProps> = ({
   data,
   columns,
   NameHeaderTable,
-  loanding,
+  loading,
   actions = false,
   UpdateOnDataBAse,
   DeleteOnDataBAse
@@ -146,6 +146,8 @@ const Table: React.FC<TableProps> = ({
   };
 
   const processRowUpdate = (newRow: GridRowModel) => {
+
+    
     if (!!SelectvalueContx[newRow._id]) { newRow.role = SelectvalueContx[newRow._id] }
     const updatedRow = { ...newRow, isNew: false };
 
@@ -157,7 +159,7 @@ const Table: React.FC<TableProps> = ({
   const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => { setRowModesModel(newRowModesModel) }
 
   return (
-    <BoxTable height={380} width={'100%'} $background={theme.palette.background.glass}>
+    <BoxTable height={450} width={'100%'} $background={theme.palette.background.glass}>
       <DataGrid
         rows={rows}
         columns={actions ? columns.concat(ActionsCol) : columns}
@@ -169,13 +171,13 @@ const Table: React.FC<TableProps> = ({
         onRowEditStop={handleRowEditStop}
         processRowUpdate={processRowUpdate}
         pageSizeOptions={[5]}
-        loading={loanding}
+        loading={loading}
         initialState={{
           pagination: {
             paginationModel: { pageSize: 5, page: 0 }
           }
         }}
-
+       
         getRowId={(row) => row._id}
         sx={{
           '&.MuiDataGrid-root': {
@@ -191,8 +193,8 @@ const Table: React.FC<TableProps> = ({
           pagination: CustomPagination
         }}
         componentsProps={{ toolbar: { NameHeaderTable } }}
-      />;
+      />
     </BoxTable>)
 }
 
-export default React.memo(Table)
+export default Table

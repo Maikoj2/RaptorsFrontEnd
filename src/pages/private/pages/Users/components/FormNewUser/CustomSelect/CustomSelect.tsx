@@ -15,6 +15,7 @@ interface SelectProps {
   onChange: (value: any) => void
   disabled?: boolean
   children?: ReactNode
+  minWidth?: string 
 }
 
 const CustomSelect: React.FC<SelectProps> = ({
@@ -25,11 +26,12 @@ const CustomSelect: React.FC<SelectProps> = ({
   disabled = false,
   children,
   name,
-  m
+  m,
+  minWidth
 }) => {
   return (
     <Box marginBottom={(!m)?'1rem':m}>
-      <FormControl sx={{ m: (!m)?'1rem':m, minWidth: 120 }} size="small">
+      <FormControl sx={{ m: (!m)?'1rem':m, minWidth: (!minWidth)?120:minWidth }} size="small">
         {label && (
           <InputLabel id="demo-select-small-label" color="secondary">
             {label}
@@ -42,6 +44,11 @@ const CustomSelect: React.FC<SelectProps> = ({
           name={name}
           onChange={(e: any) => { onChange(e) }}
           disabled={disabled}
+          sx= {{
+            border: '1px solid #d2d6da',
+            borderRadius: '0.5rem',
+            padding: '0.07rem 0.75rem',
+          }}
         >
           {options.map((option) => (
             <MenuItem key={option.value} value={option.value}>

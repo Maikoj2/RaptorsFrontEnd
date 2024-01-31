@@ -1,6 +1,6 @@
 import { type ApiUserLogin, type UserLogin } from '@/models'
 
-export const loginAdacter = ({ ok, message, Data }: ApiUserLogin): UserLogin => {
+export const loginAdapter = ({ ok, message, Data }: ApiUserLogin): UserLogin => {
   const { user, token } = Data
   const Userdata = {
     _id: user._id,

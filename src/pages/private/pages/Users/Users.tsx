@@ -5,10 +5,11 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
 import { Table } from '../../components/Table'
 import { NameTables } from '../../models'
-import { SubjectManager } from '@/models'
-import { useColDataTable } from '../../hooks/useColData'
+
+import { useColDataTableUsers } from '../../hooks/useColDataUser'
 import { useUserStore } from '../../hooks'
 import { GridRowModel } from '@mui/x-data-grid'
+import { SubjectManager } from '@/utilities';
 export interface UsersProps { }
 
 
@@ -16,7 +17,7 @@ export const addRowSubjectManager = new SubjectManager<any>()
 const Users: React.FC<UsersProps> = () => {
  const  { upDateUsersDataBase,  deleteUsersDataBase } =useUserStore()
   const { Data, status } = useSelector((state: AppStore) => state.apiUsers)
-  const { UserColumnDef } = useColDataTable()
+  const { UserColumnDef } = useColDataTableUsers();
   const [Row, setRow] = useState(Data)
   useEffect(() => {
     setRow(Data)
@@ -34,7 +35,7 @@ const Users: React.FC<UsersProps> = () => {
     data={Row}
     columns={UserColumnDef}
     NameHeaderTable={NameTables.USERS}
-    loanding={status !== 'obtained'}
+    loading={status !== 'obtained'}
     actions
     UpdateOnDataBAse={UpdateAtion}
     DeleteOnDataBAse={DeleteAtion}

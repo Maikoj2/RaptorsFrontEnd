@@ -6,7 +6,7 @@ import { Box } from '@mui/material'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { ErrorMsg } from '../../style-components'
-import { CheckBoxInputswitch, CumstonInput, LayoutcheckBoxInputswitch } from '../../style-components/Input.style'
+import { CheckBoxInputswitch, CustomInput, LayoutcheckBoxInputswitch } from '../../style-components/Input.style'
 
 const initialValues = {
   email: 'maicol9@jimenez.co', password: '000000'
@@ -46,7 +46,7 @@ const Form = () => {
     <form onSubmit={async (e: any) => { await handleSubmit(e) }}>
       <Label>Email</Label>
       <Box marginBottom={'1rem'}>
-        <CumstonInput
+        <CustomInput
           type="email"
           placeholder="Examples@example.com"
           name="email"
@@ -56,7 +56,7 @@ const Form = () => {
       </Box>
       <Label>Password</Label>
       <Box marginBottom={'1rem'}>
-        <CumstonInput
+        <CustomInput
           type="password"
           placeholder="Password"
           name="password"
@@ -70,7 +70,7 @@ const Form = () => {
         <Label className="checkLabel" htmlFor="rememberMe">Remember me</Label>
       </LayoutcheckBoxInputswitch>
       <Box marginBottom={'1rem'} textAlign={'center'}>
-        <ButtonCustom type='submit' name='btnGradient' disabled={userState.status === StatusLogin.CHEKING}>Sign in</ButtonCustom>
+        <ButtonCustom type='submit' name='btnGradient' disabled={userState.status === StatusLogin.CHECKING}>Sign in</ButtonCustom>
       </Box>
     </form>
 

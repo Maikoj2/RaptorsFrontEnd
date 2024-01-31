@@ -1,8 +1,7 @@
-import { ApiUser } from '@/models'
 import { type ApiAUser, type ApiUsers, type AUserData, type UsersData } from '@/pages/private/models/apiUsers.types'
 
-export const UsersAdacter = ({ ok, message, Data, total }: ApiUsers): UsersData => {
-  const Userdata = Data.map((user) => ({
+export const UsersAdapter = ({ ok, message, Data, total }: ApiUsers): UsersData => {
+  const UserData = Data.map((user) => ({
     _id: user._id,
     Names: user.Names,
     email: user.email,
@@ -14,14 +13,14 @@ export const UsersAdacter = ({ ok, message, Data, total }: ApiUsers): UsersData 
   return {
     status: ok,
     message,
-    Data: Userdata,
+    Data: UserData,
     total
 
   }
 }
 
-export const AUserAdacter = ({ ok, message, Data, total }: ApiAUser): AUserData => {
-  const Userdata = {
+export const AUserAdapter = ({ ok, message, Data, total }: ApiAUser): AUserData => {
+  const UserData = {
     _id: Data._id,
     Names: Data.Names,
     email: Data.email,
@@ -33,7 +32,7 @@ export const AUserAdacter = ({ ok, message, Data, total }: ApiAUser): AUserData 
   return {
     status: ok,
     message,
-    Data: Userdata,
+    Data: UserData,
     total
 
   }

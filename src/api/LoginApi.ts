@@ -3,13 +3,13 @@ import { LocalStorageType } from '@/models'
 import { logOut } from '@/redux/slices/auth.slice'
 import { getLocalStorage, getValidationError } from '@/utilities'
 import { SnackbarUtilities } from '@/utilities/Snackbar-manager'
-import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { TypesSnackbar } from '@/components/SnackBAr/SnackBAr.Notitask'
 
-const { VITE_REACT_URL } = getEnvVariable()
+const { VITE_REACT_URL_PRODUCTION } = getEnvVariable()
 
 const RaptorsApi = axios.create({
-  baseURL: VITE_REACT_URL
+  baseURL: VITE_REACT_URL_PRODUCTION
 })
 
 RaptorsApi.interceptors.request.use((config: AxiosRequestConfig) => {
@@ -25,7 +25,7 @@ RaptorsApi.interceptors.request.use((config: AxiosRequestConfig) => {
 RaptorsApi.interceptors.response.use(
 
   (response: AxiosResponse) => {
-    console.log(response)
+    // console.log(response)
     SnackbarUtilities.customErrorMsg(response.data.message, TypesSnackbar.SUCCESS)
     return response
   },

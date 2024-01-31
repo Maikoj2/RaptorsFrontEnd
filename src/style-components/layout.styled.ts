@@ -23,7 +23,7 @@ margin-left: calc(-.5 * var(--bs-gutter-x));
 `
 
 interface CartLayoutprops{
-    width$: string;
+    width$?: string;
 }
 export const CartLayout = styled.div<CartLayoutprops>`
 display: flex;

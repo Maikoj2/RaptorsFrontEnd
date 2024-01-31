@@ -5,7 +5,8 @@ import { themeInicialState, type themeMode, themeModes } from '../../pages/priva
 import { getLocalStorage } from '../../utilities/localStorage.utilite'
 
 const getInitialThemeMode = () => {
-  if (getLocalStorage(LocalStorageType.THEME)) { themeInicialState.Mode = getLocalStorage(LocalStorageType.THEME) }
+  if (getLocalStorage(LocalStorageType.THEME)){ themeInicialState.Mode = getLocalStorage(LocalStorageType.THEME);
+  }
   return themeInicialState
 }
 

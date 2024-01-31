@@ -78,13 +78,14 @@ export const useForm = ({ initialValues, validations, onSubmit }: FormOptions) =
     const promises = Object.keys(validations).map(async (fieldName) => await validateField(fieldName, values[fieldName]))
 
     const results = await Promise.all(promises)
+  
+    
 
     return results.every((result) => result)
   }
 
   const handleChange = (event: React.ChangeEvent<any>) => {
-    const { name, value } = event.target
-
+    let { name, value } = event.target
     setFormState((prevState) => ({
       ...prevState,
       values: {
@@ -92,7 +93,6 @@ export const useForm = ({ initialValues, validations, onSubmit }: FormOptions) =
         [name]: value
       }
     }))
-
     validateField(name, value)
   }
 
@@ -100,6 +100,8 @@ export const useForm = ({ initialValues, validations, onSubmit }: FormOptions) =
     event.preventDefault()
 
     const isValid = await validateForm(formState.values)
+    console.log(isValid);
+    console.log(formState.values);
 
     setFormState((prevState) => ({
       ...prevState,
@@ -117,18 +119,20 @@ export const useForm = ({ initialValues, validations, onSubmit }: FormOptions) =
       isSubmitting: false,
       isValidating: false
     }))
-    const errorMessages = getErrorMessages(formState.errors, formState.values)
+    const errorMessages = getErrorMessages(formState.errors, formState.values, true)
     setFormState((prevState) => ({
       ...prevState,
       errors: errorMessages
     }))
+
+    console.log(formState);
   }
 
-  const getErrorMessages = (errors: Record<string, string>, touched: Record<string, boolean>) => {
+  const getErrorMessages = (errors: Record<string, string>, touched: Record<string, boolean>,includeUntouchedFields: boolean = false) => {
     const errorMessages: Record<string, string> = {}
 
     Object.keys(errors).forEach((fieldName) => {
-      if (touched[fieldName]) {
+      if (touched[fieldName] || includeUntouchedFields) {
         errorMessages[fieldName] = errors[fieldName]
       }
     })
@@ -146,6 +150,7 @@ export const useForm = ({ initialValues, validations, onSubmit }: FormOptions) =
       isValid: false
     })
   }
+  
 
   return {
     values: formState.values,

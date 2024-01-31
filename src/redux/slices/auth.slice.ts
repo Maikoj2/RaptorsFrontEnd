@@ -14,7 +14,7 @@ export const authSlice = createSlice({
   reducers: {
 
     login: (state: UserLogin, { payload }: Action) => {
-      state.status = StatusLogin.AUTENTICATED
+      state.status = StatusLogin.AUTHENTICATED
       state.Data.user = payload.Data.user
       state.Data.token = payload.Data.token
       if (state.remerberMe) {
@@ -23,7 +23,7 @@ export const authSlice = createSlice({
       }
     },
     logOut: (state: UserLogin, action: any) => {
-      state.status = StatusLogin.NOT_AUTENTICATED
+      state.status = StatusLogin.NOT_AUTHENTICATED
       state.message = action.payload
       state.Data.user = UserLoginEmptystate.Data.user
       state.Data.token = UserLoginEmptystate.Data.token
@@ -31,10 +31,10 @@ export const authSlice = createSlice({
       clearLocalStorage(LocalStorageType.TOKEN_DATE_CREATED)
     },
     chackingCredentials: (state: UserLogin) => {
-      state.status = StatusLogin.CHEKING
+      state.status = StatusLogin.CHECKING
     },
     UpdateToken: (state: UserLogin, { payload }: Action) => {
-      state.status = StatusLogin.AUTENTICATED
+      state.status = StatusLogin.AUTHENTICATED
       state.Data.token = payload.Data.token
       setLocalStorage(LocalStorageType.DATA_SESSION, state)
       setLocalStorage(LocalStorageType.TOKEN_DATE_CREATED, new Date().getTime())

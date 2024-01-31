@@ -1,7 +1,7 @@
 import { typeWithKey } from '@/models';
 import {ReactNode, createContext, useContext, useState, Dispatch,useCallback} from 'react'
 
-export interface Props {
+ interface Props {
   children: ReactNode
 }
 interface RowModesModelContextType {

@@ -1,4 +1,4 @@
-import { StatusUsers } from '@/models'
+import { StatusData } from '@/models'
 
 import { createSlice } from '@reduxjs/toolkit'
 import { UsersEmptyState, type UsersData } from '../../pages/private/models/apiUsers.types'
@@ -14,30 +14,30 @@ export const userSlice = createSlice({
   reducers: {
 
     chackingDataBase: (state: UsersData) => {
-      state.status = StatusUsers.CHEKING
+      state.status = StatusData.CHECKING
     },
     chaangeStatusDataBase: (state: UsersData, {payload}:any) => {
       state.status = payload
     },
     onAllUsers: (state: UsersData, { payload }: Action) => {
-      state.status = StatusUsers.OBTAINED
+      state.status = StatusData.OBTAINED
       state.Data = payload.Data
       state.message = payload.message
       state.total = payload.total
     },
     addUser: (state: UsersData, { payload }: any) => {
-      state.status = StatusUsers.OBTAINED
+      state.status = StatusData.OBTAINED
       state.Data.push(payload.Data)
       state.message = payload.message
       state.total = state.total + 1
     },
     updateUser: (state: UsersData, { payload }: any) => {
-      state.Data = state.Data.map((row: ApiUser) => (row._id === payload._id ? payload : row))
-      state.status = StatusUsers.OBTAINED
+      state.Data = state.Data.map((row: ApiUser) => (row._id === payload.Data._id ? payload.Data : row))
+      state.status = StatusData.OBTAINED
       state.message = payload.message
     },
     DeletedUser: (state: UsersData, { payload }: any) => {
-      state.status = StatusUsers.OBTAINED
+      state.status = StatusData.OBTAINED
       state.message = payload.message
       state.total = state.total - 1
       state.Data = state.Data.filter((row:ApiUser) => (row._id !== payload.Data._id))
@@ -46,7 +46,7 @@ export const userSlice = createSlice({
       state.message = action.payload
     },
     clearUserData: (state: UsersData, action: any) => {
-      state.status = StatusUsers.NO_OBTAINED
+      state.status = StatusData.NO_OBTAINED
       state.Data = UsersEmptyState.Data
       state.message = action.payload
       state.total = 0

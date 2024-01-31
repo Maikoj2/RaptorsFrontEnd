@@ -19,7 +19,7 @@ ${(props) => {
         background-color: transparent;
         box-shadow: none;
         margin-top: 8rem`
-    case 'CardPdialog':
+    case 'CardDialog':
       return css`
         background-color: transparent;
         box-shadow: none;

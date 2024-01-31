@@ -1,2 +1,3 @@
-export * from './getEnvValriable'
-export * from './getValuebykey'
+export * from './claculateAge';
+export * from './getEnvValriable';
+export * from './getValuebykey';

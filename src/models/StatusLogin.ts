@@ -1,10 +1,10 @@
 export enum StatusLogin {
-  AUTENTICATED = 'Autenticated',
-  NOT_AUTENTICATED = 'Not-Autenticated',
-  CHEKING = 'Checking',
+  AUTHENTICATED = 'Authenticated',
+  NOT_AUTHENTICATED = 'Not-Authenticated',
+  CHECKING = 'Checking',
 }
-export enum StatusUsers {
+export enum StatusData {
   OBTAINED = 'obtained',
   NO_OBTAINED = 'No-obtained',
-  CHEKING = 'Checking',
+  CHECKING = 'Checking',
 }

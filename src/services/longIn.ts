@@ -1,5 +1,5 @@
 import { RaptorsApi } from '@/api'
-import { loginAdacter } from '@/pages/Login/adacter/adacter.login'
+import { loginAdapter } from '@/pages/Login/adapters'
 
 interface logInCredentials {
   email: string
@@ -7,9 +7,9 @@ interface logInCredentials {
 }
 
 export const AxiosLogin = async (url: string, Data: logInCredentials) => {
-  return await RaptorsApi.post(url, Data).then(({ data }) => (loginAdacter(data)))
+  return await RaptorsApi.post(url, Data).then(({ data }) => (loginAdapter(data)))
 }
 
 export const AxiosGetLogin = async (url: string) => {
-  return await RaptorsApi.get(url).then(({ data }) => (loginAdacter(data)))
+  return await RaptorsApi.get(url).then(({ data }) => (loginAdapter(data)))
 }

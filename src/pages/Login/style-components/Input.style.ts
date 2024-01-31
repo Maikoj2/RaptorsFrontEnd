@@ -1,11 +1,13 @@
 import { Input, TextField } from '@mui/material'
 import styled from 'styled-components'
-interface CumstonInputProps {
+interface CustomInputProps {
   $backgroundColor?: string,
   $cl?: string,
+  $display?: string,
+  ref?: any,
 }
-export const CumstonInput = styled.input<CumstonInputProps>` 
-display: block;
+export const CustomInput = styled.input<CustomInputProps>` 
+display:  ${(props: any) => props.$display || 'block'};
 width: 100%;
 padding: 0.5rem 0.75rem;
 font-size: 0.875rem;
@@ -24,7 +26,7 @@ transition: box-shadow 0.15s ease, border-color 0.15s ease;
     background-color: #fff;
     border-color: #DA7625;
     outline: 0;
-    box-shadow: 0 0 0 2px #e9aede;
+    box-shadow: 0 0 0 2px #FC9772;
   }
   &::-webkit-date-and-time-value {
     height: 1.4rem;
@@ -35,7 +37,7 @@ transition: box-shadow 0.15s ease, border-color 0.15s ease;
   }
   
   &:disabled{
-    background-color: #e9ecef;
+    background-color: ${(props: any) => props.$backgroundColor || '#fff'};
     opacity: 1;
 }
 &::file-selector-button {

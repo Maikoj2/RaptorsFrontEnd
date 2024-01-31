@@ -1,4 +1,4 @@
-import { SubjectManager } from '@/models'
+import { SubjectManager } from '@/utilities'
 import { Dialog, Slide, useTheme } from '@mui/material'
 import { type TransitionProps } from '@mui/material/transitions'
 import React, { useEffect, useState } from 'react'

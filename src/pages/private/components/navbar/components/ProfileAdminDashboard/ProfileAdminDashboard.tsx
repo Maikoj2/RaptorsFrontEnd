@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Typography, IconButton, useTheme } from '@mui/material'
 import { FlexBetween } from '../../../../style-components-private/flexBetween'
-import { type User } from '@/models/apiData.types'
+import {  ApiUser } from '@/models/apiData.types'
 
 export interface ProfileAdminDashboardProps {
   alt: string
@@ -9,7 +9,7 @@ export interface ProfileAdminDashboardProps {
   borderRadius: string
   height: string
   width: string
-  userData?: User
+  userData?: ApiUser
   Children?: React.ReactNode
 }
 

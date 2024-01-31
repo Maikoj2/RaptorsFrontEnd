@@ -22,7 +22,7 @@ export const UserEmptyState: ApiUser = {
 
 export const UserLoginEmptystate: UserLogin = {
 
-  status: StatusLogin.NOT_AUTENTICATED,
+  status: StatusLogin.NOT_AUTHENTICATED,
   message: '',
   remerberMe: false,
   Data: {

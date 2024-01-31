@@ -13,7 +13,7 @@ export const DividerHori = styled(Divider)<divider>`
     background-color: transparent;
     ${(props) => {
         switch (props.mode) {
-             case '$ligt':
+             case '$light':
                 return css`
                  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), white, rgba(255, 255, 255, 0));             
             `
@@ -38,7 +38,7 @@ export const DividerVerti = styled(Divider)<divider>`
                 return css`
                 background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
             `
-             case '$ligt':
+             case '$light':
                 return css`
                  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), white, rgba(255, 255, 255, 0));             
             `

@@ -1,6 +1,11 @@
+import { Button } from '@mui/material'
 import styled, { css } from 'styled-components'
 
-export const ButtonCustom = styled.button`
+interface labelProps {
+    $color?: string
+  }
+
+export const ButtonCustom = styled(Button)<labelProps>`
     display: inline-block;
     line-height: 1.4;
     text-align: center;
@@ -14,7 +19,7 @@ export const ButtonCustom = styled.button`
     border-radius: 0.5rem;
     transition: all 0.15s ease-in;
     font-weight: 700;
-    color: ${(props) => props.color || ' #fff'};
+    color: ${(props) => props.$color || ' #fff'};
     
     &:not(:disabled){
         cursor: pointer;

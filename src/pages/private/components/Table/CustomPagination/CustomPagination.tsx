@@ -10,7 +10,9 @@ function Pagination ({
 }: Pick<TablePaginationProps, 'page' | 'onPageChange' | 'className'>) {
   const apiRef = useGridApiContext()
   const pageCount = useGridSelector(apiRef, gridPageCountSelector)
-
+  // const rowIds = apiRef.current.getAllRowIds();
+  // console.log(rowIds);
+  
   return (
 	  <MuiPagination
 		color="primary"

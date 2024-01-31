@@ -9,7 +9,7 @@ const FormNewUser: React.FC<FormNewUserProps> = () => {
   return <Container>
 		<Row>
 			<CartLayout width$={'100%'}>
-				<Card id='CardPdialog'>
+				<Card id='CardDialog'>
 					<CardHeader>
 						<CartTitle >
 							Agregar nuevo usuario
