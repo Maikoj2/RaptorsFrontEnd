@@ -100,8 +100,6 @@ export const useForm = ({ initialValues, validations, onSubmit }: FormOptions) =
     event.preventDefault()
 
     const isValid = await validateForm(formState.values)
-    console.log(isValid);
-    console.log(formState.values);
 
     setFormState((prevState) => ({
       ...prevState,
@@ -124,8 +122,6 @@ export const useForm = ({ initialValues, validations, onSubmit }: FormOptions) =
       ...prevState,
       errors: errorMessages
     }))
-
-    console.log(formState);
   }
 
   const getErrorMessages = (errors: Record<string, string>, touched: Record<string, boolean>,includeUntouchedFields: boolean = false) => {

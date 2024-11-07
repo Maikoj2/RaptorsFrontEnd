@@ -6,7 +6,12 @@ import { Box } from '@mui/material'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { ErrorMsg } from '../../style-components'
-import { CheckBoxInputswitch, CustomInput, LayoutcheckBoxInputswitch } from '../../style-components/Input.style'
+import { CheckBoxInputswitch, CustomInput, LayoutcheckBoxInputswitch,  } from '../../style-components/Input.style'
+
+
+
+
+
 
 const initialValues = {
   email: 'maicol9@jimenez.co', password: '000000'
@@ -27,6 +32,7 @@ const validations = {
 
 const Form = () => {
   const { startLogin } = UseAuthStore()
+
   const { values, errors, touched, handleChange, handleSubmit, handleReset } = useForm({
     initialValues,
     validations,
@@ -35,6 +41,7 @@ const Form = () => {
       startLogin({ email: values.email, password: values.password }, Remenberme)
     }
   })
+  
   const userState = useSelector((state: AppStore) => state.loginUser)
 
   const [Remenberme, setRemenberme] = useState(true)

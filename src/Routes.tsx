@@ -32,11 +32,8 @@ const Routes = () => {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Layout>
-          <SnackbarProvider Components={
-            {
-              customErrorMsg: CustomErrorMsg
-            }
-          }
+          <SnackbarProvider 
+            Components={{customErrorMsg: CustomErrorMsg}}
             preventDuplicate
             maxSnack={3}
             anchorOrigin={{

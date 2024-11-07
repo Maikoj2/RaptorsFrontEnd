@@ -24,21 +24,23 @@ export const Main = () => {
   const [isSidebarOpen, setisSidebarOpen] = useState(isNonMobile)
   const limit = 50; const from = 0
   const DialogOpen: any = (atOpenedDialog !== '') && searchByKey(atOpenedDialog)
-  const { CheckAuthToken } = UseAuthStore()    
+  const { CheckAuthToken } = UseAuthStore()
+  if (validateTokenexpire()) {
+    useEffect(() => {
+      CheckAuthToken();
+      setatOpenedDialog(nameOpenDialg);
+      if (status === StatusData.NO_OBTAINED && !validateTokenexpire()) {
+        getAllUsersDataBase({ limit, from });
+      }
+      if (staffState.status === StatusData.NO_OBTAINED && !validateTokenexpire()) {
+        getDataStaff(limit, from);
+      }
+      if (BaseSalaryState.status === StatusData.NO_OBTAINED && !validateTokenexpire()) {
+        getBaseSalary(limit, from);
+      }
+    }, [status, staffState.status, nameOpenDialg, BaseSalaryState.status]);
 
-  useEffect(() => {
-    validateTokenexpire() && CheckAuthToken();
-    setatOpenedDialog(nameOpenDialg);
-    if (status === StatusData.NO_OBTAINED && !validateTokenexpire()) {
-      getAllUsersDataBase({  limit,  from });
-    }
-    if (staffState.status === StatusData.NO_OBTAINED && !validateTokenexpire()) {
-      getDataStaff(limit, from);
-    }
-    if (BaseSalaryState.status === StatusData.NO_OBTAINED && !validateTokenexpire()) {
-      getBaseSalary(limit, from);
-    }
-  }, [status, staffState.status, nameOpenDialg,BaseSalaryState.status]);
+  }
   return (
     <Box display={isNonMobile ? 'flex' : 'block'} width="100%" height="100%" >
       <CssBaseline />
@@ -48,7 +50,7 @@ export const Main = () => {
         isSidebarOpen={isSidebarOpen}
         setisSidebarOpen={setisSidebarOpen}
       />
-      <Box flexGrow={1} marginLeft='1rem'     width={'100%'}>
+      <Box flexGrow={1} marginLeft='1rem' width={'100%'}>
         <Navbar
           isNonMobile={isNonMobile}
           isSidebarOpen={isSidebarOpen}

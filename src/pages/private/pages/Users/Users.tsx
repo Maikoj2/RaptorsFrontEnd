@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useCallback } from 'react'
 import { type AppStore } from '@/redux/storer'
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
@@ -12,33 +12,37 @@ import { GridRowModel } from '@mui/x-data-grid'
 import { SubjectManager } from '@/utilities';
 export interface UsersProps { }
 
-
 export const addRowSubjectManager = new SubjectManager<any>()
+
 const Users: React.FC<UsersProps> = () => {
- const  { upDateUsersDataBase,  deleteUsersDataBase } =useUserStore()
+  const  { upDateUsersDataBase,  deleteUsersDataBase } =useUserStore()
   const { Data, status } = useSelector((state: AppStore) => state.apiUsers)
   const { UserColumnDef } = useColDataTableUsers();
+
+  const isLoading = status !== 'obtained';
+  
   const [Row, setRow] = useState(Data)
   useEffect(() => {
     setRow(Data)
   }, [Data])
   
-  const UpdateAtion = (data:GridRowModel)=>{
+  const handleUpdateAction = useCallback((data: GridRowModel) => {
     upDateUsersDataBase(data);
-  }
-  const DeleteAtion = (data:string)=>{
-    deleteUsersDataBase(data);
-  }
+  }, [upDateUsersDataBase]);
+  
+  const handleDeleteAction = useCallback((userId: string) => {
+    deleteUsersDataBase(userId);
+  }, [deleteUsersDataBase]);
 
  
   return <Table
     data={Row}
     columns={UserColumnDef}
     NameHeaderTable={NameTables.USERS}
-    loading={status !== 'obtained'}
+    loading={isLoading}
     actions
-    UpdateOnDataBAse={UpdateAtion}
-    DeleteOnDataBAse={DeleteAtion}
+    UpdateOnDataBAse={handleUpdateAction }
+    DeleteOnDataBAse={handleDeleteAction}
 
   />
 
