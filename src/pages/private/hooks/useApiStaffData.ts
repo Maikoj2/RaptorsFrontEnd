@@ -8,7 +8,7 @@ import { AxiosGetAllItems, AxiosSetItem } from '../services/AxiosDatabase.servic
 import { SaveStaffAdapter, allStaffAdapter } from '../pages/Staff/adapters';
 
 
-export const useStaffReducer = () => {
+export const useStaffDataManager  = () => {
 
     const [state, dispatch] = useReducer(StaffReducer, staffDataContextEmptyState);
 

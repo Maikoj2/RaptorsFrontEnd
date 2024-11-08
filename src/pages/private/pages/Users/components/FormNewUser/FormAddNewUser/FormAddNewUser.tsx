@@ -2,7 +2,7 @@ import { dialogCloseSubject$ } from "@/components/Customdialago/Customdialago"
 import { useForm } from "@/hooks"
 import { roles } from "@/models"
 import { CustomInput, ErrorMsg } from "@/pages/Login"
-import { useUserStore } from "@/pages/private/hooks"
+import { useUserDataManager } from "@/pages/private/hooks"
 import { FlexBetween } from "@/pages/private/style-components-private"
 import { ButtonCustom, Label } from "@/style-components"
 import { Box, useTheme } from "@mui/material"
@@ -21,7 +21,7 @@ const initialValues = {
 }
 
 const FormAddNewUser: React.FC<FormAddNewUserProps> = () => {
-	const { AddUsersDataBase } = useUserStore()
+	const { AddUsersDataBase } = useUserDataManager()
 	const { values, errors, touched, handleChange, handleSubmit, handleReset, isValid } = useForm({
 		initialValues,
 		validations: {

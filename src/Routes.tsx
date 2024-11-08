@@ -25,13 +25,13 @@ declare module 'notistack' {
 }
 
 const Routes = () => {
-  const sessionData = useSelector((state: AppStore) => state.loginUser)
+  const {status} = useSelector((state: AppStore) => state.loginUser)
   const Mode = useSelector((state: AppStore) => state.theme.Mode)
   const theme = useMemo(() => createTheme(themeSettings(Mode)), [Mode])
+  const isAuthenticated = status === StatusLogin.AUTHENTICATED;
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Layout>
           <SnackbarProvider 
             Components={{customErrorMsg: CustomErrorMsg}}
             preventDuplicate
@@ -41,16 +41,17 @@ const Routes = () => {
               horizontal: 'left'
             }}
           >
+            <Layout>
             <RoutesWithNotFound>
               <Route path='/' element={<Home />} />
-              <Route path={PublicRoutes.LOGIN} element={<>{(sessionData.status === StatusLogin.AUTHENTICATED) ? <Navigate replace to={`/${PrivateRoutes.PRIVATE}`} /> : <Login />}</>} />
+              <Route path={PublicRoutes.LOGIN} element={<>{(isAuthenticated) ? <Navigate replace to={`/${PrivateRoutes.PRIVATE}`} /> : <Login />}</>} />
               <Route path={PublicRoutes.HOME} element={<Home />} />
               <Route element={<AuthGuard PrivateValditation={true} />}>
                 <Route path={`${PrivateRoutes.PRIVATE}/*`} element={<Private />} />
               </Route>
             </RoutesWithNotFound>
+            </Layout>
           </SnackbarProvider>
-        </Layout>
       </BrowserRouter>
     </ThemeProvider>
   )

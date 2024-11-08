@@ -7,9 +7,9 @@ import {  ApiRoutes } from '@/models/RoutsApi'
 import {  AxiosDeleteAitemuser, AxiosGetallitemsuser,  AxiosSetAitemuser, AxiosUpdateAitemuser } from '../pages/Users/services'
 import { StatusData } from '@/models'
 
-export const useUserStore = () => {
+export const useUserDataManager = () => {
   const dispatch = useDispatch();
-  const Usersinfo = useSelector((state: AppStore) => state.apiUsers);
+  const UserState = useSelector((state: AppStore) => state.apiUsers);
   const clearMessageError = () => {
     setTimeout(() => {
       dispatch(clearErrorMessage(''))
@@ -63,6 +63,6 @@ export const useUserStore = () => {
     AddUsersDataBase,
     upDateUsersDataBase,
     deleteUsersDataBase,
-    Usersinfo
+    UserState
   }
 }

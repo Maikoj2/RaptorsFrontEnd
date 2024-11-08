@@ -9,7 +9,7 @@ import { allBAseSalaryAdacter } from '../pages/Staff/adapters/adacter.BaseSalary
 
 
 
-export const useBaseSalaryReducer = () => {
+export const useBaseSalaryDataManager = () => {
     const [state, dispatch] = useReducer( BaseSalaryReducer, BaseSalaryDataContextEmptyState );
 
     const loadBaseSalary = ({ limit = 50, from = 0 }) => {

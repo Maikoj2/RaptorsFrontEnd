@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useContext, useMemo } from 'react';
-import { useStaffReducer } from '../hooks/useApiStaffData';
+import { useStaffDataManager } from '../hooks/useApiStaffData';
 import { staffDataContext,  } from '../models/apiStaff.types';
-import { useBaseSalaryReducer } from '../hooks/useApiBaseSalaryData';
+import { useBaseSalaryDataManager } from '../hooks/useApiBaseSalaryData';
 import { BaseSalaryDataContext } from '../models/apiSalaryBase.types';
 
 
@@ -24,8 +24,8 @@ interface DataApiContextsTypes {
 export const managerApiDataContext = createContext<DataApiContextsTypes>({} as DataApiContextsTypes)
 
 export const DataApiContextProvider = ({ children }: Props) => {
-    const {staffState, loadStaff,SaveStaff } = useStaffReducer();
-    const {BaseSalaryState, loadBaseSalary} = useBaseSalaryReducer();
+    const {staffState, loadStaff,SaveStaff } = useStaffDataManager ();
+    const {BaseSalaryState, loadBaseSalary} = useBaseSalaryDataManager();
 
     const getDataStaff= ( limit:number, from:number)=> {
         loadStaff({limit, from})

@@ -1,8 +1,8 @@
 import { Box, CssBaseline, useMediaQuery } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Navbar, SideNav, Breadcrumb } from './components'
 import { Outlet } from 'react-router-dom'
-import { useUserStore } from './hooks'
+import { useUserDataManager } from './hooks'
 import { useSelector } from 'react-redux'
 import { type AppStore } from '../../redux/storer'
 import { StatusData } from '@/models'
@@ -15,20 +15,25 @@ import { useManagerApiDataContext, useManagerContext } from '@/pages/private/Con
 import { Footer } from './components/Footer'
 
 export const Main = () => {
-  const { getAllUsersDataBase } = useUserStore()
+  const { getAllUsersDataBase } = useUserDataManager()
   const { status } = useSelector((state: AppStore) => state.apiUsers);
   const { staffState, getDataStaff, BaseSalaryState, getBaseSalary } = useManagerApiDataContext()
   const { nameOpenDialg } = useManagerContext();
   const [atOpenedDialog, setatOpenedDialog] = useState('')
+  const { CheckAuthToken } = UseAuthStore()
+
   const isNonMobile = useMediaQuery('(min-width: 600px)')
   const [isSidebarOpen, setisSidebarOpen] = useState(isNonMobile)
-  const limit = 50; const from = 0
-  const DialogOpen: any = (atOpenedDialog !== '') && searchByKey(atOpenedDialog)
-  const { CheckAuthToken } = UseAuthStore()
-  if (validateTokenexpire()) {
-    useEffect(() => {
-      CheckAuthToken();
+  const limit = 50;
+  const from = 0;
+  // Memoize Dialog Content based on `atOpenedDialog`
+  const DialogOpen = useMemo(() => atOpenedDialog ? searchByKey(atOpenedDialog) : null, [atOpenedDialog])
+
+  useEffect(() => {
+      validateTokenexpire() && CheckAuthToken()
+  
       setatOpenedDialog(nameOpenDialg);
+
       if (status === StatusData.NO_OBTAINED && !validateTokenexpire()) {
         getAllUsersDataBase({ limit, from });
       }
@@ -38,9 +43,9 @@ export const Main = () => {
       if (BaseSalaryState.status === StatusData.NO_OBTAINED && !validateTokenexpire()) {
         getBaseSalary(limit, from);
       }
-    }, [status, staffState.status, nameOpenDialg, BaseSalaryState.status]);
+    
+  }, [status, staffState.status, nameOpenDialg, BaseSalaryState.status]);
 
-  }
   return (
     <Box display={isNonMobile ? 'flex' : 'block'} width="100%" height="100%" >
       <CssBaseline />

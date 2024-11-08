@@ -1,5 +1,5 @@
 import { useManagerApiDataContext } from '../../Context';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, } from 'react';
 import { useColDataTableStuff } from '../../hooks';
 import { NameTables } from '../../models';
 import { Table } from '../../components';
@@ -10,7 +10,7 @@ const FETCH_LIMIT = 50;
 const Staff = () => {
   const { staffState, getDataStaff } = useManagerApiDataContext()
 
-  const staffColumnDef = useMemo(() => useColDataTableStuff().staffColumnDef, []);
+  const {staffColumnDef} =  useColDataTableStuff();
 
   const isLoading = staffState.status !== StatusData.OBTAINED;
   

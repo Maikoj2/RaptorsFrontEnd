@@ -1,5 +1,5 @@
 
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { type AppStore } from '@/redux/storer'
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
@@ -7,17 +7,18 @@ import { Table } from '../../components/Table'
 import { NameTables } from '../../models'
 
 import { useColDataTableUsers } from '../../hooks/useColDataUser'
-import { useUserStore } from '../../hooks'
+import { useUserDataManager } from '../../hooks'
 import { GridRowModel } from '@mui/x-data-grid'
 import { SubjectManager } from '@/utilities';
+
 export interface UsersProps { }
 
 export const addRowSubjectManager = new SubjectManager<any>()
 
 const Users: React.FC<UsersProps> = () => {
-  const  { upDateUsersDataBase,  deleteUsersDataBase } =useUserStore()
+  const  { upDateUsersDataBase,  deleteUsersDataBase } =useUserDataManager()
   const { Data, status } = useSelector((state: AppStore) => state.apiUsers)
-  const { UserColumnDef } = useColDataTableUsers();
+  const  { UserColumnDef }  =   useColDataTableUsers()
 
   const isLoading = status !== 'obtained';
   
