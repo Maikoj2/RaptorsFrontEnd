@@ -1,7 +1,7 @@
-import { type typeWithKey } from '@/models'
+import { type TypeWithKey } from '@/models'
 
 export const getValidationError = (ErrorCode: any) => {
-  const codeMatcher: typeWithKey<string> = {
+  const codeMatcher: TypeWithKey<string> = {
     ERR_BAD_REQUEST: 'Request failed due to invalid data or parameters (status code 401).',
     ERR_NETWORK: 'Network connection error. Please check your connection and try again.',
     INVALID_TOKEN: 'The token is either invalid or has expired. Please reauthenticate.',

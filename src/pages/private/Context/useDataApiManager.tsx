@@ -3,6 +3,8 @@ import { useStaffDataManager } from '../hooks/useApiStaffData';
 import { staffDataContext,  } from '../models/apiStaff.types';
 import { useBaseSalaryDataManager } from '../hooks/useApiBaseSalaryData';
 import { BaseSalaryDataContext } from '../models/apiSalaryBase.types';
+// import { useUserDataManager } from '../hooks';
+// import { UsersData } from '../models';
 
 
 
@@ -11,9 +13,17 @@ interface Props {
 }
 
 interface DataApiContextsTypes {
+    // user data manager
+    // UserState: UsersData, 
+    // getDataUsers: (limit: number,  from: number)=> void, 
+    // addUser: (data:any)=> void, 
+    // updateUser: (data:any)=> void, 
+    // deleteUser: (data:any)=> void, 
+    // staff data
+    staffState: staffDataContext,
     getDataStaff: (limit:number, from:number) => void,
     addStaff: (data:any) => void,
-    staffState: staffDataContext,
+    // Base salary data
     getBaseSalary: (limit:number, from:number) => void,
     BaseSalaryState: BaseSalaryDataContext,
 
@@ -24,27 +34,59 @@ interface DataApiContextsTypes {
 export const managerApiDataContext = createContext<DataApiContextsTypes>({} as DataApiContextsTypes)
 
 export const DataApiContextProvider = ({ children }: Props) => {
+    // const { UserState, getAllUsersDataBase, AddUsersDataBase, upDateUsersDataBase, deleteUsersDataBase } =useUserDataManager();
     const {staffState, loadStaff,SaveStaff } = useStaffDataManager ();
     const {BaseSalaryState, loadBaseSalary} = useBaseSalaryDataManager();
+    
 
+    // Data User actions 
+    // const getDataUsers= ( limit:number, from:number)=> {
+    //     getAllUsersDataBase({limit, from})
+    // }
+    // const addUser  =(data: any) => {
+    //     AddUsersDataBase(data)
+    // }
+    // const updateUser  =(data: any) => {
+    //     upDateUsersDataBase(data)
+    // }
+    // const deleteUser  =(data: any) => {
+    //     deleteUsersDataBase(data)
+    // }
+
+    // Data staff actions
     const getDataStaff= ( limit:number, from:number)=> {
+        console.log("Fetching Base Salary Data...");
         loadStaff({limit, from})
     }
     const addStaff= ( data:any)=> {
-        console.log('in');
-        
         SaveStaff(data)
     }
+    // Data base salary actions
     const getBaseSalary= ( limit:number, from:number)=> {
         loadBaseSalary({limit, from})
     }
     const memoizedValues = useMemo(() => ({
+        // UserState,
+        // getDataUsers,
+        // addUser,
+        // updateUser,
+        // deleteUser,
         staffState,
         getDataStaff,
         addStaff,
         BaseSalaryState,
         getBaseSalary
-      }), [staffState, getDataStaff, BaseSalaryState, getBaseSalary])
+      }), 
+      [
+        staffState, 
+        // getDataStaff, 
+        BaseSalaryState, 
+        // getBaseSalary,
+        // UserState,
+        // addUser,
+        // updateUser,
+        // deleteUser
+    ])
 
 
     return <managerApiDataContext.Provider value={memoizedValues}>

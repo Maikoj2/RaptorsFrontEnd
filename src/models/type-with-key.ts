@@ -1,1 +1,1 @@
-export type typeWithKey<T> = Record<string, T>
+export type TypeWithKey<T> = Record<string, T>

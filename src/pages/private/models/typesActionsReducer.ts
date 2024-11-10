@@ -1,8 +1,9 @@
-import { typeWithKey } from "@/models";
+import { TypeWithKey } from "@/models";
 import { BaseSalaryDataContext } from "./apiSalaryBase.types";
 import { staffDataContext } from "./apiStaff.types";
+import { UsersData } from "./apiUsers.types";
 
-export  const StaffActionReducers:typeWithKey<string> = {
+export  const StaffActionReducers:TypeWithKey<string> = {
     GET_ALL_STAFF: '[staff] getAllStaff',
     SET_STAFF: '[staff] setStaff',
     UPDATE_STAFF: '[staff] updateStaff',
@@ -14,6 +15,15 @@ export  const BaseSalaryActionsReducers = {
     CHECKING: '[staff] CHECKING',
 
 }
+export  const UsersActionReducers:TypeWithKey<string> = {
+  GET_ALL_USERS: '[Users] getAllUsers',
+  SET_USER: '[Users] setUser',
+  UPDATE_USER: '[Users] updateUser',
+  DELETE_USER: '[Users] deleteUser',
+  CHECKING_USER: '[Users] CHECKING',
+}
+// Definir una interfaz genérica para las acciones
+
 
 
   export interface StaffActions {
@@ -26,6 +36,12 @@ export  const BaseSalaryActionsReducers = {
     type: string;
     payload: {
       StaffContext: BaseSalaryDataContext ;
+    };
+  }
+  export interface UsersActions {
+    type: string;
+    payload: {
+      UserContext: UsersData ;
     };
   }
   

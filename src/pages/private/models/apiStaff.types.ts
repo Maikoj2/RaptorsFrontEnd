@@ -161,7 +161,7 @@ export const staffDataEmptyState :DataApp[] = [{
 
 export const staffDataContextEmptyState: staffDataContext ={
     status: StatusData.NO_OBTAINED,
-    message: 'string',
+    message: '',
     Data: staffDataEmptyState,
     total: 0
   }

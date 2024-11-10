@@ -13,6 +13,8 @@ export const useStaffDataManager  = () => {
     const [state, dispatch] = useReducer(StaffReducer, staffDataContextEmptyState);
 
     const loadStaff = ({ limit = 50, from = 0 }) => {
+        
+        
         dispatch({
                 type: StaffActionReducers.CHECKING_STAFF,
                 payload: {
@@ -21,6 +23,7 @@ export const useStaffDataManager  = () => {
             })
             AxiosGetAllItems(ApiRoutes.API_STAFF, { params: { limit, from } }, allStaffAdapter )
             .then(( DataFromDatabase )=> {
+                    console.log(DataFromDatabase);
                     dispatch({
                         type: StaffActionReducers.GET_ALL_STAFF,
                         payload: {

@@ -1,8 +1,8 @@
 import { Error, Info, Success, warnning } from './svgUrl'
-import { type typeWithKey } from './type-with-key'
+import { type TypeWithKey } from './type-with-key'
 
 export const svgMatcher = (matchesCode: any) => {
-  const svgImage: typeWithKey<string> = {
+  const svgImage: TypeWithKey<string> = {
     Success,
     Error,
     Warnning: warnning,
@@ -11,7 +11,7 @@ export const svgMatcher = (matchesCode: any) => {
   return svgImage[matchesCode]
 }
 export const bodercolorMatcher = (matchesCode: any) => {
-  const colorImage: typeWithKey<string> = {
+  const colorImage: TypeWithKey<string> = {
     Success: 'hsl(120, 67%, 74%)',
     Error: 'hsl(0, 67%, 74%)',
     Warnning: 'hsl(54, 67%, 74%)',

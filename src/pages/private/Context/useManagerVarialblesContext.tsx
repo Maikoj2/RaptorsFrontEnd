@@ -1,14 +1,14 @@
-import { typeWithKey } from '@/models';
+import { TypeWithKey } from '@/models';
 import {ReactNode, createContext, useContext, useState, Dispatch} from 'react'
 
  interface Props {
   children: ReactNode
 }
 interface RowModesModelContextType {
-  setSelectvalueContx: Dispatch<React.SetStateAction<typeWithKey<string>>>,
-  SelectvalueContx:typeWithKey<string>,
-  setnameOpenDialg: Dispatch<React.SetStateAction<string>>,
-  nameOpenDialg:string
+  setSelectvalueContx: Dispatch<React.SetStateAction<TypeWithKey<string>>>,
+  SelectvalueContx:TypeWithKey<string>,
+  setnameOpenDialog: Dispatch<React.SetStateAction<string>>,
+  nameOpenDialog:string
   setConfirm: Dispatch<React.SetStateAction<boolean>>,
   confirm:boolean
 }
@@ -18,15 +18,15 @@ export const managerContext = createContext<RowModesModelContextType>({}as RowMo
 export const DataContextProvider = ({ children }: Props) => {
 
 
-  const [SelectvalueContx, setSelectvalueContx] = useState<typeWithKey<string>>({})
-  const [ nameOpenDialg,setnameOpenDialg] = useState<string>('')
+  const [SelectvalueContx, setSelectvalueContx] = useState<TypeWithKey<string>>({})
+  const [ nameOpenDialog,setnameOpenDialog] = useState<string>('')
   const [ confirm,setConfirm] = useState<boolean>(false)
 
   return <managerContext.Provider value={{ 
     SelectvalueContx,
     setSelectvalueContx,
-    nameOpenDialg, 
-    setnameOpenDialg,
+    nameOpenDialog, 
+    setnameOpenDialog,
     confirm,
     setConfirm
   }}>{children}</managerContext.Provider>

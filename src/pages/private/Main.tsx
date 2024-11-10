@@ -18,9 +18,9 @@ export const Main = () => {
   const { getAllUsersDataBase } = useUserDataManager()
   const { status } = useSelector((state: AppStore) => state.apiUsers);
   const { staffState, getDataStaff, BaseSalaryState, getBaseSalary } = useManagerApiDataContext()
-  const { nameOpenDialg } = useManagerContext();
+  const { nameOpenDialog } = useManagerContext();
   const [atOpenedDialog, setatOpenedDialog] = useState('')
-  const { CheckAuthToken } = UseAuthStore()
+
 
   const isNonMobile = useMediaQuery('(min-width: 600px)')
   const [isSidebarOpen, setisSidebarOpen] = useState(isNonMobile)
@@ -30,21 +30,19 @@ export const Main = () => {
   const DialogOpen = useMemo(() => atOpenedDialog ? searchByKey(atOpenedDialog) : null, [atOpenedDialog])
 
   useEffect(() => {
-      validateTokenexpire() && CheckAuthToken()
-  
-      setatOpenedDialog(nameOpenDialg);
+      setatOpenedDialog(nameOpenDialog);
 
-      if (status === StatusData.NO_OBTAINED && !validateTokenexpire()) {
+      if (status === StatusData.NO_OBTAINED ) {
         getAllUsersDataBase({ limit, from });
       }
-      if (staffState.status === StatusData.NO_OBTAINED && !validateTokenexpire()) {
+      if (staffState.status === StatusData.NO_OBTAINED ) {
         getDataStaff(limit, from);
       }
-      if (BaseSalaryState.status === StatusData.NO_OBTAINED && !validateTokenexpire()) {
-        getBaseSalary(limit, from);
-      }
+      // if (BaseSalaryState.status === StatusData.NO_OBTAINED ) {
+      //   getBaseSalary(limit, from);
+      // }
     
-  }, [status, staffState.status, nameOpenDialg, BaseSalaryState.status]);
+  }, [status]);
 
   return (
     <Box display={isNonMobile ? 'flex' : 'block'} width="100%" height="100%" >

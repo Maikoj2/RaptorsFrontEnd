@@ -73,12 +73,14 @@ const Table: React.FC<TableProps> = ({
         if (isInEditMode) {
           return [
             <GridActionsCellItem
+              key={`${id}-save`}
               icon={<FaSave />}
               label="Save"
               onClick={handleSaveClick(id)}
 
             />,
             <GridActionsCellItem
+              key={`${id}-cancel`}
               icon={<FaTimes />}
               label="Cancel"
               className="textPrimary"
@@ -89,6 +91,7 @@ const Table: React.FC<TableProps> = ({
         }
         return [
           <GridActionsCellItem
+            key={`${id}-edit`}
             icon={<FaEdit />}
             label="Edit"
             className="textPrimary"
@@ -97,6 +100,7 @@ const Table: React.FC<TableProps> = ({
           />,
           <GridActionsCellItem
             icon={<FaTrashAlt />}
+            key={`${id}-delete`}
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
@@ -178,7 +182,7 @@ const Table: React.FC<TableProps> = ({
           }
         }}
        
-        getRowId={(row) => row._id}
+        getRowId={(row) => row._id || row.id}
         sx={{
           '&.MuiDataGrid-root': {
             borderRadius: '2rem'

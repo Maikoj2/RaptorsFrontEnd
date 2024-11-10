@@ -6,8 +6,9 @@ import { staffDataContext } from "../../models";
 
 export const StaffReducer = (state: staffDataContext, action: StaffActions): any => {
 
+
     switch (action.type) {
-        case StaffActionReducers.GET_ALL_STAFF:
+        case StaffActionReducers.GET_ALL_STAFF:        
             return {
                 Data: action.payload.StaffContext.Data,
                 status: StatusData.OBTAINED,

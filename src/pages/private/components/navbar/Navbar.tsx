@@ -1,4 +1,4 @@
-import { useState, type Dispatch, type SetStateAction } from 'react'
+import { forwardRef, useState, type Dispatch, type SetStateAction } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SetMode } from '../../../../redux/slices/theme.slice'
 import { type AppStore } from '@/redux/storer'
@@ -31,19 +31,20 @@ interface sideBarProps {
   isNonMobile: boolean
 }
 
-const Navbar: React.FunctionComponent<sideBarProps> = ({ isSidebarOpen, setisSidebarOpen, isNonMobile }) => {
+const Navbar= forwardRef<HTMLDivElement, sideBarProps>(({ isSidebarOpen, setisSidebarOpen, isNonMobile },ref) => {
   const user = useSelector((state: AppStore) => state.loginUser)
   const theme: any = useTheme()
   const [anchorEl, setAnchorEl] = useState(null)
   const { LogOut } = UseAuthStore()
   const { setThemeMode } = UseThemeMode()
   const isOpen = Boolean(anchorEl)
-  const handleClick = (event: any) => { console.log(event); setAnchorEl(event.currentTarget) }
+  const handleClick = (event: any) => { setAnchorEl(event.currentTarget) }
   const handleClose = () => { setAnchorEl(null) }
 
   return (
 
     <AppBar
+    ref={ref}
       sx={{
         position: 'static',
         background: 'none',
@@ -140,5 +141,5 @@ const Navbar: React.FunctionComponent<sideBarProps> = ({ isSidebarOpen, setisSid
 
     </AppBar>
   )
-}
+})
 export default Navbar

@@ -22,11 +22,15 @@ type FormValues =  z.infer<typeof schema>;
 const CustomForm2 = () => {
   const { startLogin } = UseAuthStore() 
  const {control, handleSubmit, formState: { errors, isValid   }} = useForm<FormValues>({
-    resolver: zodResolver(schema)
+    resolver: zodResolver(schema),
+    defaultValues: {
+      email: 'maicol9@jimenez.co',
+      password: '000000',
+    },
  })
  const userState = useSelector((state: AppStore) => state.loginUser)
 
- const [Remenberme, setRemenberme] = useState(false ) 
+ const [Remenberme, setRemenberme] = useState(true ) 
  const onSubmit: SubmitHandler<FormValues> = (data) => {
 
   if (isValid) startLogin({ email: data.email, password: data.password }, Remenberme)
@@ -35,7 +39,7 @@ const CustomForm2 = () => {
     setRemenberme(event.target.checked)
   }
  return (
-    <form onSubmit={handleSubmit(async (e: any) => { await onSubmit(e) })}>
+    <form onSubmit={handleSubmit(onSubmit)}>
         <InputForm 
             name='email' 
             control={control} 

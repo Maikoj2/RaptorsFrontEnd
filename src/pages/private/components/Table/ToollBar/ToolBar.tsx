@@ -12,9 +12,9 @@ export interface ToollBarProps {
 
 const ToolBar: React.FC<ToollBarProps> = ({ NameHeaderTable = '' }) => {
   const theme: any = useTheme();
-  const { setnameOpenDialg } = useManagerContext();
+  const { setnameOpenDialog } = useManagerContext();
   const HandelClick = () => {
-	setnameOpenDialg(NameHeaderTable)
+	setnameOpenDialog(NameHeaderTable)
     dialogOpenSubject$.setSubject = true
   }
   return (
