@@ -15,11 +15,11 @@ export const AuthGuard = ({ PrivateValditation }: props) => {
   const userState = useSelector((state: AppStore) => state.loginUser)
   const { CheckAuthToken } = UseAuthStore()
   const ExpiredToken = validateTokenexpire();
-  if (ExpiredToken){
+  
     useEffect(() => {
-     CheckAuthToken()
-    }, [CheckAuthToken])
-  } 
+      ExpiredToken && CheckAuthToken()
+    }, [CheckAuthToken, ExpiredToken]);
+
   return (userState.status === StatusLogin.AUTHENTICATED)
     ? (PrivateValditation
         ? (<Outlet />)
