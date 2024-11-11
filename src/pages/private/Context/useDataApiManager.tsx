@@ -3,8 +3,8 @@ import { useStaffDataManager } from '../hooks/useApiStaffData';
 import { staffDataContext,  } from '../models/apiStaff.types';
 import { useBaseSalaryDataManager } from '../hooks/useApiBaseSalaryData';
 import { BaseSalaryDataContext } from '../models/apiSalaryBase.types';
-// import { useUserDataManager } from '../hooks';
-// import { UsersData } from '../models';
+import { useUserDataManager } from '../hooks';
+import { UsersData } from '../models';
 
 
 
@@ -14,11 +14,11 @@ interface Props {
 
 interface DataApiContextsTypes {
     // user data manager
-    // UserState: UsersData, 
-    // getDataUsers: (limit: number,  from: number)=> void, 
-    // addUser: (data:any)=> void, 
-    // updateUser: (data:any)=> void, 
-    // deleteUser: (data:any)=> void, 
+    UserState: UsersData, 
+    getDataUsers: (limit: number,  from: number)=> void, 
+    addUser: (data:any)=> void, 
+    updateUser: (data:any)=> void, 
+    deleteUser: (data:any)=> void, 
     // staff data
     staffState: staffDataContext,
     getDataStaff: (limit:number, from:number) => void,
@@ -34,27 +34,27 @@ interface DataApiContextsTypes {
 export const managerApiDataContext = createContext<DataApiContextsTypes>({} as DataApiContextsTypes)
 
 export const DataApiContextProvider = ({ children }: Props) => {
-    // const { UserState, getAllUsersDataBase, AddUsersDataBase, upDateUsersDataBase, deleteUsersDataBase } =useUserDataManager();
+    const { UserState, getAllUsersDataBase, AddUsersDataBase, upDateUsersDataBase, deleteUsersDataBase } =useUserDataManager();
     const {staffState, loadStaff,SaveStaff } = useStaffDataManager ();
     const {BaseSalaryState, loadBaseSalary} = useBaseSalaryDataManager();
     
 
     // Data User actions 
-    // const getDataUsers= ( limit:number, from:number)=> {
-    //     getAllUsersDataBase({limit, from})
-    // }
-    // const addUser  =(data: any) => {
-    //     AddUsersDataBase(data)
-    // }
-    // const updateUser  =(data: any) => {
-    //     upDateUsersDataBase(data)
-    // }
-    // const deleteUser  =(data: any) => {
-    //     deleteUsersDataBase(data)
-    // }
+    const getDataUsers= ( limit:number=50, from:number=0 )=> {
+        getAllUsersDataBase({limit, from})
+    }
+    const addUser  =(data: any) => {
+        AddUsersDataBase(data)
+    }
+    const updateUser  =(data: any) => {
+        upDateUsersDataBase(data)
+    }
+    const deleteUser  =(data: any) => {
+        deleteUsersDataBase(data)
+    }
 
     // Data staff actions
-    const getDataStaff= ( limit:number, from:number)=> {
+    const getDataStaff= ( limit:number=50, from:number=0)=> {
         console.log("Fetching Base Salary Data...");
         loadStaff({limit, from})
     }
@@ -62,15 +62,15 @@ export const DataApiContextProvider = ({ children }: Props) => {
         SaveStaff(data)
     }
     // Data base salary actions
-    const getBaseSalary= ( limit:number, from:number)=> {
+    const getBaseSalary= ( limit:number=50, from:number=0)=> {
         loadBaseSalary({limit, from})
     }
     const memoizedValues = useMemo(() => ({
-        // UserState,
-        // getDataUsers,
-        // addUser,
-        // updateUser,
-        // deleteUser,
+        UserState,
+        getDataUsers,
+        addUser,
+        updateUser,
+        deleteUser,
         staffState,
         getDataStaff,
         addStaff,
@@ -79,13 +79,13 @@ export const DataApiContextProvider = ({ children }: Props) => {
       }), 
       [
         staffState, 
-        // getDataStaff, 
+        getDataStaff, 
         BaseSalaryState, 
-        // getBaseSalary,
-        // UserState,
-        // addUser,
-        // updateUser,
-        // deleteUser
+        getBaseSalary,
+        UserState,
+        addUser,
+        updateUser,
+        deleteUser
     ])
 
 
