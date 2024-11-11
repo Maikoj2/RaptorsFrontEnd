@@ -38,7 +38,7 @@ export interface TableProps {
 
 
 const Table: React.FC<TableProps> = ({
-  data,
+  data ,
   columns,
   NameHeaderTable,
   loading,
@@ -48,7 +48,7 @@ const Table: React.FC<TableProps> = ({
 }) => {
   const theme: any = useTheme()
   const { Data } = useSelector((state: AppStore) => state.loginUser)
-  // const { setnameOpenDialg } = useManagerContext();
+   const { setnameOpenDialog } = useManagerContext();
   const [rows, setRows] = useState(data);
   // const [confirmdeleted, setconfimdeleted] = useState(false);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
@@ -128,13 +128,13 @@ const Table: React.FC<TableProps> = ({
 
 
   const handleDeleteClick = (id: GridRowId) => () => {
-    // setnameOpenDialg(nameModals.CONFIRMACION)
+      setnameOpenDialog(nameModals.CONFIRMACION)
     DeleteOnDataBAse!(id as string);
-    // dialogOpenSubject$.setSubject = true 
+     dialogOpenSubject$.setSubject = true 
       if (Data.user._id !== id) {
         setRows(rows.filter((row: ApiUser) => row._id !== id));
       }
-    // }
+     
   };
 
   const handleCancelClick = (id: GridRowId) => () => {
@@ -182,7 +182,7 @@ const Table: React.FC<TableProps> = ({
           }
         }}
        
-        getRowId={(row) => row._id || row.id}
+        getRowId={(row) => row._id || Math.random().toString(36).substr(2, 9)}
         sx={{
           '&.MuiDataGrid-root': {
             borderRadius: '2rem'
