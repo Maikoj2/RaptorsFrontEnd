@@ -158,7 +158,7 @@
 *::after {
   box-sizing: border-box;
   scrollbar-width: auto;
-  scrollbar-color: #EF4405 #FC9772;
+  /* scrollbar-color: #EF4405 #FC9772; */
 
 }
 

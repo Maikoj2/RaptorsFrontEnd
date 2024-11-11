@@ -2,12 +2,13 @@ import { LocalStorageType } from '@/models'
 import { getLocalStorage } from './localStorage.utilite'
 
 export const validateTokenexpire = () => {
-  if (!localStorage.getItem(LocalStorageType.TOKEN_DATE_CREATED)) return false
-  const dateLastLogin = getLocalStorage(LocalStorageType.TOKEN_DATE_CREATED)
-  const MinutesPass: number = new Date(new Date().getTime() - dateLastLogin).getMinutes()
-  console.log(MinutesPass);
-  
-  if (MinutesPass >= 60) return true
+  const tokenCreationDate = getLocalStorage(LocalStorageType.TOKEN_DATE_CREATED);
+  if (!tokenCreationDate) return false
 
-  return false
+  const now = new Date().getTime();
+
+  const MinutesPassed: number = (now - tokenCreationDate) /(1000 *60);
+  console.log(MinutesPassed);
+  
+  return MinutesPassed >= 60
 }

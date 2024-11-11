@@ -7,6 +7,7 @@ import { FlexBetween } from "@/pages/private/style-components-private"
 import { ButtonCustom, Label } from "@/style-components"
 import { Box, useTheme } from "@mui/material"
 import { CustomSelect } from "../CustomSelect"
+import { useManagerApiDataContext } from "@/pages/private/Context"
 
 
 export interface FormAddNewUserProps { }
@@ -21,7 +22,7 @@ const initialValues = {
 }
 
 const FormAddNewUser: React.FC<FormAddNewUserProps> = () => {
-	const { AddUsersDataBase } = useUserDataManager()
+	const { UserState:{Data,status}, addUser  } = useManagerApiDataContext()
 	const { values, errors, touched, handleChange, handleSubmit, handleReset, isValid } = useForm({
 		initialValues,
 		validations: {
@@ -58,7 +59,7 @@ const FormAddNewUser: React.FC<FormAddNewUserProps> = () => {
 			}
 		},
 		onSubmit: ({ Names, email, password, img, role }: any) => {
-			AddUsersDataBase({ Names, email, password, img, role })
+			addUser({ Names, email, password, img, role })
 		}
 	})
 	const handleClic = () => {

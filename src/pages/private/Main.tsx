@@ -2,22 +2,15 @@ import { Box, CssBaseline, useMediaQuery } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
 import { Navbar, SideNav, Breadcrumb } from './components'
 import { Outlet } from 'react-router-dom'
-import { useUserDataManager } from './hooks'
-import { useSelector } from 'react-redux'
-import { type AppStore } from '../../redux/storer'
 import { StatusData } from '@/models'
-
-import { UseAuthStore } from '@/hooks'
-import { validateTokenexpire } from '@/utilities'
 import { Customdialago } from '@/components'
 import { searchByKey } from '@/helpers'
 import { useManagerApiDataContext, useManagerContext } from '@/pages/private/Context';
 import { Footer } from './components/Footer'
 
 export const Main = () => {
-  const { getAllUsersDataBase } = useUserDataManager()
-  const { status } = useSelector((state: AppStore) => state.apiUsers);
-  const { staffState, getDataStaff, BaseSalaryState, getBaseSalary } = useManagerApiDataContext()
+
+  const { staffState, getDataStaff, BaseSalaryState, getBaseSalary, UserState ,getDataUsers} = useManagerApiDataContext()
   const { nameOpenDialog } = useManagerContext();
   const [atOpenedDialog, setatOpenedDialog] = useState('')
 
@@ -26,14 +19,20 @@ export const Main = () => {
   const [isSidebarOpen, setisSidebarOpen] = useState(isNonMobile)
   const limit = 50;
   const from = 0;
-  // Memoize Dialog Content based on `atOpenedDialog`
+  // const DialogOpen: any = (atOpenedDialog !== '') && searchByKey(atOpenedDialog)
   const DialogOpen = useMemo(() => atOpenedDialog ? searchByKey(atOpenedDialog) : null, [atOpenedDialog])
-
+  
+  
+  const layoutStyle = {
+    display: isNonMobile ? 'flex' : 'block',
+    width: '100%',
+    height: '100%'
+};
   useEffect(() => {
       setatOpenedDialog(nameOpenDialog);
 
-      if (status === StatusData.NO_OBTAINED ) {
-        getAllUsersDataBase({ limit, from });
+      if (UserState.status === StatusData.NO_OBTAINED ) {
+        getDataUsers(limit, from);
       }
       if (staffState.status === StatusData.NO_OBTAINED ) {
         getDataStaff(limit, from);
@@ -42,10 +41,10 @@ export const Main = () => {
       //   getBaseSalary(limit, from);
       // }
     
-  }, [status]);
+  }, [getDataUsers, getDataStaff,nameOpenDialog]);
 
   return (
-    <Box display={isNonMobile ? 'flex' : 'block'} width="100%" height="100%" >
+    <Box display={layoutStyle} >
       <CssBaseline />
       <SideNav
         isNonMobile={isNonMobile}
@@ -53,7 +52,13 @@ export const Main = () => {
         isSidebarOpen={isSidebarOpen}
         setisSidebarOpen={setisSidebarOpen}
       />
-      <Box flexGrow={1} marginLeft='1rem' width={'100%'}>
+      <Box flexGrow={1} 
+      marginLeft={isSidebarOpen ? '1rem' : '0'} 
+      width={isSidebarOpen ? `calc(100% - 15.625rem)` : '100%'}
+      sx={{
+        transition: 'all 0.3s ease'
+      }}
+      >
         <Navbar
           isNonMobile={isNonMobile}
           isSidebarOpen={isSidebarOpen}

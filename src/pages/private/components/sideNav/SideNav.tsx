@@ -106,6 +106,7 @@ const sidebar: React.FunctionComponent<sideBarProps> = ({ setisSidebarOpen, isSi
 
           sx={{
             width: drawerWidth,
+            transition: 'width 0.6s ease',
             '& .MuiDrawer-paper': {
               color: theme.palette.secondary[200],
 
@@ -120,7 +121,7 @@ const sidebar: React.FunctionComponent<sideBarProps> = ({ setisSidebarOpen, isSi
             boxShadow: 'none',
             overflow: 'hidden',
             touchAction: 'auto',
-            transition: 'all 0.2s ease-in-out',
+            transition: 'all 0.3s ease',
             borderRadius: '1rem',
             m: '1rem 0 1rem 1rem',
             backgroundColor: !isNonMobile ? theme.palette.background.alt : 'transparent'

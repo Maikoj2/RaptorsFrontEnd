@@ -21,6 +21,7 @@ export  const UsersActionReducers:TypeWithKey<string> = {
   UPDATE_USER: '[Users] updateUser',
   DELETE_USER: '[Users] deleteUser',
   CHECKING_USER: '[Users] CHECKING',
+  CLEAR_MESSAGE: '[Users] CLEAR',
 }
 // Definir una interfaz genérica para las acciones
 
