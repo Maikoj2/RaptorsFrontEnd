@@ -21,9 +21,7 @@ export const AuthGuard = ({ PrivateValditation }: props) => {
     }, [CheckAuthToken, ExpiredToken]);
 
   return (userState.status === StatusLogin.AUTHENTICATED)
-    ? (PrivateValditation
-        ? (<Outlet />)
-        : (<Navigate replace to={PrivateRoutes.PRIVATE} />))
+    ? (PrivateValditation ? (<Outlet />): (<Navigate replace to={PrivateRoutes.PRIVATE} />))
     : (<Navigate replace to={PublicRoutes.LOGIN} />)
 }
 

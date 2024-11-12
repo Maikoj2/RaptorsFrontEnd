@@ -40,7 +40,7 @@ export const useUserDataManager = () => {
   const upDateUsersDataBase = async (Data: any) => {
     delete Data.isNew;
     console.log(Data);
-    dispatch(chackingDataBase());
+    DispatchAction(UsersActionReducers.CHECKING,{UserContext:UserEmptyState});
     AxiosUpdateAitemuser(`${ApiRoutes.API_USER}/${Data._id}`, Data)
       .then((data: any) => {
 

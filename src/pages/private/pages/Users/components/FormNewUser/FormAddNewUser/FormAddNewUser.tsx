@@ -1,5 +1,5 @@
 import { dialogCloseSubject$ } from "@/components/Customdialago/Customdialago"
-import { useForm } from "@/hooks"
+// import { useForm } from "@/hooks"
 import { roles } from "@/models"
 import { CustomInput, ErrorMsg } from "@/pages/Login"
 import { useUserDataManager } from "@/pages/private/hooks"
@@ -8,11 +8,15 @@ import { ButtonCustom, Label } from "@/style-components"
 import { Box, useTheme } from "@mui/material"
 import { CustomSelect } from "../CustomSelect"
 import { useManagerApiDataContext } from "@/pages/private/Context"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { NewUserSchema, FormUserValues } from '../../../models/SchemaZod';
+import { InputForm } from "@/pages/Login/components/CustomForm/Components"
 
 
 export interface FormAddNewUserProps { }
 
-const initialValues = {
+const initialUserValues = {
 	Names: '',
 	email: '',
 	password: '',
@@ -21,134 +25,93 @@ const initialValues = {
 	role: ''
 }
 
-const FormAddNewUser: React.FC<FormAddNewUserProps> = () => {
-	const { UserState:{Data,status}, addUser  } = useManagerApiDataContext()
-	const { values, errors, touched, handleChange, handleSubmit, handleReset, isValid } = useForm({
-		initialValues,
-		validations: {
-			Names: {
-				validators: [(value: any) => value.length > 0],
-				errorMessages: ['The name is required']
-			},
-			email: {
-				validators: [
-					(value: any) => value.length > 0,
-					(value: any) => /\S+@\S+\.\S+/.test(value)
-				],
-				errorMessages: ['The email is required', 'The email is not valid']
-			},
-			password: {
-				validators: [
-					(value: any) => value.length > 0,
-					(value: any) => value.length >= 8
-				],
-				errorMessages: ['The password is required', 'The password must be at least 8 characters']
-			},
-			repeatPassword: {
-				validators: [
-					(value: any) => value.length > 0,
-					(value: any) => value === values.password
-				],
-				errorMessages: ['The password must be repeated', 'The passwords do not match']
-			},
-			role: {
-				validators: [
-					(value: any) => value !== ''
-				],
-				errorMessages: ['The role must be select one option']
-			}
-		},
-		onSubmit: ({ Names, email, password, img, role }: any) => {
-			addUser({ Names, email, password, img, role })
-		}
+const FormAddNewUser = () => {
+	const { UserState: { Data, status }, addUser } = useManagerApiDataContext()
+	const { control, handleSubmit, reset, formState: { errors, isValid } } = useForm<FormUserValues>({
+		resolver: zodResolver(NewUserSchema),
+		defaultValues: initialUserValues,
 	})
+	const roleOptions = [
+		{ value: roles.ADMIN, label: 'Administrador' },
+		{ value: roles.USER, label: 'Usuario' },
+		{ value: roles.TEACHER, label: 'Profesor' }
+	]
+	const onSubmit: SubmitHandler<FormUserValues> = (data) => {
+		isValid && addUser(data);
+	}
 	const handleClic = () => {
-		setTimeout(() => {
-			handleReset()
-		}, 10)
-		dialogCloseSubject$.setSubject = true
+		if (isValid) {
+			setTimeout(() => {
+				reset()
+			}, 10)
+			dialogCloseSubject$.setSubject = true
+		}
 	}
 
 	const theme: any = useTheme()
 	return (
-		<form onSubmit={async (e) => { await handleSubmit(e) }}>
-			<Label $cl={theme.palette.neutral[100]}>Nombre Completo</Label>
-			<Box marginBottom={'1rem'}>
-				<CustomInput
-					type="text"
-					placeholder="Nombres..."
-					name="Names"
-					value={values.Names}
-					onChange={handleChange}
-					$backgroundColor={theme.palette.background.alt}
-					$cl={theme.palette.neutral[100]}
-				/>
-				{touched.Names && errors.Names && <ErrorMsg>{errors.Names}</ErrorMsg>}
-			</Box>
-			<Label $cl={theme.palette.neutral[100]}>E-mail</Label>
-			<Box marginBottom={'1rem'}>
-				<CustomInput
-					type="email"
-					placeholder="Examples@example.com"
-					name="email"
-					value={values.email}
-					onChange={handleChange}
-					$backgroundColor={theme.palette.background.alt}
-					$cl={theme.palette.neutral[100]}
-				/>
-				{touched.email && errors.email && <ErrorMsg>{errors.email}</ErrorMsg>}
-			</Box>
-			<Label $cl={theme.palette.neutral[100]}>Contraseña</Label>
-			<Box marginBottom={'1rem'}>
-				<CustomInput
-					type="password"
-					placeholder=""
-					name="password"
-					value={values.password}
-					onChange={handleChange}
-					$backgroundColor={theme.palette.background.alt}
-					$cl={theme.palette.neutral[100]}
-				/>
-				{touched.password && errors.password && <ErrorMsg>{errors.password}</ErrorMsg>}
-			</Box>
-			<Label $cl={theme.palette.neutral[100]}>Repita Contraseña</Label>
-			<Box marginBottom={'1rem'}>
-				<CustomInput
-					type="password"
-					placeholder=""
-					name="repeatPassword"
-					value={values.repeatPassword}
-					onChange={handleChange}
-					$backgroundColor={theme.palette.background.alt}
-					$cl={theme.palette.neutral[100]}
-				/>
-				{touched.repeatPassword && errors.repeatPassword && <ErrorMsg>{errors.repeatPassword}</ErrorMsg>}
-			</Box>
+		<form onSubmit={handleSubmit(onSubmit)}>
+			<InputForm
+				name="Names"
+				control={control}
+				type="text"
+				label="Nombre Completo"
+				$cl={theme.palette.neutral[100]}
+				placeholder="Nombres..."
+				error={errors.Names}
+				$backgroundColor={theme.palette.background.alt}
+			/>
+			<InputForm
+				name="email"
+				control={control}
+				type="email"
+				label="E-mail"
+				$cl={theme.palette.neutral[100]}
+				placeholder="Examples@example.com"
+				error={errors.email}
+				$backgroundColor={theme.palette.background.alt}
+			/>
+			<InputForm
+				name="password"
+				control={control}
+				type="password"
+				label="Contraseña"
+				$cl={theme.palette.neutral[100]}
+				placeholder=""
+				error={errors.password}
+				$backgroundColor={theme.palette.background.alt}
+			/>
+			<InputForm
+				name="repeatPassword"
+				control={control}
+				type="password"
+				label="Repita Contraseña"
+				$cl={theme.palette.neutral[100]}
+				placeholder=""
+				error={errors.repeatPassword}
+				$backgroundColor={theme.palette.background.alt}
+			/>
+
 			<Label $cl={theme.palette.neutral[100]} >Role</Label>
 			<FlexBetween >
 				<Box display={'flex'} flexDirection={'column'}>
 					<CustomSelect
-						value={values.role}
-						onChange={handleChange}
-						name='role'
-						options={[
-							{ value: roles.ADMIN, label: 'Administrador' },
-							{ value: roles.USER, label: 'Usuario' },
-							{ value: roles.TEACHER, label: 'Profesor' }
-						]}
+						name="role"
+						label="Select Role"
+						options={roleOptions}
+						control={control} // Pasa el control obtenido de useForm
+						error={errors.role} // Pasa el error relacionado con el campo "role"
 						m={'0px'}
 					/>
-					{touched.role && errors.role && <ErrorMsg>{errors.role}</ErrorMsg>}
-
 				</Box>
 				<Box marginBottom={'1rem'}>
-
 					<ButtonCustom
 						onClick={handleClic}
 						type='submit'
 						name='primary'
-					     $color={theme.palette.neutral[100]}
-						disabled={!isValid}>Agregar</ButtonCustom>
+						$color={theme.palette.neutral[100]}
+					// disabled={!isValid}
+					>Agregar</ButtonCustom>
 				</Box>
 
 			</FlexBetween>

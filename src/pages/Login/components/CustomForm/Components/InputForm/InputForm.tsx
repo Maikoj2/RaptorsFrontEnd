@@ -10,14 +10,16 @@ export type InputFormProps = {
 	type?: string,
 	error?: FieldError,
 	placeholder?: string
+	$cl?: string,
+	$backgroundColor?: string,
 
 }
 
-const InputForm = ({ name, type, control, placeholder, error, label }: InputFormProps) => {
+const InputForm = ({ name, type, control, placeholder, error, label , $cl='', $backgroundColor=''}: InputFormProps) => {
 
 	return (
 		<>
-			<Label htmlFor={name}>{label}</Label>
+			<Label htmlFor={name} $cl={$cl}>{label}</Label>
 			<Box marginBottom={'1rem'}>
 				<Controller
 					name={name}
@@ -30,6 +32,8 @@ const InputForm = ({ name, type, control, placeholder, error, label }: InputForm
 								{...field}
 								placeholder={placeholder}
 								name={name} 
+								$cl={$cl}
+								$backgroundColor={$backgroundColor}
 							/>
 							{error && <ErrorMsg>{error.message}</ErrorMsg>}
 						</>
