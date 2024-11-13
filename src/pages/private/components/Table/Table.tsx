@@ -16,7 +16,6 @@ import { CustomPagination } from './CustomPagination'
 import { useState, useEffect, } from 'react';
 import { ApiUser } from '../../../../models/apiData.types';
 import { BoxTable } from '../../style-components-private'
-import React from 'react';
 import { FaSave, FaTimes, FaEdit, FaTrashAlt } from 'react-icons/fa';
 import { useManagerContext } from '../../Context';
 import { AppStore } from '@/redux/storer';
@@ -37,7 +36,7 @@ export interface TableProps {
 
 
 
-const Table: React.FC<TableProps> = ({
+const Table = ({
   data ,
   columns,
   NameHeaderTable,
@@ -45,13 +44,13 @@ const Table: React.FC<TableProps> = ({
   actions = false,
   UpdateOnDataBAse,
   DeleteOnDataBAse
-}) => {
+}:TableProps) => {
   const theme: any = useTheme()
   const { Data } = useSelector((state: AppStore) => state.loginUser)
    const { setnameOpenDialog } = useManagerContext();
   const [rows, setRows] = useState(data);
   // const [confirmdeleted, setconfimdeleted] = useState(false);
-  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
+  const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const { SelectvalueContx } = useManagerContext()
 
   useEffect(() => {

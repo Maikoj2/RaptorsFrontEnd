@@ -21,7 +21,7 @@ const FETCH_LIMIT = 50;
 
 const Users = () => {
   const  { upDateUsersDataBase,  deleteUsersDataBase } =useUserDataManager()
-  const { UserState:{Data,status}, getDataUsers  } = useManagerApiDataContext()
+  const { UserState:{Data,status}, getDataUsers, updateUser  } = useManagerApiDataContext()
   const  { UserColumnDef }  =   useColDataTableUsers()
   const [Row, setRow] = useState(Data)
   useEffect(() => {
@@ -34,8 +34,8 @@ const Users = () => {
   }, [getDataUsers])
   
   const handleUpdateAction = useCallback((data: GridRowModel) => {
-    upDateUsersDataBase(data);
-  }, [upDateUsersDataBase]);
+    updateUser(data);
+  }, [updateUser]);
   
   const handleDeleteAction = useCallback((userId: string) => {
     deleteUsersDataBase(userId);

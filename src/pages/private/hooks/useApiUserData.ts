@@ -1,6 +1,5 @@
-import { addUser, chaangeStatusDataBase, chackingDataBase, clearErrorMessage, DeletedUser, onAllUsers, updateUser } from '../../../redux/slices/user.slice'
-import { ApiRoutes } from '@/models/RoutsApi'
 
+import { ApiRoutes } from '@/models/RoutsApi'
 import { AxiosDeleteAitemuser, AxiosGetallitemsuser, AxiosSetAitemuser, AxiosUpdateAitemuser } from '../pages/Users/services'
 import { StatusData, UserEmptyState } from '@/models'
 import { useReducer } from 'react';
@@ -8,10 +7,8 @@ import { UserReducer } from '../Context'
 import { UsersActionReducers, UsersEmptyState } from '../models'
 
 export const useUserDataManager = () => {
-  // const dispatch = useDispatch();
-  // const UserState = useSelector((state: AppStore) => state.apiUsers);
   const [state, dispatch] = useReducer(UserReducer, UsersEmptyState);
-  const DispatchAction = (type:string, payload:any) => {
+  const DispatchAction = (type:string, payload: any) => {
     dispatch({type: type,payload: payload})
   };
   const clearMessageError = () => {
@@ -40,28 +37,28 @@ export const useUserDataManager = () => {
   const upDateUsersDataBase = async (Data: any) => {
     delete Data.isNew;
     console.log(Data);
-    DispatchAction(UsersActionReducers.CHECKING,{UserContext:UserEmptyState});
-    AxiosUpdateAitemuser(`${ApiRoutes.API_USER}/${Data._id}`, Data)
-      .then((data: any) => {
+    // DispatchAction(UsersActionReducers.CHECKING,{UserContext:UserEmptyState});
+    // AxiosUpdateAitemuser(`${ApiRoutes.API_USER}/${Data._id}`, Data)
+    //   .then((data: any) => {
 
-        data.Data = Data;
-        console.log(data.Data);
+    //     data.Data = Data;
+    //     console.log(data.Data);
 
-        dispatch(updateUser(data));
-        clearMessageError();
-      })
+    //     DispatchAction(UsersActionReducers.UPDATE_USER, {UserContext:data});        
+    //     clearMessageError();
+    //   })
   }
   const deleteUsersDataBase = async (Data: any) => {
     console.log(Data);
 
-    dispatch(chackingDataBase());
-    AxiosDeleteAitemuser(`${ApiRoutes.API_USER}/${Data}`)
-      .then((data: any) => {
-        dispatch(DeletedUser(data));
-        clearMessageError();
-      }).catch(() =>
-        dispatch(chaangeStatusDataBase(StatusData.OBTAINED))
-      )
+    // dispatch(chackingDataBase());
+    // AxiosDeleteAitemuser(`${ApiRoutes.API_USER}/${Data}`)
+    //   .then((data: any) => {
+    //     dispatch(DeletedUser(data));
+    //     clearMessageError();
+    //   }).catch(() =>
+    //     dispatch(chaangeStatusDataBase(StatusData.OBTAINED))
+    //   )
   }
   return {
     getAllUsersDataBase,

@@ -1,37 +1,62 @@
-import { StatusData } from "@/models";
+import { ApiUser, StatusData } from "@/models";
 import { StaffActionReducers, UsersActionReducers, UsersActions, UsersData } from "../../models";
-interface Action {
-    type: string;
-    payload: any;
+import { ApiUsers } from '../../models/apiUsers.types';
+import { string } from "zod";
+interface UserContextPayload {
+    UserContext: {
+        Data: ApiUser;  // Specify the exact type of User objects here
+        message: string;
+        total: number;
+    };
 }
-export const UserReducer = (state: UsersData, action: Action): any => {
+export interface ActionUserReducer {
+    type: string;
+    payload: UserContextPayload | string;
+}
+export const UserReducer = (state: UsersData, { type, payload }: ActionUserReducer): any => {
 
-    switch (action.type) {
+    switch (type) {
         case UsersActionReducers.GET_ALL_USERS:
-            return {
-                Data: action.payload.UserContext.Data,
-                status: StatusData.OBTAINED,
-                message: action.payload.UserContext.message,
-                total: action.payload.UserContext.total,
+            if (typeof payload != 'string') {
+                return {
+                    Data: payload.UserContext.Data,
+                    status: StatusData.OBTAINED,
+                    message: payload.UserContext.message,
+                    total: payload.UserContext.total,
+                }
             }
-        case UsersActionReducers.SET_USER:              
-              const newUser = action.payload.UserContext.Data;
-              return {
-                ...state,
-                Data: [...state.Data, newUser],
-                total: state.total + 1,
-                message: action.payload.UserContext.message,
-                status: StatusData.OBTAINED,
+
+        case UsersActionReducers.SET_USER:
+            if (typeof payload != 'string') {
+                const newUser = payload.UserContext.Data;
+                return {
+                    ...state,
+                    Data: [...state.Data, newUser],
+                    total: state.total + 1,
+                    message: payload.UserContext.message,
+                    status: StatusData.OBTAINED,
+                }
             }
         case StaffActionReducers.CHECKING_USER:
             return {
                 ...state,
                 status: StatusData.CHECKING,
             };
+        case StaffActionReducers.UPDATE_STAFF:
+            if (typeof payload != 'string') {
+                return {
+                    Data: state.Data.map((row: ApiUser) => {
+                        (row._id === payload.UserContext.Data._id) ?
+                            payload.UserContext.Data : row;
+                    }),
+                    status: StatusData.OBTAINED,
+                    message: payload.UserContext.message
+                };
+            }
         case StaffActionReducers.CLEAR_MESSAGE:
             return {
                 ...state,
-                message: action.payload,
+                message: payload,
             };
 
         default:

@@ -113,7 +113,6 @@ const FormAddNewUser = () => {
 					// disabled={!isValid}
 					>Agregar</ButtonCustom>
 				</Box>
-
 			</FlexBetween>
 
 		</form >
