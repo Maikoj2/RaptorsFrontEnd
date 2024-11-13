@@ -12,13 +12,15 @@ interface SelectOption {
 interface SelectProps {
   label?: string
   m?: string
+  value: string 
   name: string
   options: SelectOption[]
   disabled?: boolean
   children?: ReactNode
   minWidth?: string
-  control: Control<any>,
+  // control: Control<any>,
   error?: FieldError,
+  onChange: (value: any) => void
 }
 
 const CustomSelect = ({
@@ -29,17 +31,19 @@ const CustomSelect = ({
   name,
   m,
   minWidth,
-  control,
+  // control,
   error,
+  onChange, 
+  value
 
 }: SelectProps) => {
   return (
     <Box marginBottom={(!m) ? '1rem' : m}>
-      <Controller
+      {/* <Controller
         name={name}
         control={control}
         render={({ field }) => (
-          <>
+          <> */}
             <FormControl sx={{ m: (!m) ? '1rem' : m, minWidth: (!minWidth) ? 120 : minWidth }} size="small">
               {label && (
                 <InputLabel id="demo-select-small-label" color="secondary">
@@ -49,9 +53,9 @@ const CustomSelect = ({
               <Select
                 labelId="demo-select-small-label"
                 id="demo-select-small"
-                {...field}
+                value={value}
                 name={name}
-                onChange={(e: any) => {field.onChange(e.target.value) }}
+                onChange={(e: any) => {onChange(e) }}
                 disabled={disabled}
                 sx={{
                   border: '1px solid #d2d6da',
@@ -68,10 +72,10 @@ const CustomSelect = ({
               </Select>
             </FormControl>
             {error && <ErrorMsg>{error.message}</ErrorMsg>}
-          </>
+          {/* </> */}
 
-        )}
-      />
+        {/* )} */}
+      {/* /> */}
     </Box>
   )
 }

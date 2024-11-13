@@ -9,7 +9,7 @@ import { Box, useTheme } from "@mui/material"
 import { CustomSelect } from "../CustomSelect"
 import { useManagerApiDataContext } from "@/pages/private/Context"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { NewUserSchema, FormUserValues } from '../../../models/SchemaZod';
 import { InputForm } from "@/pages/Login/components/CustomForm/Components"
 
@@ -27,7 +27,7 @@ const initialUserValues = {
 
 const FormAddNewUser = () => {
 	const { UserState: { Data, status }, addUser } = useManagerApiDataContext()
-	const { control, handleSubmit, reset, formState: { errors, isValid } } = useForm<FormUserValues>({
+	const { control, handleSubmit, reset, formState: { errors, isValid, } } = useForm<FormUserValues>({
 		resolver: zodResolver(NewUserSchema),
 		defaultValues: initialUserValues,
 	})
@@ -95,13 +95,21 @@ const FormAddNewUser = () => {
 			<Label $cl={theme.palette.neutral[100]} >Role</Label>
 			<FlexBetween >
 				<Box display={'flex'} flexDirection={'column'}>
-					<CustomSelect
+					<Controller
 						name="role"
-						label="Select Role"
-						options={roleOptions}
-						control={control} // Pasa el control obtenido de useForm
-						error={errors.role} // Pasa el error relacionado con el campo "role"
-						m={'0px'}
+						control={control}
+						render={({ field }) => (
+
+							<CustomSelect
+								name='role'
+								label="Select Role"
+								options={roleOptions}
+								value={field.value} 
+								error={errors.role}
+								onChange={field.onChange} 
+								m={'0px'}
+							/>
+						)}
 					/>
 				</Box>
 				<Box marginBottom={'1rem'}>
