@@ -37,28 +37,25 @@ export const useUserDataManager = () => {
   const upDateUsersDataBase = async (Data: any) => {
     delete Data.isNew;
     console.log(Data);
-    // DispatchAction(UsersActionReducers.CHECKING,{UserContext:UserEmptyState});
-    // AxiosUpdateAitemuser(`${ApiRoutes.API_USER}/${Data._id}`, Data)
-    //   .then((data: any) => {
-
-    //     data.Data = Data;
-    //     console.log(data.Data);
-
-    //     DispatchAction(UsersActionReducers.UPDATE_USER, {UserContext:data});        
-    //     clearMessageError();
-    //   })
+    DispatchAction(UsersActionReducers.CHECKING,{UserContext:UserEmptyState});
+    AxiosUpdateAitemuser(`${ApiRoutes.API_USER}/${Data._id}`, Data)
+      .then((data: any) => {
+        data.Data = Data;
+        DispatchAction(UsersActionReducers.UPDATE_USER, {UserContext:data});        
+        clearMessageError();
+      })
   }
   const deleteUsersDataBase = async (Data: any) => {
     console.log(Data);
 
-    // dispatch(chackingDataBase());
-    // AxiosDeleteAitemuser(`${ApiRoutes.API_USER}/${Data}`)
-    //   .then((data: any) => {
-    //     dispatch(DeletedUser(data));
-    //     clearMessageError();
-    //   }).catch(() =>
-    //     dispatch(chaangeStatusDataBase(StatusData.OBTAINED))
-    //   )
+    DispatchAction(UsersActionReducers.CHECKING,{UserContext:UserEmptyState});
+    AxiosDeleteAitemuser(`${ApiRoutes.API_USER}/${Data}`)
+      .then((data: any) => {
+        DispatchAction(UsersActionReducers.DELETE_USER, {UserContext:data});        
+        clearMessageError();
+      }).catch(() =>
+        DispatchAction(UsersActionReducers.DELETE_USER, {UserContext: StatusData.OBTAINED})
+      )
   }
   return {
     getAllUsersDataBase,

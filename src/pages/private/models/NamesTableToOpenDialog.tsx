@@ -11,7 +11,7 @@ export const ComponentOnpenOnDialog = [
     value: <FormNewUser></FormNewUser>
   },
   {
-    key: nameModals.CONFIRMACION,
+    key: nameModals.CONFIRMATION,
     value: <WindowsToConfirm></WindowsToConfirm>
   }
   ,

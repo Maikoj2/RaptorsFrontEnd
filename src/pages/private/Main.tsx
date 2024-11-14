@@ -19,8 +19,8 @@ export const Main = () => {
   const [isSidebarOpen, setisSidebarOpen] = useState(isNonMobile)
   const limit = 50;
   const from = 0;
-  // const DialogOpen: any = (atOpenedDialog !== '') && searchByKey(atOpenedDialog)
-  const DialogOpen = useMemo(() => atOpenedDialog ? searchByKey(atOpenedDialog) : null, [atOpenedDialog])
+  const DialogOpen: any = (atOpenedDialog !== '') && searchByKey(atOpenedDialog)
+  // const DialogOpen = useMemo(() => atOpenedDialog ? searchByKey(atOpenedDialog) : null, [atOpenedDialog])
   
   
   const layoutStyle = {

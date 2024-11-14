@@ -20,14 +20,14 @@ export const addRowSubjectManager = new SubjectManager<any>()
 const FETCH_LIMIT = 50;
 
 const Users = () => {
-  const  { upDateUsersDataBase,  deleteUsersDataBase } =useUserDataManager()
-  const { UserState:{Data,status}, getDataUsers, updateUser  } = useManagerApiDataContext()
+  const { UserState:{Data,status}, getDataUsers, updateUser, deleteUser  } = useManagerApiDataContext()
   const  { UserColumnDef }  =   useColDataTableUsers()
   const [Row, setRow] = useState(Data)
+  const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
-    setRow(Data)},[Data])
-
-  const isLoading = status !== StatusData.OBTAINED;
+    setIsLoading(status !== StatusData.OBTAINED)
+    setRow(Data)}
+  ,[Data,status])
   
   useEffect(() => {
     if (status === StatusData.NO_OBTAINED) getDataUsers(FETCH_LIMIT, 0);
@@ -38,8 +38,8 @@ const Users = () => {
   }, [updateUser]);
   
   const handleDeleteAction = useCallback((userId: string) => {
-    deleteUsersDataBase(userId);
-  }, [deleteUsersDataBase]);
+    deleteUser(userId);
+  }, [deleteUser]);
 
  
   return <Table

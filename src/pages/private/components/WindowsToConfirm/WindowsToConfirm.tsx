@@ -9,10 +9,11 @@ import { useManagerContext } from '../../Context';
 export interface WindowsToConfirmProps { }
 
 const WindowsToConfirm: React.FC<WindowsToConfirmProps> = () => {
-	const {  setConfirm   } =	useManagerContext()
+	const {  setConfirm, setnameOpenDialog  } =	useManagerContext()
 	const theme: any = useTheme()
 	const handleClic = (confirm:boolean) => {
 		setConfirm(confirm)
+		setnameOpenDialog('')
 		dialogCloseSubject$.setSubject = true
 	}
 	return <Container>
@@ -35,17 +36,17 @@ const WindowsToConfirm: React.FC<WindowsToConfirmProps> = () => {
 							<Box width={'8rem'}>
 								<ButtonCustom
 									onClick={()=>handleClic(true)}
-									type='submit'
+									type='button'
 									name='primary'
-									color={theme.palette.neutral[100]}
+									$color={theme.palette.neutral[100]}
 								>si</ButtonCustom>
 							</Box>
 							<Box width={'8rem'}>
 								<ButtonCustom
 									onClick={()=>handleClic(false)}
-									type='submit'
+									type='button'
 									name='primary'
-									color={theme.palette.neutral[100]}
+									$color={theme.palette.neutral[100]}
 								>no</ButtonCustom>
 							</Box>
 						</FlexBetween>

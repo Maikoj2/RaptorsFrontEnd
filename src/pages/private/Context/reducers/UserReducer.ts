@@ -37,26 +37,46 @@ export const UserReducer = (state: UsersData, { type, payload }: ActionUserReduc
                     status: StatusData.OBTAINED,
                 }
             }
-        case StaffActionReducers.CHECKING_USER:
-            return {
-                ...state,
-                status: StatusData.CHECKING,
-            };
-        case StaffActionReducers.UPDATE_STAFF:
+
+
+        case UsersActionReducers.UPDATE_USER:
             if (typeof payload != 'string') {
                 return {
                     Data: state.Data.map((row: ApiUser) => {
-                        (row._id === payload.UserContext.Data._id) ?
+                        return (row._id === payload.UserContext.Data._id) ?
                             payload.UserContext.Data : row;
                     }),
                     status: StatusData.OBTAINED,
                     message: payload.UserContext.message
                 };
             }
-        case StaffActionReducers.CLEAR_MESSAGE:
+        case UsersActionReducers.DELETE_USER:
+            if (typeof payload != 'string') {
+                return {
+                    Data: state.Data.filter((row: ApiUser) => {
+                        return (row._id !== payload.UserContext.Data._id)         
+                    }),
+                    status: StatusData.OBTAINED,
+                    message: payload.UserContext.message,
+                    total: state.total - 1
+                };
+            }
+        case UsersActionReducers.CLEAR_MESSAGE:
             return {
                 ...state,
                 message: payload,
+            }
+
+        case UsersActionReducers.CHECKING_USER:
+
+        case UsersActionReducers.CHANGE_STATUS:
+            return {
+                ...state,
+                status: StatusData.CHECKING,
+            }
+            return {
+                ...state,
+                status: payload,
             };
 
         default:

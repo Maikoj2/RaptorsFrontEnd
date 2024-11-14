@@ -13,7 +13,7 @@ import {
 import { useTheme } from '@mui/material';
 import { ToolBar } from './ToollBar'
 import { CustomPagination } from './CustomPagination'
-import { useState, useEffect, } from 'react';
+import { useState, useEffect, useCallback, } from 'react';
 import { ApiUser } from '../../../../models/apiData.types';
 import { BoxTable } from '../../style-components-private'
 import { FaSave, FaTimes, FaEdit, FaTrashAlt } from 'react-icons/fa';
@@ -27,7 +27,7 @@ export interface TableProps {
   pageSize?: number
   data: any
   NameHeaderTable: string,
-  loading?: boolean,
+  loading: boolean,
   actions?: boolean,
   UpdateOnDataBAse?: (newRow: any) => void
   DeleteOnDataBAse?: (id: string) => void
@@ -37,25 +37,31 @@ export interface TableProps {
 
 
 const Table = ({
-  data ,
+  data,
   columns,
   NameHeaderTable,
   loading,
   actions = false,
   UpdateOnDataBAse,
   DeleteOnDataBAse
-}:TableProps) => {
+}: TableProps) => {
   const theme: any = useTheme()
   const { Data } = useSelector((state: AppStore) => state.loginUser)
-   const { setnameOpenDialog } = useManagerContext();
   const [rows, setRows] = useState(data);
-  // const [confirmdeleted, setconfimdeleted] = useState(false);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
-  const { SelectvalueContx } = useManagerContext()
+  const { SelectvalueContx, setnameOpenDialog, confirm, setConfirm } = useManagerContext()
+  const [confirmDeleted, setConfimDeleted] = useState(false);
+  const [tableLoading, setTableLoading] = useState(false);
+  const [pendingDeleteId, setPendingDeleteId] = useState<GridRowId | null>(null);
+  
 
   useEffect(() => {
-    setRows(data)
-  }, [data])
+    setRows(data),
+    setConfimDeleted(confirm)
+    setTableLoading(loading)
+    // console.log(confirmDeleted);
+
+  }, [data, confirm, loading])
 
 
 
@@ -126,15 +132,24 @@ const Table = ({
   const handleSaveClick = (id: GridRowId) => () => setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
 
 
-  const handleDeleteClick = (id: GridRowId) => () => {
-      setnameOpenDialog(nameModals.CONFIRMACION)
-    DeleteOnDataBAse!(id as string);
-     dialogOpenSubject$.setSubject = true 
-      if (Data.user._id !== id) {
-        setRows(rows.filter((row: ApiUser) => row._id !== id));
+  const handleDeleteClick = useCallback(
+    (id: GridRowId) => () => {
+      setPendingDeleteId(id); // Store the id of the row to be deleted
+      setnameOpenDialog(nameModals.CONFIRMATION);
+      dialogOpenSubject$.setSubject = true;
+    },
+    []
+  );
+  useEffect(() => {
+    if (confirmDeleted && pendingDeleteId !== null) {
+      // Perform the deletion if confirmed and a pending ID exists
+      if (Data.user._id !== pendingDeleteId) {
+        setRows(rows.filter((row: ApiUser) => row._id !== pendingDeleteId));
+        DeleteOnDataBAse?.(pendingDeleteId as string); // Optional: Call API to delete from database
       }
-     
-  };
+      setPendingDeleteId(null); setConfirm(false)// Reset after deletion
+    }
+  }, [confirmDeleted, pendingDeleteId, Data.user._id, rows, DeleteOnDataBAse, setRows]);
 
   const handleCancelClick = (id: GridRowId) => () => {
     setRowModesModel({
@@ -150,7 +165,7 @@ const Table = ({
 
   const processRowUpdate = (newRow: GridRowModel) => {
 
-    
+
     if (!!SelectvalueContx[newRow._id]) { newRow.role = SelectvalueContx[newRow._id] }
     const updatedRow = { ...newRow, isNew: false };
 
@@ -174,13 +189,13 @@ const Table = ({
         onRowEditStop={handleRowEditStop}
         processRowUpdate={processRowUpdate}
         pageSizeOptions={[5]}
-        loading={loading}
+        loading={tableLoading}
         initialState={{
           pagination: {
             paginationModel: { pageSize: 5, page: 0 }
           }
         }}
-       
+
         getRowId={(row) => row._id || Math.random().toString(36).substr(2, 9)}
         sx={{
           '&.MuiDataGrid-root': {

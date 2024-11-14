@@ -11,8 +11,8 @@ export  const StaffActionReducers:TypeWithKey<string> = {
     CHECKING_STAFF: '[staff] CHECKING',
 }
 export  const BaseSalaryActionsReducers = {
-    GET_ALL_BASE_SALARY: '[staff] getAllBaseSalary',
-    CHECKING: '[staff] CHECKING',
+    GET_ALL_BASE_SALARY: '[BaseSalary] getAllBaseSalary',
+    CHECKING: '[BaseSalary] CHECKING',
 
 }
 export  const UsersActionReducers:TypeWithKey<string> = {
@@ -22,6 +22,7 @@ export  const UsersActionReducers:TypeWithKey<string> = {
   DELETE_USER: '[Users] deleteUser',
   CHECKING_USER: '[Users] CHECKING',
   CLEAR_MESSAGE: '[Users] CLEAR',
+  CHANGE_STATUS: '[Users] CHANGE STATUS',
 }
 // Definir una interfaz genérica para las acciones
 

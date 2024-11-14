@@ -1,11 +1,12 @@
 import { Button } from '@mui/material'
 import styled, { css } from 'styled-components'
 
-interface labelProps {
-    $color?: string
+interface ButtonCustomProps {
+    $color?: string;
+    name?: 'primary' | 'btnGradient'; // Limita las opciones válidas para el `name`
   }
 
-export const ButtonCustom = styled(Button)<labelProps>`
+export const ButtonCustom = styled(Button)<ButtonCustomProps>`
     display: inline-block;
     line-height: 1.4;
     text-align: center;

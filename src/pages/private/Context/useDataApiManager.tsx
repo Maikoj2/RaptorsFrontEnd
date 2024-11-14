@@ -55,7 +55,6 @@ export const DataApiContextProvider = ({ children }: Props) => {
 
     // Data staff actions
     const getDataStaff= ( limit:number=50, from:number=0)=> {
-        console.log("Fetching Base Salary Data...");
         loadStaff({limit, from})
     }
     const addStaff= ( data:any)=> {

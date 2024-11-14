@@ -1,5 +1,4 @@
 export enum nameModals {
-    CONFIRMACION = 'Seguro',
-    
+    CONFIRMATION = 'Seguro',
   }
   
